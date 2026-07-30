@@ -1,4 +1,4 @@
 interface:
   display_name: "FrameSpine"
   short_description: "以注意力主干、有限系列共创和 HyperFrames 动态预演制作系列短视频"
-  default_prompt: "使用 $FrameSpine 与我共创图片主导的抖音系列视频。初始化系列时，先读取已有资料，一次确认一个长期配置并给出推荐；完成无具体选题的 HyperFrames 风格校准后停止追问，不要推荐主题、Hook、故事或镜头。用户提供具体内容后，再进入 Episode Production 进行单集创作与预览迭代。"
+  default_prompt: "使用 $FrameSpine 与我共创图片主导的抖音系列视频。初始化系列时，先读取已有资料，一次确认一个长期配置并给出推荐；完成无具体选题的 HyperFrames 风格校准后停止追问，不要推荐主题、Hook、故事或镜头。用户提供具体内容后，再进入 Episode Production：完整用户文案默认进入 Locked Script Mode，保留原句、顺序、互动与停顿，先读懂叙事并将其导演成图片；只有选题、文章或资料进入 Development Mode，明确要求改稿才进入 Revision Mode。通过真实预览迭代，不建立状态机或审批门。"

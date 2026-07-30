@@ -13,8 +13,11 @@
 ## Beat B01 —
 
 - 注意力作用：Hook / Reveal / Evidence / Contrast / Reframe / Payoff / Callback / 其他
-- 对应旁白：
+- 对应 `SCRIPT.md` 原文范围：
 - 图片要让观众理解：
+- 图片要让观众感受：
+- 图片让观众接下来期待：
+- 要承接的互动 / 停顿 / 情绪 / 关系功能：
 - 图片具体证明：
 - 主体、动作与环境：
 - 第一眼焦点：

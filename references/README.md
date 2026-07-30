@@ -19,6 +19,7 @@
 2. `core/attention-spine.md`
 3. `core/image-storytelling.md`
 4. `core/hyperframes-directing.md`
+5. 用户提供完整定稿文案时：`core/narrative-directing.md`
 
 ## 修改与审片
 
@@ -31,6 +32,7 @@
 
 - `examples/knowledge-explainer.md`
 - `examples/character-story.md`
+- `examples/locked-script-directing.md`
 
 ## 技术附录
 

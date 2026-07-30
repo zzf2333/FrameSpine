@@ -114,7 +114,7 @@ Story Flow
 3. `references/core/image-storytelling.md`
 4. `references/core/hyperframes-directing.md`
 
-当用户只给一个选题、一篇文章、已有文案、资料包或旧视频时，按 `episode-production.md` 中对应的输入类型开始，不要求用户重新填写整套表格。
+用户提供完整文案时，额外读 `references/core/narrative-directing.md`：默认进入 Locked Script Mode，将原文保存到 `SCRIPT.md`，提取而不重构其 Attention Spine，保留原句、顺序、互动与停顿。用户只给选题、文章或资料时使用 Development Mode；只有明确要求修改文字时才进入 Revision Mode。
 
 ### 用户正在观看预览并反馈
 
@@ -139,6 +139,7 @@ Story Flow
 
 - `references/examples/knowledge-explainer.md`
 - `references/examples/character-story.md`
+- `references/examples/locked-script-directing.md`（定稿文案导演案例）
 
 案例用于理解方法，不要机械复制其结构或画面。
 
@@ -233,19 +234,17 @@ Series Style Calibration 测试动态视觉身份，不是第一条视频样片�
 
 # 流程二：单集视频制作
 
-## 1. 理解输入和最终回报
+## 1. 按输入进入正确导演路径
 
 先确定用户给的是选题、资料、文章、完整文案、旧视频还是修改要求。提取已知内容，不要求重复输入。
 
-在写 Hook 前先回答：
+- **Locked Script Mode**：完整用户文案是 `SCRIPT.md` 中的锁定源文本。先读懂讲述者、事件链、好奇、认知/情绪/关系变化，再 Extract Attention Spine、按原文分段、设计图片节拍和 Story Flow。不得默认重写 Hook、结尾、句子或顺序，也不得因为时长删稿。
+- **Development Mode**：选题、文章和资料先确定最终回报，再 Build Attention Spine、发展旁白并图片化。
+- **Revision Mode**：只在用户明确要求改稿时，在允许范围内修改并保留原稿的讲述者、互动和节奏功能。
 
-> 观众看完后，具体多获得了什么？
+## 2. 设计或提取注意力主干
 
-最终回报必须足以兑现开头承诺，并能由图片或图片关系呈现。
-
-## 2. 设计注意力主干
-
-在完整旁白之前设计：
+Development Mode 在完整旁白之前设计：
 
 ```text
 观看承诺
@@ -258,11 +257,11 @@ Series Style Calibration 测试动态视觉身份，不是第一条视频样片�
 
 注意力推进可以来自异常、证据、对比、揭示、升级、重构、局部回报和应用，不要机械使用“但是”和夸张悬念。
 
-开头不确定时，在同一 HyperFrames 工程中做最多 3 个结构差异明显的 Hook 候选。候选必须在第一帧、图片关系或观看承诺上真正不同，而不只是换一句文案。
+开头不确定时，Development Mode 或获授权的 Revision Mode 可在同一 HyperFrames 工程中做最多 3 个结构差异明显的 Hook 候选。Locked Script Mode 只探索第一帧和图片关系，不改动开头原句。
 
-## 3. 写中文旁白并拆故事
+## 3. 发展旁白或导演定稿文案
 
-旁白要短、具体、可视化。每个主要段落说明：
+Development / Revision Mode 的旁白要短、具体、可视化。每个主要段落说明：
 
 - 观众进入时在等待什么；
 - 本段新增什么；
@@ -270,7 +269,7 @@ Series Style Calibration 测试动态视觉身份，不是第一条视频样片�
 - 图片怎样让它成立；
 - 通过什么视觉或问题进入下一段。
 
-找不到图片表达时，优先改写文案、引入具体人物、行为、环境、证据或前后差异，不用大段编辑文字补洞。
+Development / Revision Mode 找不到图片表达时，可改写文案、引入具体人物、行为、环境、证据或前后差异，不用大段编辑文字补洞。Locked Script Mode 保留文本，改为寻找原文中的人物、动作、物件、环境、证据、情绪和前后状态。
 
 ## 4. 尽早做 Story Flow
 
@@ -295,16 +294,16 @@ Series Style Calibration 测试动态视觉身份，不是第一条视频样片�
 
 ## 6. 生成正式声音并制作 Timed Animatic
 
-用户认可文案和图片方向后：
+用户认可文字和图片方向后：
 
-1. 将最终中文旁白写入 `narration.txt`；
+1. 将权威中文旁白保存在 `SCRIPT.md`，由默认 TTS 命令同步派生的 `narration.txt`；
 2. 调用 `scripts/generate-tts.mjs` 生成火山 TTS；
 3. 使用 HyperFrames transcribe 获取时间参考；
 4. 生成自然英文字幕；
 5. 将正式声音与双语字幕加入同一 HyperFrames 工程；
 6. 依据真实时间重新导演图片停留、运动和转场。
 
-实际 TTS 使某段过长时，优先删减或重写内容；只有语气问题才调整语速。
+实际 TTS 使某段过长时，Locked Script Mode 先调整节拍、停留、声音分段、目标时长或建议拆集；只有用户明确允许才改稿。Development / Revision Mode 才考虑删减或重写内容；只有语气问题才调整语速。
 
 ## 7. 生成最终图片并精修
 

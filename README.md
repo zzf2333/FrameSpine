@@ -51,6 +51,14 @@ Hook / Story Flow
 → Final Composition
 ```
 
+### 单集文案输入
+
+- 用户交付完整文案时，默认使用 **Locked Script Mode**：将原文放入 `SCRIPT.md`，先提取其叙事与 Attention Spine，再按原文导演图片；不默认改 Hook、结尾、句子、顺序、互动或停顿。
+- 用户只给选题、文章或资料时，使用 **Development Mode**：确定最终回报、构建 Attention Spine、发展旁白。
+- 只有明确要求改稿时使用 **Revision Mode**。
+
+`SCRIPT.md → narration.txt → TTS`：`SCRIPT.md` 是唯一源文本，默认 TTS 命令会同步生成 `narration.txt`；不要独立编辑后者。
+
 ## 生成声音和图片
 
 ```bash

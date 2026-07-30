@@ -44,12 +44,16 @@ GPT_IMAGE2_TIMEOUT_MS=180000
 
 ## 输入
 
-单集根目录的 `narration.txt`：
+默认输入是单集根目录的 `SCRIPT.md`，它是权威旁白源文本：
 
 - 用空行分隔独立语音段；
-- 以 `#` 开头的行被忽略；
-- 建议按可单独重做的语义段落拆分；
-- 不要把一整条 60 秒旁白只作为一个超长段。
+- 模板中的 HTML 注释会被忽略；
+- 默认脚本会将其逐字同步到 `narration.txt`，再用相同文字请求 TTS；
+- `narration.txt` 是派生文件，不独立编辑；
+- Locked Script Mode 必须保留原句、标点、顺序、互动和停顿；
+- Development / Revision Mode 在文本确认后也应以 `SCRIPT.md` 为唯一来源。
+
+已有旧项目或自定义输入可显式传入 `--input narration.txt`；显式输入不会覆盖 `SCRIPT.md`。
 
 运行：
 
@@ -66,6 +70,8 @@ node <skill>/scripts/generate-tts.mjs \
   --output assets/audio/narration.wav
 ```
 
+默认不需要 `--input`，会从 `SCRIPT.md` 同步 `narration.txt`。
+
 输出：
 
 ```text
@@ -81,7 +87,7 @@ assets/audio/units/*.wav
 - 系列初始化阶段先做短声线试听；
 - Hook、解释、证据和结尾可以使用不同分段与停顿；
 - 用户不满意时只重做对应段；
-- TTS 太慢先检查文案，不只提高速度；
+- TTS 太慢先检查真实时长、段落、图片停留和目标时长；Locked Script Mode 未获用户许可时不缩短文案；
 - 声音选择与系列旁白角色一致。
 
 # 三、GPT Image 2
