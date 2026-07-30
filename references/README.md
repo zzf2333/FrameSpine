@@ -7,7 +7,7 @@
 按需读取：
 
 1. `core/series-initialization.md`
-2. `core/hyperframes-directing.md` 的视觉身份与风格校准部分
+2. `core/hyperframes-directing.md` 的「最小的制作循环」与「HyperFrames Skill 引用策略」
 
 先建立可复用的 Series Configuration 与 Meaning Anchor，达到 Series Ready 后进行无具体选题的风格校准。不要读取 `core/attention-spine.md`，也不要在系列初始化阶段设计 Episode 内容。
 

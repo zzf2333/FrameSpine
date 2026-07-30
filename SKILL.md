@@ -17,6 +17,25 @@ description: Co-design, direct, preview, revise, and produce image-first Douyin 
 制作底座：HyperFrames 全套 Skill、GSAP 与 CLI
 ```
 
+## HyperFrames Role
+
+HyperFrames is the visual production environment of FrameSpine.
+
+FrameSpine decides:
+
+- what the audience should understand;
+- what the image should communicate;
+- what visual change helps comprehension.
+
+HyperFrames decides:
+
+- how images move;
+- how scenes transition;
+- how typography appears;
+- how the final composition is implemented.
+
+Do not use HyperFrames effects to compensate for weak storytelling.
+
 这个 Skill 的价值不在于自动把文案拼成视频，而在于帮助 Agent：
 
 - 建立长期可复用的视频系列生产配置，包括内容定位、观众、叙事契约、图片语言、视觉身份、声音身份和制作环境；
@@ -78,7 +97,7 @@ Story Flow
 先读：
 
 1. `references/core/series-initialization.md`
-2. `references/core/hyperframes-directing.md` 的视觉身份与风格校准部分
+2. `references/core/hyperframes-directing.md` 的「最小的制作循环」与「HyperFrames Skill 引用策略」
 
 目标是建立未来单集可继承的 Series Configuration，并完成不依赖具体选题的 Series Style Calibration。不要在此阶段读取 `attention-spine.md`，也不要设计第一期的主题、Hook、故事或分镜。
 
@@ -312,17 +331,19 @@ npx hyperframes render --quality high --output final.mp4
 
 # HyperFrames 能力路由
 
-在制作 composition 时，不要只依赖本 Skill 的概述。读取并使用已安装的 HyperFrames 能力：
+HyperFrames 是制作环境，不是 FrameSpine 之外的新创意体系。先由 Attention Spine 和 Image Storytelling 决定图片要表达什么，再按实际制作需要读取已安装的 HyperFrames 能力。
 
-- **任何新 composition**：`hyperframes`，以及其 `references/typography.md`、`references/motion-principles.md`
-- **GSAP 时间线与图片运动**：`gsap`
-- **多场景视频**：HyperFrames `references/transitions.md`
-- **中英文字幕**：HyperFrames `references/captions.md`
-- **关键词、证据标记或少量编辑文字**：HyperFrames `references/css-patterns.md`
-- **音乐真正驱动画面时**：HyperFrames `references/audio-reactive.md`
-- **预览、检查和渲染**：`hyperframes-cli`
+| 使用频率 | 能力 | 用途 |
+| --- | --- | --- |
+| Required｜必需 | `hyperframes` / `hyperframes-core` | composition、Scene、预览与渲染的技术合同。 |
+| Required｜必需 | GSAP / Motion | 图片运动与时间节奏。 |
+| Common｜常用 | Transitions | 建立前后图片的关系。 |
+| Common｜常用 | Typography | 少量编辑文字与字幕层级。 |
+| Basic｜基础 | Captions | 稳定的中英文字幕。 |
+| Conditional｜条件使用 | Data visualization、Audio reactive、Shader、advanced effects | 仅当内容确实需要时使用。 |
+| Execution｜执行 | `hyperframes-cli` | 初始化、检查、预览、转写与渲染。 |
 
-`references/core/hyperframes-directing.md` 负责解释这些能力在图片主导抖音视频中的导演用途；HyperFrames 自身 Skill 负责具体实现规则。不要复制或改写一套平行的 HyperFrames 合同。
+`references/core/hyperframes-directing.md` 只说明这些能力在图片主导视频中的导演用途；HyperFrames 自身 Skill 仍是 composition 技术规则的唯一来源。不要为此发明新的协议、Schema、Pattern 系统或自动判断层。
 
 # 配套脚本边界
 
