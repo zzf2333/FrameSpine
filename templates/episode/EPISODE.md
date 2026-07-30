@@ -3,6 +3,8 @@
 单集 ID：`__EPISODE_SLUG__`
 
 > 这是人可读的分析与导演工作稿。`SCRIPT.md` 是唯一的旁白源文本；不要在这里维护可被意外改写的第二份旁白。
+>
+> 按当前模式只填写有制作价值的部分。Locked Script Mode 不需要补全 Hook Lab，也不需要重新论证作者已经明确的最终观点；填写 Narrative Reading、Attention Spine、故事段落和必要的系列约束即可。
 
 # 1. Source Script
 

@@ -39,7 +39,7 @@ Do not use HyperFrames effects to compensate for weak storytelling.
 这个 Skill 的价值不在于自动把文案拼成视频，而在于帮助 Agent：
 
 - 建立长期可复用的视频系列生产配置，包括内容定位、观众、叙事契约、图片语言、视觉身份、声音身份和制作环境；
-- 在单集阶段把用户提供的内容设计为观看承诺、注意力主干、图片节拍和 HyperFrames 视频；
+- 在单集阶段根据输入类型，发展或提取观看承诺与注意力主干；完整文案默认作为锁定源文本被导演成图片视频；
 - 用 HyperFrames 对系列风格进行动态校准，并对单集进行 Story Flow、Animatic 和成片预览；
 - 根据用户观看反馈持续修改，而不是用自动评分替用户验收；
 - 在单集方向稳定后调用火山 TTS 和 GPT Image 2，完成正式制作。

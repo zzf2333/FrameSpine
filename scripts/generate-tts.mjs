@@ -14,11 +14,31 @@ function sourceBody(source, ignoreLegacyComments = false) {
 		.replace(/^\s+|\s+$/g, "");
 }
 
-function paragraphs(source) {
+function narrationUnits(source) {
 	return source
 		.split(/\n\s*\n+/)
-		.map((part) => part.replace(/\s+/g, " ").trim())
+		.flatMap((paragraph) => paragraph.split(/\r?\n/))
+		.map((line) => line.trim())
 		.filter(Boolean);
+}
+
+function unitPauses(source, paragraphPauseMs, softBreakMs) {
+	const lines = source.split(/\r?\n/);
+	const pauses = [];
+	let previousWasSpeech = false;
+	let blankLines = 0;
+	for (const line of lines) {
+		if (!line.trim()) {
+			if (previousWasSpeech) blankLines += 1;
+			continue;
+		}
+		if (previousWasSpeech) {
+			pauses.push(blankLines ? paragraphPauseMs : softBreakMs);
+		}
+		previousWasSpeech = true;
+		blankLines = 0;
+	}
+	return pauses;
 }
 
 async function main() {
@@ -37,6 +57,12 @@ async function main() {
 		"VOLCENGINE_TTS_VOICE_TYPE",
 	]);
 
+	const endpoint =
+		env.VOLCENGINE_TTS_ENDPOINT ||
+		"https://openspeech.bytedance.com/api/v1/tts";
+	const timeout = numberValue(env, "VOLCENGINE_TTS_TIMEOUT_MS", 120000);
+	const pauseMs = numberValue(env, "TTS_PARAGRAPH_PAUSE_MS", 120);
+	const softBreakMs = numberValue(env, "TTS_SOFT_BREAK_MS", 80);
 	const source = sourceBody(
 		await readFile(input, "utf8"),
 		Boolean(explicitInput),
@@ -44,15 +70,10 @@ async function main() {
 	if (!source) throw new Error(`${explicitInput || "SCRIPT.md"} 里没有旁白`);
 	if (!explicitInput)
 		await writeFile(path.join(project, "narration.txt"), `${source}\n`);
-	const units = paragraphs(source);
+	const units = narrationUnits(source);
+	const pauses = unitPauses(source, pauseMs, softBreakMs);
 	if (!units.length)
 		throw new Error(`${explicitInput || "SCRIPT.md"} 里没有可生成的旁白段落`);
-
-	const endpoint =
-		env.VOLCENGINE_TTS_ENDPOINT ||
-		"https://openspeech.bytedance.com/api/v1/tts";
-	const timeout = numberValue(env, "VOLCENGINE_TTS_TIMEOUT_MS", 120000);
-	const pauseMs = numberValue(env, "TTS_PARAGRAPH_PAUSE_MS", 120);
 	const unitDir = path.join(path.dirname(output), "units");
 	await mkdir(unitDir, { recursive: true });
 
@@ -109,7 +130,7 @@ async function main() {
 		await writeFile(file, audio);
 		audioBuffers.push(audio);
 
-		const startMs = cursorMs + (index > 0 ? pauseMs : 0);
+		const startMs = cursorMs + (index > 0 ? pauses[index - 1] : 0);
 		const endMs = startMs + info.durationMs;
 		report.push({
 			index: index + 1,
@@ -123,7 +144,7 @@ async function main() {
 		console.log(`generated ${index + 1}/${units.length}`);
 	}
 
-	const narration = concatWavs(audioBuffers, pauseMs);
+	const narration = concatWavs(audioBuffers, pauses);
 	await ensureParent(output);
 	await writeFile(output, narration);
 	const narrationInfo = wavInfo(narration);

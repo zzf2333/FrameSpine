@@ -42,8 +42,15 @@ export async function imageBufferFromPayload(payload, baseUrl, apiKey, timeoutMs
   const value = item?.url || item?.image_url || payload?.url;
   if (typeof value !== "string" || !value) throw new Error("图片接口没有返回 Base64 或 URL");
 
-  const target = new URL(value, baseUrl);
-  const headers = target.host === new URL(baseUrl).host ? { Authorization: `Bearer ${apiKey}` } : {};
+  let target;
+  let apiHost;
+  try {
+    target = new URL(value, baseUrl);
+    apiHost = new URL(baseUrl).host;
+  } catch (error) {
+    throw new Error(`图片接口返回了无效 URL：${error.message}`);
+  }
+  const headers = target.host === apiHost ? { Authorization: `Bearer ${apiKey}` } : {};
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -108,18 +115,25 @@ function buildWav(format, data) {
   return output;
 }
 
-export function concatWavs(buffers, pauseMs = 0) {
+export function concatWavs(buffers, pauses = 0) {
   const parsed = buffers.map(wavInfo);
   const base = parsed[0];
+  if (!base) throw new Error("没有可拼接的 WAV 文件");
   const keys = ["audioFormat", "channels", "sampleRate", "byteRate", "blockAlign", "bitsPerSample"];
   if (!parsed.every((item) => keys.every((key) => item[key] === base[key]))) {
     throw new Error("不同语音段的 WAV 格式不一致");
   }
-  const silenceBytes = Math.round((pauseMs / 1000) * base.byteRate / base.blockAlign) * base.blockAlign;
-  const silence = silenceBytes > 0 ? Buffer.alloc(silenceBytes) : null;
+  const pauseFor = (index) => Array.isArray(pauses) ? pauses[index - 1] || 0 : pauses;
+  const silenceFor = (pauseMs) => {
+    const silenceBytes = Math.round((pauseMs / 1000) * base.byteRate / base.blockAlign) * base.blockAlign;
+    return silenceBytes > 0 ? Buffer.alloc(silenceBytes) : null;
+  };
   const parts = [];
   parsed.forEach((item, index) => {
-    if (index > 0 && silence) parts.push(silence);
+    if (index > 0) {
+      const silence = silenceFor(pauseFor(index));
+      if (silence) parts.push(silence);
+    }
     parts.push(item.data);
   });
   return buildWav(base, Buffer.concat(parts));
