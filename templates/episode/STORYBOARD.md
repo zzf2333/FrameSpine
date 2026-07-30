@@ -12,6 +12,8 @@
 |---|---|---|---|---|
 | S01 | B01–B02 |  |  |  |
 
+> 每个 Scene 还要说明：哪些层进入、哪些持续、哪些在 Handoff 交给下一 Scene、哪些必须退出。不要用长期全屏叠层或仅靠 `z-index + opacity` 模拟剪辑。
+
 # 2. 图片节拍
 
 ## Beat B01 —
@@ -28,6 +30,10 @@
 - 后续揭示：
 - Narrative Contract 角色：evidence / representation / metaphor / emotional environment / imagined world；本拍继承或覆盖的 Reality Level / Story License；怎样服务本期 Meaning Anchor：
 - 图片结构：单图揭示 / 同构替换 / 多图累积 / 证据放大 / 拼贴 / 图形层 / 其他
+- 主视觉事件：本拍唯一主要变化；次要运动只服务它
+- 媒体适配：full-bleed cover / intentional frame；若留黑或不铺满，说明叙事原因
+- Scene / Transition 关系：同一 Scene / hard cut / 官方 transition；前后关系是什么
+- 图层生命周期：本拍进入什么、持续什么、退出什么、交给下一拍什么
 - Entry：
 - Development：
 - Emphasis：

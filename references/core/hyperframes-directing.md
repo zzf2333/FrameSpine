@@ -54,6 +54,48 @@ The first question is:
 
 先在 Studio 中单独展示它解决的观看问题与出现位置；展示后停止。只有用户在后续消息中明确确认，才可把它合并到成片。不能因为它“更有质感”、CLI 可运行或 Agent 认为有效就直接加入。这个对话边界不需要状态文件或批准记录。
 
+## HyperFrames Production Contract
+
+这部分不复制 HyperFrames API，而是规定 FrameSpine Agent 必须怎样使用官方合同；它不创建平行 Schema、Recipe Library 或新的制作架构。
+
+### 先读取正式 Skills
+
+开始创建或修改 `video/` Composition 前，必须读取已安装的 `hyperframes` / `hyperframes-core` Skill；使用 GSAP 或 Motion 时读取对应 Skill，使用正式转场时读取 Transitions，使用字幕时读取 Captions，使用编辑文字时读取 Typography。不得只读 FrameSpine reference 后凭经验实现 Composition。
+
+### Beat Contract
+
+每个 Beat 默认只有一个主要观看任务和一个主要视觉事件，按以下顺序实现：
+
+```text
+Hero Frame
+→ Entry
+→ Development
+→ Emphasis
+→ Handoff
+```
+
+次要运动只能支持主视觉事件，不能与它争夺焦点；“需要静止以便阅读”也是有效实现，不能机械要求每张图都运动。
+
+### Media Fit Contract
+
+全屏叙事图片默认必须以符合 HyperFrames 正式媒体布局的 cover / crop 覆盖竖屏画布：不得直接拉伸；在运动起点、终点和最大偏移时都不得露出画布外空白；安全裁切须保护人物、手、产品、证据和字幕区。`contain`、留黑、画中画或上下框只在明确的叙事构图中使用，并在 `STORYBOARD.md` 写明原因。非设计性的黑边或大面积空底属于 P0 blocker。
+
+### Scene / Layer Lifecycle
+
+每个 Scene 必须明确哪些层进入、在 Scene 内持续、在 Handoff 时交给下一 Scene，以及在 Scene 结束时必须退出。禁止旧 Scene 图层无限保留、多张全屏图片长期叠放、只用 `z-index + opacity` 模拟场景切换、上一个 Transition 未结束就开启新的主运动，或在 Scene 外维护第二套时间逻辑。
+
+### Transition Contract
+
+每个转场先声明关系，再选择正式 Transition 或同一 Scene 内连续构图：Object Continuity、Movement Continuity、Spatial Continuity、Cause → Effect、Question → Answer、Surface → Reveal、Before → After 或 Emotional Change。若说不清关系，默认使用干净 hard cut 或保持同一 Scene；不得堆 wipe、zoom、glitch、mask 和 shader。
+
+### Timeline Contract
+
+以 Scene、Beat 和正式 cue 组织时间，避免大量 magic offsets 与相互覆盖的绝对时间偏移。Story Flow、Image Animatic、Timed Animatic 和 Final 使用同一条逐步成熟的时间线；Final 只精修已通过的结构，不重建第二套剪辑。Timed Animatic 及其后的实际字幕只读取 `captions.json`；Story Flow 可使用清楚标示的临时字幕占位，但不得把占位文字或时间当作正式字幕时间轴。
+
+### HyperFrames Self-Review
+
+交付预览前，在 Studio 完整播放，并在每个 Scene 的进入前、进入完成、主要揭示时刻、转场重叠区、结束前和下一 Scene 稳定后检查旧层残留、露底、黑帧/空帧、主体越界、多个主运动、转场关系，以及 Timed Animatic 及之后由 `captions.json` 驱动的字幕。再按当前阶段与实际风险运行官方 lint / inspect / validate / preview；工具报告不能替代完整播放。
+
 ## 什么时候读取
 
 在以下情况读取本文件：
@@ -290,7 +332,7 @@ Series Style Calibration 同样使用 HyperFrames，但它只验证可复用的�
 
 CLI snapshot、lint、inspect、validate 与 render 只能证明各自的技术结果，不能证明 Studio 中图片可以加载、Storyboard 卡片不是空白、用户访问的是同一路径、字幕与主体关系成立，或视频具备可审片性。
 
-若 Agent 无法亲自查看 Studio UI，必须明确说明无法验证用户实际看到的内容，提供真实预览地址后停止，等待用户确认；不得从文件存在或 CLI 成功推断 Studio 可见。
+若 Agent 无法亲自查看 Studio UI，必须明确说明无法验证用户实际看到的内容，并先解决真实预览访问；不得从文件存在或 CLI 成功推断 Studio 可见，也不得把未经视觉自审的地址作为阶段预览交付。
 
 ### Storyboard Preview Contract
 
