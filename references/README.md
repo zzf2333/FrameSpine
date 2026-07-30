@@ -7,11 +7,9 @@
 按需读取：
 
 1. `core/series-initialization.md`
-2. `core/attention-spine.md`
-3. `core/image-storytelling.md`
-4. `core/hyperframes-directing.md`
+2. `core/hyperframes-directing.md` 的视觉身份与风格校准部分
 
-先定义系列的 Narrative Contract（观众进入什么现实、应相信什么）后，达到 calibration-ready 就开始制作，不需要把所有文件读完才行动。
+先建立可复用的 Series Configuration 与 Meaning Anchor，达到 Series Ready 后进行无具体选题的风格校准。不要读取 `core/attention-spine.md`，也不要在系列初始化阶段设计 Episode 内容。
 
 ## 新单集
 

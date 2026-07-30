@@ -1,4 +1,6 @@
-# HyperFrames 系列校准片
+# HyperFrames 系列风格校准
+
+这里的 composition 是**动态视觉身份测试**，不是一条 Episode，也不应伪装成即将发布的视频。
 
 在此目录初始化 HyperFrames：
 
@@ -6,14 +8,21 @@
 npx hyperframes init . --non-interactive
 ```
 
-校准片建议 15–30 秒，使用代表性真实内容测试：
+使用非叙事化的素材、抽象关系、通用占位文案或组件演示，测试：
 
-- 第一帧视觉 Hook；
-- 图片叙事；
-- 一次证据或 Reframe；
-- 旁白角色；
-- 双语字幕；
-- 主转场与强调转场；
-- 结尾回收。
+- 图片风格与图像处理；
+- 竖屏构图与双语字幕；
+- 运动与转场语言；
+- TTS 声线、节奏和音乐方向；
+- 可复用的 HyperFrames 组件；
+- Narrative Contract 在视觉世界中的一致性。
 
-它不是 Logo、颜色和转场 Demo。用户要判断的是这个系列真正讲内容时会怎样播放。
+不测试：
+
+- 某个选题；
+- 某一期 Hook；
+- 某一期故事结构；
+- 某一期图片节拍；
+- 某一期 HyperFrames 镜头。
+
+校准反馈只更新 `SERIES.md` 和 `DESIGN.md`。当用户提供具体内容时，在 `episodes/` 中创建单集并走 Episode Production。

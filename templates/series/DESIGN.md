@@ -1,13 +1,13 @@
 # DESIGN.md
 
-> 根据 `SERIES.md` 中的 Narrative Contract 与 HyperFrames 校准片反馈由 Agent 编写。写任何正式 composition 前先完成。这里是可执行视觉身份，不是抽象情绪词清单。
+> 根据 `SERIES.md` 中的长期配置与 Series Style Calibration 反馈由 Agent 编写。这里是可执行、可复用的视觉身份，不是某一期 composition 的分镜或抽象情绪词清单。
 
 ## Narrative-to-Visual Translation
 
 - 继承的 Narrative Mode：
 - Reality Level：
 - Story License：
-- Truth Anchor：
+- Meaning Anchor：
 - 图片世界怎样让观众自然理解这份叙事契约：
 
 ## Style Prompt

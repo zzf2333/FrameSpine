@@ -21,6 +21,14 @@
 
 ## 核心思路
 
+### Episode inherits Series
+
+开始单集前先读取 `SERIES.md` 与 `DESIGN.md`。它们是本期的长期约束：系列身份、Audience Profile、Narrative Contract、图片/视觉/声音身份和生产配置。
+
+不要因为一条视频的选题、Hook、故事结构、图片节拍或偶然成功，就改写系列配置。若发现可复用的长期规律，记录为候选，留给后续 Series Style Calibration 或用户明确要求时再更新。
+
+以下只属于 Episode：主题、文案、Hook、Attention Spine、故事结构、段落、图片节拍、Storyboard、TTS、图片生成和 HyperFrames Composition。
+
 单集制作不是“写完文案 → 批量生图 → 自动合成”。
 
 正确过程是逐步提高确定性：
@@ -130,7 +138,7 @@ Image Animatic、少量样图、临时 TTS
 - 主题；
 - 目标观众；
 - 观众当前误解、困惑或需求；
-- 系列的 Narrative Contract：观众应进入的现实、故事自由度与真实锚点；
+- 系列的 Narrative Contract：观众应进入的现实、故事自由度与意义锚点；
 - 本期是否需要补充来源、案例或虚构/象征表达的语境；
 - 目标时长；
 - 该系列的相关规则；
@@ -141,14 +149,14 @@ Image Animatic、少量样图、临时 TTS
 
 在写 Hook、人物与事实性措辞前，读取 `SERIES.md` 中的 Narrative Contract。
 
-每个故事决定都要匹配系列的 Narrative Mode、Reality Level、Story License 与 Truth Anchor。
+每个故事决定都要匹配系列的 Narrative Mode、Reality Level、Story License 与 Meaning Anchor。
 
 例如：
 
 - **Educational Narrative**：可以写“很多创业者都会经历这样的阶段”，或让综合人物承载机制；除非有可用来源，不要把合成场景说成“2024 年某创业者真实经历”。
 - **Cinematic Storytelling**：可以从“一个年轻创业者发现……”进入虚构人物和戏剧冲突，但不要把它包装成纪实事件。
-- **Documentary Reality**：事件、人物、数据和来源本身就是真实锚点；图片与叙事应优先让证据可见。
-- **Conceptual / Fantasy**：允许创造世界与规则，但每个幻想元素仍应服务已经定义的观念、问题或体验。
+- **Documentary Reality**：事件、人物、数据和来源是重要的意义承载；图片与叙事应优先让证据可见。
+- **Conceptual Fantasy**：允许创造世界与规则，但每个幻想元素仍应服务已经定义的观念、问题或体验。
 
 这不是审核步骤。目标是让观众从第一帧就进入系列承诺的现实，而不是在叙事方式上被误导或打断。
 
@@ -725,4 +733,4 @@ lint 全绿不等于视频好看或留得住人。
 - 某种转场适合核心重构；
 - 某个角色或场景需要作为系列资产保留。
 
-这些发现可以更新 `SERIES.md` 或 `DESIGN.md`，但不要因为一次偶然成功就把它硬编码成所有单集模板。必要时制作短校准片再确认。
+这些发现先记录为候选，不要因为一次偶然成功就更新 `SERIES.md` 或 `DESIGN.md`。只有重复出现、用户明确要求，或经过 Series Style Calibration 确认后，才更新长期系列配置。

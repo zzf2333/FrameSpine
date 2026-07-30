@@ -10,8 +10,8 @@
 - 必须使用的资料：
 - 已确认事实：
 - 用户观点或推理：
-- 本期 Narrative Contract：从系列继承的主 Narrative Mode、Reality Level、Story License 与 Truth Anchor：
-- 本期是否覆盖主模式、现实层级或故事许可；如覆盖，为什么，以及哪项 Truth Anchor 保持不变：
+- 本期 Narrative Contract：从系列继承的主 Narrative Mode、Reality Level、Story License 与 Meaning Anchor：
+- 本期是否覆盖主模式、现实层级或故事许可；如覆盖，为什么，以及哪项 Meaning Anchor 保持不变：
 - 本期来源、引用、真实人物、品牌、版权、隐私和敏感题材的适用约束：
 - 不允许的表达：
 - 目标时长：
@@ -21,6 +21,7 @@
 - 目标观众：
 - 为什么现在值得看：
 - 这一期在系列中的作用：
+- 从 `SERIES.md` / `DESIGN.md` 继承的图片、视觉、声音与生产约束：
 - 特殊人物、品牌和素材：
 
 # 3. Narrative Contract Check
@@ -28,7 +29,7 @@
 - 这个故事让观众进入什么样的现实：
 - 本期图片是证据 / 典型处境 / 情绪环境 / 象征 / 想象世界中的哪些组合：
 - 创作自由怎样服务主题：
-- 观众最终应相信什么：
+- 观众最终应带走什么意义：
 - 是否需要避免把综合、虚构或象征表达写成纪实事件：
 - 关键机制 / 体验 / 因果 / 事件 / 数据 / 来源怎样在旁白与图片中承接：
 

@@ -14,9 +14,9 @@
 
 - 目标观众：自由职业者和知识工作者；
 - 系列价值：识别被包装成“准备”的逃避和身份保护；
-- 注意力气质：结果先行 + 人物处境 + 认知重构；
+- 本期注意力策略：结果先行 + 人物处境 + 认知重构；
 - 图片语言：写实人物与物件连续，轻度编辑摄影；
-- Narrative Contract：Educational Narrative，Reality Level 3，Story License 为 Composite；真实锚点是“准备如何替代真实反馈”的体验、冲突与机制，而不是某位设计师的纪实经历；
+- Narrative Contract：Educational Narrative，Reality Level 3，Story License 为 Composite；Meaning Anchor 是“准备如何替代真实反馈”的体验、冲突与机制，而不是某位设计师的纪实经历；
 - 声音：克制、带同理心，不指责；
 - 编辑文字：只在核心机制处出现一次；
 - 结尾：给一个可执行动作，而不是励志口号。

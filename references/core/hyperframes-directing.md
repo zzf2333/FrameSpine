@@ -22,7 +22,7 @@ Studio 可播放预览
 
 ## 什么时候必须读取
 
-- 制作系列 calibration composition。
+- 制作不依赖具体 Episode 内容的 Series Style Calibration composition。
 - 创建单集 Story Flow、Image Animatic 或 Final。
 - 不知道应该保持同一 Scene 还是切换 Scene。
 - 图片运动重复、像 PPT 或转场炫技。
@@ -60,9 +60,9 @@ Studio 可播放预览
 
 # 二、先建立视觉身份
 
-在任何正式 composition 之前，读取系列 `SERIES.md` 中的 Narrative Contract，再完善 `DESIGN.md`。
+在任何 Series Style Calibration 或正式 Episode composition 之前，读取系列 `SERIES.md`，再完善 `DESIGN.md`。
 
-`DESIGN.md` 必须把用户系列方向、Narrative Contract 和 calibration 反馈编译为可执行的视觉身份，包括：
+`DESIGN.md` 必须把用户系列方向、Narrative Contract 和风格校准反馈编译为可执行的视觉身份，包括：
 
 - Style Prompt；
 - 图片世界与质感，以及它对应的 Narrative Mode；
@@ -78,7 +78,7 @@ Studio 可播放预览
 
 不要使用通用蓝色、默认字体和随手选择的渐变。
 
-HyperFrames 自身要求先有视觉身份，再开始 composition；本 Skill 的系列初始化负责让这份视觉身份来自用户的目标与叙事契约，而不是模板。
+HyperFrames 自身要求先有视觉身份，再开始 composition；系列初始化负责建立这份可复用身份，Episode Production 再将它应用到某一期内容，而不是把某一期故事写回系列配置。
 
 # 三、一个单集只维护一个持续演进的 HyperFrames 项目
 

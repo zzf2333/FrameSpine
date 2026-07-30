@@ -258,7 +258,7 @@ C：违反直觉对比，最适合抖音，也最容易用图片证明。
 | 动效太单调 | 所有图同一种运动、速度无对比 | 场景任务、速度和静止 | 每镜加新特效 |
 | 声音没力量 | 文案起句、Voice、停顿或语速 | 先听单段 | 全片加音量 |
 | 结尾没感觉 | 回报不完整、缺回收、CTA 抢结尾 | 最终回报和开头图 | 加更大 CTA |
-| 画面不像这个系列 | Narrative Mode 不清、Reality Level 漂移，或创作自由没有服务真实锚点 | Narrative Contract、图片角色、旁白措辞与关键 Scene | 只换色调或加“更真实”的滤镜 |
+| 画面不像这个系列 | Narrative Mode 不清、Reality Level 漂移，或创作自由没有服务意义锚点 | Narrative Contract、图片角色、旁白措辞与关键 Scene | 只换色调或加“更真实”的滤镜 |
 
 ## 修改正确层级
 
@@ -284,7 +284,7 @@ C：违反直觉对比，最适合抖音，也最容易用图片证明。
 
 症状：观众不清楚自己进入的是纪录、知识故事、电影叙事还是概念世界；综合人物、象征或幻想元素让主题变弱；旁白承诺与画面世界互相冲突。
 
-修改：回到 `SERIES.md` 的 Narrative Mode、Reality Level、Story License 与 Truth Anchor；调整叙事措辞、图片角色和关键 Scene 的体验，而不是增加真实性评分或披露门。
+修改：回到 `SERIES.md` 的 Narrative Mode、Reality Level、Story License 与 Meaning Anchor；调整叙事措辞、图片角色和关键 Scene 的体验，而不是增加真实性评分或披露门。
 
 ### 图片任务层
 
@@ -407,7 +407,7 @@ Agent 应具备导演立场，但不把偏好伪装成客观真理。
 
 - 系列价值清楚；
 - 方向有辨识度；
-- 校准片测试真实内容；
+- Series Style Calibration 测试可复用的图片、声音与运动身份，不测试某期内容；
 - 用户看过声音、图片和运动；
 - `DESIGN.md` 可执行。
 
@@ -486,7 +486,7 @@ Agent 应具备导演立场，但不把偏好伪装成客观真理。
 当多期反复出现同一改进，或 Provider、图片语言、长期人物、字幕系统发生明显变化时：
 
 1. 提出系列级建议；
-2. 做一个短校准片；
+2. 做一次 Series Style Calibration；
 3. 用户观看；
 4. 更新 `SERIES.md` 和 `DESIGN.md`。
 

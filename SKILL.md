@@ -10,7 +10,7 @@ description: Co-design, direct, preview, revise, and produce image-first Douyin 
 ```text
 核心：注意力主干
 
-流程一：系列初始化与校准
+流程一：系列初始化与视觉校准
 流程二：单集视频制作
 
 主表达：图片叙事
@@ -19,12 +19,11 @@ description: Co-design, direct, preview, revise, and produce image-first Douyin 
 
 这个 Skill 的价值不在于自动把文案拼成视频，而在于帮助 Agent：
 
-- 通过有限而高价值的对话，把用户模糊的系列想法变成可制作方向；
-- 设计适合抖音的观看承诺、局部回报、证据、重构与最终兑现；
-- 把内容翻译成由图片承担主要表达的动态视觉节拍；
-- 尽早使用 HyperFrames 做出可播放的校准片、故事预览和 Animatic；
+- 建立长期可复用的视频系列生产配置，包括内容定位、观众、叙事契约、图片语言、视觉身份、声音身份和制作环境；
+- 在单集阶段把用户提供的内容设计为观看承诺、注意力主干、图片节拍和 HyperFrames 视频；
+- 用 HyperFrames 对系列风格进行动态校准，并对单集进行 Story Flow、Animatic 和成片预览；
 - 根据用户观看反馈持续修改，而不是用自动评分替用户验收；
-- 在方向稳定后调用火山 TTS 和 GPT Image 2，完成正式制作。
+- 在单集方向稳定后调用火山 TTS 和 GPT Image 2，完成正式制作。
 
 ## 工作原则
 
@@ -79,11 +78,9 @@ Story Flow
 先读：
 
 1. `references/core/series-initialization.md`
-2. `references/core/attention-spine.md` 的系列级部分
-3. `references/core/image-storytelling.md` 的系列图片语言部分
-4. `references/core/hyperframes-directing.md` 的校准片部分
+2. `references/core/hyperframes-directing.md` 的视觉身份与风格校准部分
 
-目标不是把所有未来问题问完，而是尽快达到 **calibration-ready**：已经足以制作一条有判断价值的 HyperFrames 系列校准片。
+目标是建立未来单集可继承的 Series Configuration，并完成不依赖具体选题的 Series Style Calibration。不要在此阶段读取 `attention-spine.md`，也不要设计第一期的主题、Hook、故事或分镜。
 
 ### 新单集、改写选题或制作一期视频
 
@@ -122,7 +119,29 @@ Story Flow
 
 案例用于理解方法，不要机械复制其结构或画面。
 
-# 流程一：系列初始化与校准
+# Series vs Episode Boundary
+
+Series initialization 定义可复用的长期决定。
+
+它应回答：
+
+- 这个系列是什么？
+- 给谁看？
+- 长期提供什么价值？
+- 使用什么叙事、图片、视觉与声音身份？
+- 如何保持长期一致？
+
+它不应决定：
+
+- 下一条视频讲什么；
+- 某一期 Hook；
+- 某一期故事结构；
+- 某一期图片节拍；
+- 某一期 HyperFrames 镜头。
+
+这些全部属于 Episode Production。
+
+# 流程一：系列初始化与视觉校准
 
 ## 1. 先读取已有信息
 
@@ -134,7 +153,7 @@ Story Flow
 - 当前项目中的 `SERIES.md`、`DESIGN.md` 和旧校准片；
 - 对话中已经决定的事项。
 
-能从资料中得到的事实不要再问。提问只用于用户拥有决定权、且答案会明显影响校准片的事项。
+能从资料中得到的事实不要再问。提问只用于用户拥有决定权、且答案会明显影响长期系列配置或风格校准的事项。
 
 ## 2. 使用收敛式系列共创
 
@@ -146,23 +165,22 @@ Story Flow
 为什么现在需要这个决定
 基于现有信息，Agent 推荐什么
 只问一个清晰问题
-答案会改变校准片的什么部分
+答案会改变哪项长期系列配置或风格校准
 ```
 
 不要无休止追问。不要连续向用户提出超过四个问题而不进行一次总结、方案比较或小样转向。
 
-## 3. 在 calibration-ready 时停止追问
+## 3. 在 Series Ready 时停止追问
 
-当以下信息足以支撑有效校准片时，停止纯访谈：
+当以下信息足以支撑未来单集继承的长期配置时，停止纯访谈：
 
-- 系列长期服务谁、稳定提供什么价值；
-- 有一个代表性内容用于测试；
-- 能提出合理的注意力方向；
-- 能提出一到两个图片叙事方向；
-- 关键叙事契约、品牌和制作边界清楚；
-- 剩余未知更适合通过观看样片判断。
+- 系列身份、观众与长期价值清楚；
+- Narrative Contract 与 Meaning Anchor 清楚；
+- 图片、视觉与声音身份可以复用；
+- 品牌、来源、版权、隐私和生产配置清楚；
+- 剩余未知只涉及未来题材例外或可通过风格校准判断的制作感受。
 
-不要追问到“所有事情都确定”。颜色细差、运动速度、转场手感、TTS 细微语速等体验问题应通过 HyperFrames 校准片解决。
+不要追问到“所有事情都确定”。颜色细差、运动速度、转场手感、TTS 细微语速等体验问题应通过无具体选题的 Series Style Calibration 解决。
 
 ## 4. 形成系列工作文件
 
@@ -175,23 +193,20 @@ CALIBRATION.md
 .env
 ```
 
-`SERIES.md` 保存系列定位、观众承诺、注意力与图片叙事语言、叙事契约和制作约束；`DESIGN.md` 是 HyperFrames 的视觉身份；`CALIBRATION.md` 定义校准片要回答的问题、要比较的方案，以及叙事契约是否被正确体验。Narrative Contract 用来设计观看现实，不承担真实性评分、AI 披露门或虚构检测。
+`SERIES.md` 保存 Series Identity、Audience Profile、Narrative Contract、Image / Visual / Voice Identity 与 Production Configuration；`DESIGN.md` 是 HyperFrames 的可复用视觉身份；`CALIBRATION.md` 定义无具体选题的风格校准。Narrative Contract 用来设计观看现实，不承担真实性评分、AI 披露门或虚构检测。
 
-## 5. 制作 HyperFrames 系列校准片
+## 5. 制作 HyperFrames 系列风格校准
 
-校准片应测试实际观看体验，而不是做一张风格板。至少覆盖：
+Series Style Calibration 测试动态视觉身份，不是第一条视频样片。它只验证：
 
-- 第一帧视觉钩子；
-- 一次快速局部回报；
-- 一张图片中的分层揭示；
-- 前后对比、证据或机制图片化；
-- 中文旁白与双语字幕；
-- 少量编辑文字；
-- 主转场与强调转场；
-- 快节奏与停顿的对比；
-- 开头视觉线索的回收。
+- 图片风格与处理方式；
+- 竖屏布局和双语字幕；
+- 运动与转场语言；
+- TTS、音乐和声音气质；
+- 可复用 HyperFrames 组件；
+- Narrative Contract 在视觉世界中的一致性。
 
-使用 2–3 个结构差异明显的候选时，放在同一个校准项目中方便切换比较。用户选中、混合或否定后，修改真实 `DESIGN.md` 和 calibration composition。
+可使用抽象关系、通用素材、占位文本或组件演示；不得测试某个主题、Hook、故事结构、图片节拍或单集镜头。用户选中、混合或否定方向后，只更新 `SERIES.md`、`DESIGN.md` 和 calibration composition。
 
 # 流程二：单集视频制作
 

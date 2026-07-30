@@ -14,11 +14,11 @@
 
 - 目标观众：工作繁忙、喜欢效率工具但经常难以开始的职场人；
 - 系列价值：把看似个人意志问题重新解释为环境、机制和决策设计问题；
-- 注意力气质：冷静异常 + 快速第一层回报；
+- 系列声音身份：中文旁白冷静清楚；
 - 图片语言：写实编辑摄影，真实物件与人物环境关系；
-- Narrative Contract：Educational Narrative，Reality Level 3，Story License 为 Composite；综合人物与模拟场景可以承载体验，真实锚点是计划、奖励与选择成本的机制关系；
+- Narrative Contract：Educational Narrative，Reality Level 3，Story License 为 Composite；综合人物与模拟场景可以承载体验，Meaning Anchor 是计划、奖励与选择成本的机制关系；
 - 编辑文字：极少，只为关键机制命名；
-- 声音：中文旁白冷静清楚，Reframe 有短暂停顿；
+- 本期注意力策略：冷静异常 + 快速第一层回报；Reframe 有短暂停顿；
 - 字幕：中英文双语，稳定低干扰。
 
 ---
