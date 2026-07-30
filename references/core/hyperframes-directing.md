@@ -260,13 +260,41 @@ Series Style Calibration 同样使用 HyperFrames，但它只验证可复用的�
 
 ### 4. 以播放预览沟通
 
-给用户观看 Studio URL、预览或导出，而不是让用户审 HTML。
+给用户观看实际 HyperFrames Studio URL 与 route，而不是让用户审 HTML、CLI 输出或导出文件。
 
 每轮指出具体观看问题，例如：
 
 > 请重点看这张证据图是否先建立整体，再让关键数字变得可读；以及下一张图是否自然接住这个数字。
 
 用户说“慢”或“太花”时，先判断问题属于内容、图片、构图、信息顺序还是时间，再修改对应层级。不要把反馈自动翻译为全局加速或增加特效。
+
+### Studio 是创意预览的事实来源
+
+创意预览以用户实际打开的 HyperFrames Studio URL 与 route 为准，按以下顺序工作：
+
+```text
+启动 Studio
+→ 获取用户将打开的 URL 与 route
+→ 在该 route 检查真实资源
+→ 确认首拍、中段关键拍与结尾拍可见
+→ 确认图片和字幕没有空白
+→ 再运行 lint / inspect / validate
+→ 用户确认 Final Preview 后才 render
+```
+
+CLI snapshot、lint、inspect、validate 与 render 只能证明各自的技术结果，不能证明 Studio 中图片可以加载、Storyboard 卡片不是空白、用户访问的是同一路径、字幕与主体关系成立，或视频具备可审片性。
+
+若 Agent 无法亲自查看 Studio UI，必须明确说明无法验证用户实际看到的内容，提供真实预览地址后停止，等待用户确认；不得从文件存在或 CLI 成功推断 Studio 可见。
+
+### Storyboard Preview Contract
+
+`STORYBOARD.md` 是导演计划，不是可视化 Storyboard，也不构成用户预览。使用 HyperFrames Storyboard 时：
+
+- 每个 Frame 必须有可渲染的 `src` composition；
+- 每个主要 Beat 必须在 Studio 中出现实际画面；
+- 第一拍、中段关键拍与结尾拍必须逐一检查；
+- Markdown、Prompt、资产路径、outline、空白卡片或只有标题的卡片不能替代 Frame preview；
+- 任一关键 Frame 空白、资源加载失败或没有可渲染 `src` 时，停止当前阶段并修复；不得继续 TTS、字幕或 Final。
 
 ## 六、HyperFrames Skill 引用策略
 
@@ -296,16 +324,21 @@ npx hyperframes inspect --at <关键时刻>
 npx hyperframes preview
 ```
 
-Final 前按需运行：
+Final Preview 前按需运行：
 
 ```bash
 npx hyperframes lint
 npx hyperframes validate
 npx hyperframes inspect --samples 15
+```
+
+只有用户在观看 Final Preview 后于后续消息明确允许导出，才运行：
+
+```bash
 npx hyperframes render --quality high --output final.mp4
 ```
 
-工具可以发现布局溢出、媒体路径、时间线、字幕和渲染问题；它们不判断 Hook 是否成立、图片是否有意义，或用户是否喜欢。
+工具可以发现布局溢出、媒体路径、时间线、字幕和渲染问题；它们不判断 Hook 是否成立、图片是否有意义，或用户是否喜欢。报告时只能说“lint 通过”“validate 未发现时间线错误”“render 命令成功”或“资源文件存在”；不得因此说视频已完成、Storyboard 已通过、图片叙事已成立、用户可以验收或视觉方向已经确认。
 
 最终约束：
 

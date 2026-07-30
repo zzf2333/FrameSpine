@@ -52,6 +52,31 @@ Do not use HyperFrames effects to compensate for weak storytelling.
 
 技术工具只诊断技术问题，例如媒体损坏、布局溢出、时间线错误、字幕遮挡和渲染失败。
 
+### 先展示，再推进
+
+> **不静默跨阶段。每个创作成熟阶段都必须先产生用户能实际观看的 HyperFrames 预览；展示后立即结束当前回复。只有用户在后续消息中明确同意继续，才能进入下一阶段。**
+
+FrameSpine 默认一次只推进一个创作成熟阶段：
+
+```text
+Story Flow
+→ Image Animatic
+→ Timed Animatic
+→ Final Composition
+```
+
+Agent 不得在同一轮完成两个成熟阶段。即使用户要求“直接做完整成片”或“跳过中间审片”，也必须先完成当前阶段的真实 Studio Preview、展示后停止，并等待用户在**后续消息**中对下一阶段的明确许可。每个阶段都必须：
+
+1. 在真实 HyperFrames Studio 中形成可完整播放的预览；
+2. 验证用户将打开的实际 Studio URL 与 route 能加载该阶段的真实资源；
+3. 在回复中给出预览位置、当前完成内容、本轮审片重点与仍未完成/仍为占位的内容；
+4. 明确说出本轮不会进入哪些下游工作；
+5. **停止当前工作并等待用户下一条消息。**
+
+用户未回复、CLI 通过、Markdown 或文件存在、MP4 成功导出、Agent 自评通过，都不是进入下一阶段的许可。用户最初说“做一个视频”也不等于授权跳过全部中间审片。
+
+**No approval state machine does not mean no review boundary. The boundary lives in the conversation, not in a status file.** 不建立状态文件、`approved=true`、自动评分或跨文件批准记录；但真实对话中的四个停步不能省略。
+
 ### 制作能力厚，控制层薄
 
 优先投入：
@@ -63,7 +88,7 @@ Do not use HyperFrames effects to compensate for weak storytelling.
 - 用户反馈后的针对性修改；
 - TTS、图片和声音的正式生产。
 
-不要为了第一版提前建设复杂 Schema、跨文件校验、创意评分器或通用 HTML 编译器。
+不要为了第一版提前建设复杂 Schema、跨文件校验、创意评分器或通用 HTML 编译器。薄控制层不是没有边界，而是只保留少量、清晰、可观察的边界：Story Flow 预览、Image Animatic 预览、Timed Animatic 预览与 Final Preview。
 
 ### 同一个 HyperFrames 项目逐步成熟
 
@@ -318,7 +343,9 @@ Prompt 应包含图片的叙事任务、可见证据、构图、字幕安全区�
 
 使用 HyperFrames、GSAP、字幕、转场、声音和音乐能力精修。按 `quality-and-iteration.md` 分轮观看并主动给出导演建议。
 
-技术检查：
+先启动 Studio，取得用户实际打开的 URL 与 route，并确认首拍、中段关键拍、结尾拍以及最终图片、声音和字幕均可见、可加载且无遮挡。只有这份 Studio Final Preview 可以交给用户观看。
+
+在 Studio route 已确认后，再运行技术检查：
 
 ```bash
 npx hyperframes lint
@@ -327,7 +354,7 @@ npx hyperframes validate
 npx hyperframes preview
 ```
 
-用户观看并确认后：
+修复后回到同一 Studio route 复查，并展示 Final Preview 后结束当前回复。只有用户在**后续消息**明确允许导出，才运行：
 
 ```bash
 npx hyperframes render --quality high --output final.mp4

@@ -378,6 +378,14 @@ Story Flow 验证整条视频的观看动力与段落关系，不追求最终美
 
 内容问题在 Development / Revision Mode 回到注意力或旁白；Locked Script Mode 则报告源文本风险，并优先通过图片、停留、声音、证据与场景关系承接。视觉关系问题回到图片任务；不要在 Story Flow 阶段用精细动画掩盖结构问题。
 
+### Required Preview｜必须可见
+
+Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一帧、主要段落、第一层回报和结尾都要真实可见。`STORYBOARD.md`、文字时间线、空卡片、CLI 日志或占位名称不构成 Story Flow Preview。
+
+### Stop Here｜在此停止
+
+展示实际 Studio URL 与 route，说明此版的观看重点和仍为占位的内容后，**结束当前回复**，等待用户在后续消息中明确同意进入 Image Animatic。此时允许占位图、参考图、简单图形、临时声音和粗略运动；禁止调用正式 `generate-tts.mjs`、写入正式 `captions.json`、批量 `generate-images.mjs` 最终图、Final 精修或最终 render。
+
 ## 阶段五：图片节拍与 Image Animatic
 
 阅读 `image-storytelling.md`。
@@ -456,6 +464,14 @@ Story Flow 验证整条视频的观看动力与段落关系，不追求最终美
 - 换人物、情绪或图片风格。
 
 在这一轮解决方向，再生成昂贵最终图。
+
+### Required Preview｜必须可见
+
+每个主要图片 Beat 都必须在 Studio 中有实际可见画面，能观看构图、观看顺序和图片交接；低成本样图、参考图或少量风险图可以使用。图片 Prompt、资产路径、静态列表或只有 outline 的 Storyboard 不能替代 Image Animatic Preview。
+
+### Stop Here｜在此停止
+
+展示实际 Studio URL 与 route，逐一确认首拍、中段关键拍和结尾拍不为空白后，**结束当前回复**，等待用户在后续消息中明确同意进入 Timed Animatic。用户未确认前，禁止正式 TTS、正式 `captions.json`、批量最终图片、Final 精修与最终 render。
 
 ## 阶段六：正式 TTS 与双语字幕
 
@@ -548,9 +564,13 @@ Locked Script Mode 若总时长过长：
 
 Development / Revision Mode 才可以删除重复解释、合并相似内容、调整证据位置，最后才小幅提高语速。不要把一篇过长文案用 1.5 倍速压进视频。
 
-### 用户观看
+### Required Preview｜必须可见
 
-这轮用户应听到正式声音、看到完整字幕和接近真实镜头时间。用户认可后，才批量生成最终图片。
+Timed Animatic 必须在 Studio 中将正式声音、`captions.json`、真实时长、实际图片与粗略运动一起播放；WAV 文件存在、字幕 JSON 写完或 transcribe 成功都不能替代它。
+
+### Stop Here｜在此停止
+
+展示实际 Studio URL 与 route，说明正式声音、字幕和节奏的审看片段后，**结束当前回复**，等待用户在后续消息中明确同意进入最终图片生产。用户未确认前，禁止批量最终图片、最终精细动画、Final Composition 精修与最终 render。
 
 ## 阶段八：最终图片生产
 
@@ -629,7 +649,13 @@ node <skill>/scripts/generate-images.mjs \
 - 处理字幕、图片主体和平台 UI 安全区；
 - 音乐和音效服务内容，不盖过 TTS。
 
+### Studio-first 预览验证
+
+先启动 Studio，取得用户实际打开的 URL 与 route，并在该 route 检查首拍、中段关键拍、结尾拍、最终素材、字幕和声音均能加载，没有空白资源或字幕遮挡。只有这份完整 Studio 播放才是 Final Preview；lint 全绿或 MP4 文件存在不能替代它。
+
 ### 技术检查
+
+在 Studio route 已确认可见后，再按需运行：
 
 ```bash
 npx hyperframes lint
@@ -638,20 +664,19 @@ npx hyperframes validate
 npx hyperframes preview
 ```
 
-根据报告修复：
+根据报告修复文字溢出、主体出画、低对比度、场景空白、媒体路径错误与时间线注册/动画冲突。修复后回到同一 Studio route 重新确认首拍、中段关键拍和结尾拍。技术工具不判断内容是否抓人，也不能替代用户观看。
 
-- 文字溢出；
-- 主体出画；
-- 低对比度；
-- 场景空白；
-- 媒体路径错误；
-- 时间线注册和动画冲突。
+### Required Preview｜必须可见
 
-这些工具不判断内容是否抓人。最终仍由用户观看完整预览。
+Final Composition 必须在 Studio 中完整播放最终素材、字幕、声音与动效。
+
+### Stop Here｜在此停止
+
+展示 Final Preview 后，**结束当前回复**，等待用户在后续消息中明确允许导出。只有这条后续确认才可调用最终 render；不得把先前“做一个视频”的请求、沉默或技术检查通过解释为导出许可。
 
 ### 渲染
 
-用户确认后：
+用户在观看 Final Preview 后于后续消息明确确认时：
 
 ```bash
 npx hyperframes render --quality high --output final.mp4
