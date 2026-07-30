@@ -28,6 +28,7 @@
 - Development：
 - Emphasis：
 - Handoff：
+- 字幕组：对应的 `SCRIPT.md` 原文范围；中文 Display Text（隐藏句法标点）；自然英文；与本拍共享的语义区间 / 切换时机
 - 字幕安全区与主体保护：
 - 编辑文字：默认无；如需要，写内容、唯一作用和持续时间
 - 素材策略：GPT Image 2 / 用户素材 / 截图 / 系列资产 / HyperFrames 图形 / 混合
