@@ -378,6 +378,20 @@ Story Flow 验证整条视频的观看动力与段落关系，不追求最终美
 
 内容问题在 Development / Revision Mode 回到注意力或旁白；Locked Script Mode 则报告源文本风险，并优先通过图片、停留、声音、证据与场景关系承接。视觉关系问题回到图片任务；不要在 Story Flow 阶段用精细动画掩盖结构问题。
 
+### Preview Readiness Review｜交付前自审
+
+```text
+启动 Studio
+→ 完整播放一次
+→ 检查第一拍 / 第一层回报 / 中段最弱处 / 结尾
+→ 检查空白资源、Scene 顺序与段落交接
+→ 运行需要的 lint / inspect / preview
+→ 修复
+→ 在同一路径再次完整播放
+```
+
+必须确认从头到尾可播放，第一帧、主要段落、第一层回报和结尾都可见，没有空卡片或错误资源，粗略 Scene 顺序与 Attention Spine 一致，并已列出仍为占位的内容。此阶段不要求最终图片或精细运动，但不能只有文档或 outline。
+
 ### Required Preview｜必须可见
 
 Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一帧、主要段落、第一层回报和结尾都要真实可见。`STORYBOARD.md`、文字时间线、空卡片、CLI 日志或占位名称不构成 Story Flow Preview。
@@ -464,6 +478,10 @@ Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一�
 - 换人物、情绪或图片风格。
 
 在这一轮解决方向，再生成昂贵最终图。
+
+### Preview Readiness Review｜交付前自审
+
+完整播放并确认每个主要 Beat 都有实际画面；全屏图片在 Hero Frame、运动起点/终点和最大位移时正确覆盖画布，没有非设计性黑边、空洞或错误裁切；每拍有一个清楚的主视觉事件，Entry / Development / Emphasis / Handoff 可被看见；相邻 Beat 关系明确，并具备当前需要的最小 Motion / Reveal / Handoff。还须检查字幕安全区、图层残留、无意重叠与 Scene 边界。修复 P0 问题后，在同一 Studio route 再完整播放。
 
 ### Required Preview｜必须可见
 
@@ -564,6 +582,10 @@ Locked Script Mode 若总时长过长：
 
 Development / Revision Mode 才可以删除重复解释、合并相似内容、调整证据位置，最后才小幅提高语速。不要把一篇过长文案用 1.5 倍速压进视频。
 
+### Preview Readiness Review｜交付前自审
+
+完整播放并确认正式 TTS 与 `captions.json` 使用同一实际时间轴，Composition 只读取 `captions.json`，图片停留可读，语义字幕不提前泄露，组内换行没有变成新时间组。检查转场、字幕和图片揭示没有同时争抢注意力，Scene 边界没有跳帧、黑帧或残留层，且声画同步；真实声音加入后中段没有变成剪辑混乱。修复 P0 问题后，在同一 Studio route 再完整播放。
+
 ### Required Preview｜必须可见
 
 Timed Animatic 必须在 Studio 中将正式声音、`captions.json`、真实时长、实际图片与粗略运动一起播放；WAV 文件存在、字幕 JSON 写完或 transcribe 成功都不能替代它。
@@ -650,6 +672,10 @@ node <skill>/scripts/generate-images.mjs \
 - 音乐和音效服务内容，不盖过 TTS。
 
 原图、字幕和用户在当前任务中明确指定的元素可按已确认方向进入 Final；其余任何新增视觉处理——例如装饰文字/图形、遮罩、滤镜、光效、粒子、纹理、数据图形、强化转场、强调标记或音效驱动视觉——不得在精修时直接并入。先在 Studio 作为候选展示它解决的问题和出现位置，展示后停止；仅当用户在后续消息确认，才可合并。
+
+### Preview Readiness Review｜交付前自审
+
+完成正常观看、静音观看、只听声音与手机尺寸观看；再执行 Scene boundary pass（每个 Scene 进入前、交接中、结束前和下一 Scene 稳定后）以及 Media coverage pass（所有全屏媒体的运动起点、终点和最大位移）。确认不存在占位/审核标记、生成错误、露底、错误裁切、图层残留、重叠转场、黑帧、空帧、字幕错位或不可播放区间。
 
 ### Studio-first 预览验证
 

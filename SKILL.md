@@ -77,9 +77,25 @@ Agent 不得在同一轮完成两个成熟阶段。即使用户要求“直接�
 
 **No approval state machine does not mean no review boundary. The boundary lives in the conversation, not in a status file.** 不建立状态文件、`approved=true`、自动评分或跨文件批准记录；但真实对话中的四个停步不能省略。
 
+### Agent 自审先于用户审片
+
+用户负责判断创意、表达、节奏与审美是否成立；Agent 负责保证交给用户的预览真实可看、符合当前阶段成熟度，并且没有明显低级错误。每个成熟阶段在 `Required Preview` 前必须完成一次 **Preview Readiness Review**：
+
+```text
+制作当前阶段
+→ 在真实 Studio 中完整播放
+→ 使用 HyperFrames 工具检查关键时刻和技术问题
+→ 修复 P0 阻断问题
+→ 回到同一 Studio route 重新播放
+→ 才能展示给用户
+→ 展示后停止
+```
+
+仍存在任一与当前成熟阶段相关的 P0 阻断问题时，不得请求用户审片。CLI 通过、文件存在、render 成功或只看单张截图，都不构成 Preview Ready。若 Agent 无法获得真实像素级 Studio 预览，必须说明视觉自审受阻并先解决预览访问；不得猜测画面正确、把用户当作第一轮 QA，或把未自审的地址作为阶段预览交付。
+
 ### 新增视觉处理先预览
 
-> **不是原图、字幕或用户明确指定的元素，就先作为候选 Studio Preview；未经用户在后续消息中确认，不得并入成片。**
+> **不是原图、字幕或用户在当前任务中明确指定的元素，就先作为候选 Studio Preview；未经用户在后续消息中确认，不得并入成片。**
 
 任何新增视觉处理必须说明它要解决的具体观看问题、出现的位置与仍属候选的状态，展示后立即停止。它包括但不限于：额外动效、编辑文字、装饰图形、遮罩、滤镜、光效、粒子、背景纹理、数据图形、强化转场、强调标记和音效驱动视觉元素。
 
@@ -97,6 +113,12 @@ Agent 不得在同一轮完成两个成熟阶段。即使用户要求“直接�
 - TTS、图片和声音的正式生产。
 
 不要为了第一版提前建设复杂 Schema、跨文件校验、创意评分器或通用 HTML 编译器。薄控制层不是没有边界，而是只保留少量、清晰、可观察的边界：Story Flow 预览、Image Animatic 预览、Timed Animatic 预览与 Final Preview。
+
+### HyperFrames 技术合同不可替代
+
+创建或修改任何 `video/` Composition 前，Agent 必须读取已安装的 `hyperframes` / `hyperframes-core` Skill；并按实际镜头需要读取 Motion / GSAP、Transitions、Captions 或 Typography Skill。FrameSpine 只决定叙事任务、图片任务和观看路径；Composition、Scene、Timeline、Transition、Caption、媒体加载、预览和 render 必须服从 HyperFrames 正式技术合同。
+
+不得只读 FrameSpine reference 后凭经验自行发明平行实现，也不得用缺少明确 Scene / Transition 生命周期的绝对定位图层、透明度堆叠或随意时间偏移模拟 HyperFrames 剪辑。
 
 ### 同一个 HyperFrames 项目逐步成熟
 

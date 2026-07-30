@@ -37,6 +37,26 @@
 
 这不是审批状态机：不保存 `approved=true`、不维护状态文件、不自动评分；边界存在于真实对话中。
 
+## Preview Readiness Review：Agent 自审先于用户审片
+
+用户负责创意判断；Agent 负责基础可看性和 HyperFrames 合规。每次交付前必须：
+
+```text
+完整播放
+→ 关键帧与 Scene boundary 检查
+→ P0 blocker 检查
+→ HyperFrames 技术工具
+→ 修复
+→ 同一路径重播
+→ 才能展示
+```
+
+存在任一与当前成熟阶段相关的 P0 blocker 时，不得请求用户审片：Studio URL/route 不可用或与交付地址不一致；Composition 无法完整播放；该阶段应有的关键 Frame/Beat/Scene 或图片、音频、字幕、字体资源空白或加载失败；非设计性黑边、露底、错误拉伸或严重裁切；运动时露出空白；字幕/平台 UI 遮挡关键内容；旧图层残留、多张全屏层无边界叠加、重叠转场、黑帧、空帧、跳帧、多个竞争主运动或大量 magic offsets；镜头顺序与 Attention Spine / Storyboard 明显不一致；或声画、字幕与揭示明显错位。
+
+阶段专属要求：Story Flow 必须有真实图片与清楚标示的临时字幕占位，但不要求正式 TTS、`captions.json`、最终图片或 Final 素材；Image Animatic 必须具备主要 Beat 的实际画面和最低必要运动；Timed Animatic 必须使用正式声音与 `captions.json` 的真实字幕时间轴；Final 不得保留占位/审核标记或明显生成错误。Timed Animatic 及之后，Composition 内临时切字幕而非读取 `captions.json` 属于 P0 blocker。
+
+技术工具通过只是技术信息，不能抵消上述视觉问题。Agent 只有实际获得像素级 Studio 预览并完整观看后，才能说“已在 Studio 中确认”；若无法视觉访问，必须报告自审受阻并先解决预览访问，不能猜测画面正确、让用户充当第一轮 QA，或把未经自审的地址作为阶段预览交付。
+
 ## 审片不是一次总评
 
 用户若被要求一次同时判断内容、图片、字幕、节奏、声音、转场和风格，反馈往往会变成：
@@ -226,6 +246,14 @@ Final Preview 前可运行 lint、inspect 与 validate 修复技术问题。只�
 实际预览：
 - Studio URL：
 - Composition / Storyboard route：
+
+Preview Readiness Review：
+- 我实际检查的 Studio route：
+- 完整播放次数：
+- 检查的关键时刻：第一帧 / 第一层回报 / 中段最弱处 / Scene 边界 / 结尾
+- 已运行的 HyperFrames 工具：（只列实际运行的）
+- 发现并已修复的 P0 问题：
+- 当前不存在的 P0 blocker：空白资源 / 非设计性黑边 / 图片未覆盖 / 图层残留 / 重叠转场 / 字幕错位 / 不可播放区间
 
 我已在 Studio 中确认：
 - 第一拍可见
