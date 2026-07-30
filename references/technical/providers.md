@@ -19,7 +19,9 @@ VOLCENGINE_TTS_SPEED_RATIO=1.10
 VOLCENGINE_TTS_VOLUME_RATIO=1.00
 VOLCENGINE_TTS_PITCH_RATIO=1.00
 VOLCENGINE_TTS_TIMEOUT_MS=120000
-TTS_PARAGRAPH_PAUSE_MS=120
+TTS_REQUEST_UNIT=paragraph
+TTS_SOFT_BREAK_MS=80
+TTS_PARAGRAPH_PAUSE_MS=240
 
 # Third-party GPT Image 2
 GPT_IMAGE2_BASE_URL=
@@ -46,7 +48,7 @@ GPT_IMAGE2_TIMEOUT_MS=180000
 
 默认输入是单集根目录的 `SCRIPT.md`，它是权威旁白源文本：
 
-- 空行产生较长的段落停顿；单换行保留为较短的声音停顿；
+- 空行保留为较长的段落停顿；单换行保留在源文中，既不为字幕分组服务，也不默认拆成新的 TTS 请求；
 - 模板中的 HTML 注释会被忽略；
 - 默认脚本会将其逐字同步到 `narration.txt`，再用相同文字请求 TTS；
 - `narration.txt` 是派生文件，不独立编辑；
@@ -80,14 +82,16 @@ assets/audio/narration.json
 assets/audio/units/*.wav
 ```
 
-`narration.json` 记录段落实际时长，帮助排片。字幕的词级或短语时间使用 HyperFrames transcribe。
+`narration.json` 记录实际请求单元、时间与时长，帮助排片。字幕的词级或短语时间使用 HyperFrames transcribe；HyperFrames 实际显示的字幕只读取 Episode 根目录的 `captions.json`。
 
 ## TTS 制作建议
 
 - 系列初始化阶段先做短声线试听；
 - Hook、解释、证据和结尾可以使用不同分段与停顿；
 - 用户不满意时只重做对应段；
-- `TTS_PARAGRAPH_PAUSE_MS` 控制空行段落间隔（默认 120ms），`TTS_SOFT_BREAK_MS` 控制单换行间隔（默认 80ms）；两者只改变声音间隔，不改写源文本；
+- `TTS_REQUEST_UNIT=paragraph`（默认）每个空行段落只请求一次 TTS，保留连续语调；此模式下单换行仍保留在源文和 `narration.txt` 中，但不额外拼接停顿。
+- 只有实际听感确认短行需要独立交付节拍时才设为 `TTS_REQUEST_UNIT=line`；此模式每个非空短行单独请求 TTS，`TTS_SOFT_BREAK_MS` 控制单换行间隔（默认 80ms），`TTS_PARAGRAPH_PAUSE_MS` 控制空行段落间隔（默认 240ms）。
+- 字幕组、源文短行和 TTS 请求单元是三个不同概念；不要为了其中一个自动改写另一个。
 - TTS 太慢先检查真实时长、段落、图片停留和目标时长；Locked Script Mode 未获用户许可时不缩短文案；
 - 声音选择与系列旁白角色一致。
 

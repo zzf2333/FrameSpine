@@ -469,7 +469,7 @@ Story Flow 验证整条视频的观看动力与段落关系，不追求最终美
 
 ### 火山 TTS
 
-将权威中文旁白保存在 `SCRIPT.md`。默认命令从它同步生成 `narration.txt`；单换行保留短行节奏，空行保留较长段落停顿。不要为了 TTS 或字幕断句独立编辑派生文件。
+将权威中文旁白保存在 `SCRIPT.md`。默认命令从它同步生成 `narration.txt`；单换行和空行都保留原稿节奏。默认每个空行段落只请求一次 TTS，以保持连续语调；不要为了 TTS 或字幕断句独立编辑派生文件。
 
 运行：
 
@@ -477,15 +477,15 @@ Story Flow 验证整条视频的观看动力与段落关系，不追求最终美
 node <skill>/scripts/generate-tts.mjs --project <episode-dir>
 ```
 
-需要调整单段语气时，先调整短行/段落停顿、Voice 或图片停留。Development / Revision Mode
-可在允许范围内改文字；Locked Script Mode 保持源文本不变。当前脚本按短行生成语音单元，空行在单元间形成较长停顿，避免整条反复重做。
+需要调整单段语气时，先调整 Voice、段落停顿或图片停留。Development / Revision Mode
+可在允许范围内改文字；Locked Script Mode 保持源文本不变。默认按空行段落生成语音单元，避免短行被切成反复起调的播报片段；只有真实听感确认短行需要独立交付节拍时，才设置 `TTS_REQUEST_UNIT=line`。字幕组、源文短行和 TTS 请求单元不是同一个概念。
 
 ### 时间参考与字幕组
 
 使用：
 
 ```bash
-npx hyperframes transcribe ../assets/audio/narration.wav
+npx hyperframes transcribe <episode-dir>/assets/audio/narration.wav
 ```
 
 先获取正式声音的词级时间，再由 Agent 按语义组成字幕组，并与 `STORYBOARD.md` 的图片节拍对齐：
@@ -494,8 +494,10 @@ npx hyperframes transcribe ../assets/audio/narration.wav
 词级时间
 → 中文语义字幕组
 → 图片节拍对齐
-→ Display Text 标点清理
+→ Display Text 标点清理与组内换行
 → 同区间自然英文
+→ 写入 `captions.json`
+→ HyperFrames 读取 `captions.json`
 → Timed Animatic 审看
 ```
 
@@ -503,14 +505,16 @@ npx hyperframes transcribe ../assets/audio/narration.wav
 
 ### 双语字幕
 
+- 正式 TTS 和转写后，将所有实际显示的字幕组写入 Episode 根目录的 `captions.json`；它是 HyperFrames 唯一读取的字幕时间轴，不能在 Composition 中临时按标点、字数或 `SCRIPT.md` 重新切分；
 - 中文先按自然意义、声音停顿与图片推进分组；一个短语只在它真正被说出并由画面推进时出现；
 - 中文 Display Text 忠实对应旁白，但默认隐藏句法标点；不反向修改 `SCRIPT.md` 或 `narration.txt`，并保留数字、单位、产品名和技术表达中的必要符号；
-- 英文为同一中文语义组写自然表达，和中文共享开始/结束时间；不按英文自己的字数额外拆成时间组；
-- 中文为主、英文为辅，可分别自然换行；英文过长时优先压缩表达，不缩小字号或逐字硬译；
+- 英文为同一中文语义组写自然表达，默认和中文共享开始/结束时间；不按英文自己的字数额外拆成时间组。确实来不及阅读时，只能在同一 `captions.json` 项中用可选 `en_end` 略晚隐藏，不能独立推进信息；
+- `zh` / `en` 内的 `\n` 只表示同一字幕组的人工视觉换行；它不创建新的时间组、TTS 停顿或叙事事件；
+- `STORYBOARD.md` 只用字幕 ID 说明字幕和图片如何配合。一个 Beat 可关联多个字幕组；一个字幕组也可跨 Beat 或 Scene；
 - 一次只显示一个字幕组；不要提前展示后半句、答案或下一件事；
 - 关键字幕切换尽量与图片揭示同步，并提前考虑图片主体和安全区。
 
-字幕技术、推荐尺度和审看细则见 `references/technical/subtitles.md`。
+字幕时间轴格式、推荐尺度和审看细则见 `references/technical/subtitles.md`。
 
 ## 阶段七：Timed Animatic
 
@@ -525,8 +529,9 @@ npx hyperframes transcribe ../assets/audio/narration.wav
 - Hook 是否说得太慢；
 - 第一层回报是否被长句拖后；
 - 图片是否没有阅读时间；
+- `captions.json` 是否是 Composition 唯一字幕来源，且每个字幕组都能追溯到原文和正式声音；
 - 双语字幕是否按语义切分、会不会提前泄露后文或切得太快；
-- 字幕切换是否和图片揭示同步，数字与专有名词是否被错误清理；
+- 字幕切换是否和图片揭示同步，组内换行没有被误做时间切换，数字与专有名词是否被错误清理；
 - 复杂图片是否需要停顿；
 - 是否要合并或拆分节拍；
 - 转场是否抢旁白；

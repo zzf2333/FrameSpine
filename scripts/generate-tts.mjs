@@ -14,31 +14,41 @@ function sourceBody(source, ignoreLegacyComments = false) {
 		.replace(/^\s+|\s+$/g, "");
 }
 
-function narrationUnits(source) {
-	return source
-		.split(/\n\s*\n+/)
-		.flatMap((paragraph) => paragraph.split(/\r?\n/))
-		.map((line) => line.trim())
+function narrationPlan(source, requestUnit, paragraphPauseMs, softBreakMs) {
+	const paragraphs = source
+		.split(/\r?\n\s*\r?\n+/)
+		.map((paragraph) => paragraph.trim())
 		.filter(Boolean);
-}
 
-function unitPauses(source, paragraphPauseMs, softBreakMs) {
-	const lines = source.split(/\r?\n/);
+	if (requestUnit === "paragraph") {
+		return {
+			units: paragraphs,
+			pauses: paragraphs.slice(1).map(() => paragraphPauseMs),
+		};
+	}
+
+	if (requestUnit !== "line") {
+		throw new Error('TTS_REQUEST_UNIT 只能是 "paragraph" 或 "line"');
+	}
+
+	const units = [];
 	const pauses = [];
 	let previousWasSpeech = false;
 	let blankLines = 0;
-	for (const line of lines) {
-		if (!line.trim()) {
+	for (const line of source.split(/\r?\n/)) {
+		const text = line.trim();
+		if (!text) {
 			if (previousWasSpeech) blankLines += 1;
 			continue;
 		}
 		if (previousWasSpeech) {
 			pauses.push(blankLines ? paragraphPauseMs : softBreakMs);
 		}
+		units.push(text);
 		previousWasSpeech = true;
 		blankLines = 0;
 	}
-	return pauses;
+	return { units, pauses };
 }
 
 async function main() {
@@ -61,8 +71,9 @@ async function main() {
 		env.VOLCENGINE_TTS_ENDPOINT ||
 		"https://openspeech.bytedance.com/api/v1/tts";
 	const timeout = numberValue(env, "VOLCENGINE_TTS_TIMEOUT_MS", 120000);
-	const pauseMs = numberValue(env, "TTS_PARAGRAPH_PAUSE_MS", 120);
+	const pauseMs = numberValue(env, "TTS_PARAGRAPH_PAUSE_MS", 240);
 	const softBreakMs = numberValue(env, "TTS_SOFT_BREAK_MS", 80);
+	const requestUnit = env.TTS_REQUEST_UNIT || "paragraph";
 	const source = sourceBody(
 		await readFile(input, "utf8"),
 		Boolean(explicitInput),
@@ -70,8 +81,12 @@ async function main() {
 	if (!source) throw new Error(`${explicitInput || "SCRIPT.md"} 里没有旁白`);
 	if (!explicitInput)
 		await writeFile(path.join(project, "narration.txt"), `${source}\n`);
-	const units = narrationUnits(source);
-	const pauses = unitPauses(source, pauseMs, softBreakMs);
+	const { units, pauses } = narrationPlan(
+		source,
+		requestUnit,
+		pauseMs,
+		softBreakMs,
+	);
 	if (!units.length)
 		throw new Error(`${explicitInput || "SCRIPT.md"} 里没有可生成的旁白段落`);
 	const unitDir = path.join(path.dirname(output), "units");
@@ -154,6 +169,7 @@ async function main() {
 			{
 				provider: "volcengine",
 				voice_type: env.VOLCENGINE_TTS_VOICE_TYPE,
+				request_unit: requestUnit,
 				duration_s: Number((narrationInfo.durationMs / 1000).toFixed(3)),
 				units: report,
 			},

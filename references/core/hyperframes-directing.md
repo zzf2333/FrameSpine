@@ -18,7 +18,7 @@ HyperFrames Production
 决定图片如何在时间中被理解
 ```
 
-FrameSpine 负责内容判断、图片任务和观看路径；HyperFrames 负责将已经成立的图片、字幕、声音和场景实现为可播放的 composition。
+FrameSpine 负责内容判断、图片任务和观看路径；HyperFrames 负责将已经成立的图片、字幕、声音和场景实现为可播放的 composition。单集的实际字幕只从 Episode 根目录的 `captions.json` 读取；不要在 Composition 中重切 `SCRIPT.md` 或 `STORYBOARD.md`。
 
 不要建立平行的 Scene Recipe Library、Animation Pattern System、
 Visual Enhancement System、数据协议、Schema 或自动判断层。
@@ -253,7 +253,7 @@ Story Flow
 
 - **Story Flow**：用占位图、临时声音和粗略变化检查观看动力；
 - **Image Animatic**：检查图片任务、观看顺序、构图和图片交接；
-- **Timed Animatic**：加入正式 TTS 与真实字幕时间，重排停留和节奏；
+- **Timed Animatic**：加入正式 TTS 与 `captions.json` 的真实字幕时间，重排停留和节奏；
 - **Final**：替换最终素材并精修，不重做已经通过预览的内容结构。
 
 Series Style Calibration 同样使用 HyperFrames，但它只验证可复用的视觉、声音和运动身份；不测试主题、Hook、故事或单集镜头。

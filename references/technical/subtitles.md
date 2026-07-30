@@ -44,8 +44,10 @@ SCRIPT.md
 → HyperFrames transcribe 获取词级时间
 → Agent 按语义组成字幕组
 → 对齐 Storyboard 的图片节拍
-→ 清理 Display Text 的句法标点
+→ 清理 Display Text 的句法标点并决定组内换行
 → 写自然英文
+→ 写入 captions.json
+→ HyperFrames 读取 captions.json
 → Timed Animatic 人工观看修正
 ```
 
@@ -138,14 +140,14 @@ AI-powered
 
 ## 中文与英文共享同一意义区间
 
-先确定中文语义组，再为这个组写自然英文；中英文使用相同开始和结束时间，但各自按阅读习惯换行。
+先确定中文语义组，再为这个组写自然英文；中英文默认使用相同开始和结束时间，但各自按阅读习惯换行。
 
 ```text
 中文：三天一个订单都没有
 英文：Not a single order for three days
 ```
 
-不要让英文按自己的字数独立切成另一个时间组，除非声音和画面确实发生了第二次推进。英文过长时优先自然压缩表达，不缩小字号或机械逐字翻译。
+不要让英文按自己的字数独立切成另一个时间组。英文过长时优先自然压缩表达，不缩小字号或机械逐字翻译；若仍确实来不及阅读，可在同一 `captions.json` 项中增加可选的 `en_end`，让英文略晚隐藏。它不得早于 `start`、不得改变 `zh` 的结束时间、不得形成独立信息推进或改变该组的意义边界。
 
 保持统一：人名、品牌、专有名词、数字、单位、语气和重要概念。
 
@@ -160,25 +162,54 @@ AI-powered
 
 不要为满足长度机械拆坏语义。一个较长但完整的短语可在同一字幕组内分两行；若要拆成两个时间组，必须让拆分同时服务声音、画面和好奇管理。
 
-## 最少字幕记录
+## `captions.json`：唯一字幕时间轴
 
-字幕数据只服务执行和追溯，不构成审批系统或复杂 Schema。需要记录时，一个轻量文件即可：
+每个 Episode 根目录的 `captions.json` 是 HyperFrames **实际显示字幕的唯一时间轴**。正式 TTS 和转写后，由 Agent 编写它；Composition 直接读取它，而不是从 `SCRIPT.md`、`STORYBOARD.md` 或临时按标点/字数重新切分字幕。
 
-```json
-{
-  "start": 4.28,
-  "end": 5.62,
-  "source": "三天，一个订单都没有。",
-  "zh": "三天一个订单都没有",
-  "en": "Not a single order for three days",
-  "beat": "B05"
-}
+```text
+SCRIPT.md       唯一旁白源文
+STORYBOARD.md   字幕与图片如何配合的导演笔记
+captions.json   HyperFrames 实际显示的字幕时间轴
 ```
 
+它只是轻量执行数据，不是审批系统、自动评分器或复杂 Schema。数组中每项代表一个时间字幕组：
+
+```json
+[
+  {
+    "id": "C01",
+    "start": 4.28,
+    "end": 5.62,
+    "source": "三天，一个订单都没有。",
+    "zh": "三天一个订单都没有",
+    "en": "Not a single order for three days",
+    "beats": ["B05"]
+  },
+  {
+    "id": "C02",
+    "start": 5.76,
+    "end": 7.18,
+    "source": "后来他做了一件特别聪明的事。",
+    "zh": "后来他做了一件\n特别聪明的事",
+    "en": "Then he made\none smart move",
+    "en_end": 7.36,
+    "beats": ["B05", "B06"]
+  }
+]
+```
+
+- `id`：供 `STORYBOARD.md` 和 Composition 引用；
+- `start` / `end`：正式声音上本字幕组和中文 Display Text 的秒数；
+- `en_end`：可选。仅当英文无法自然压缩且确实来不及阅读时使用；它只让英文略晚隐藏，不能创建英文独立字幕组；
 - `source`：追溯 `SCRIPT.md`，不作为屏幕直接显示文本；
-- `zh`：清理显示标点后的中文；
-- `en`：同一语义组的自然英文；
-- `beat`：与 `STORYBOARD.md` 图片推进对齐。
+- `zh` / `en`：Display Text；清理显示标点后保留的字符串；
+- `beats`：相关图片 Beat 的 ID 数组，仅表达关系，不要求字幕组和图片 Beat 一一对应。
+
+### 字幕组切换不等于组内换行
+
+一个字幕组是一段连续的语义和时间区间；`start` 或 `end` 变化才代表切换到下一组。`zh` 或 `en` 字符串中的 `\n` 是同一个时间组内的人工视觉换行，用来保护自然阅读与构图，不能被误解为新的字幕组、TTS 停顿或新的信息推进。
+
+因此一张拼豆盒图片可以关联 `C01–C03`，一个 `C02` 也可以横跨 `B05` 到 `B06`。在 `STORYBOARD.md` 只记录这种配合关系，例如“`C02` 出现时开始推近；`C03` 出现时揭示第一笔收入”；不要重复字幕文本或时间。
 
 ## 视觉层级与构图
 

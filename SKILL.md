@@ -298,10 +298,11 @@ Development / Revision Mode 找不到图片表达时，可改写文案、引入�
 
 1. 将权威中文旁白保存在 `SCRIPT.md`，由默认 TTS 命令同步派生的 `narration.txt`；
 2. 调用 `scripts/generate-tts.mjs` 生成火山 TTS；
-3. 使用 HyperFrames transcribe 获取时间参考；
-4. 生成自然英文字幕；
-5. 将正式声音与双语字幕加入同一 HyperFrames 工程；
-6. 依据真实时间重新导演图片停留、运动和转场。
+3. 使用 HyperFrames transcribe 获取词级时间参考；
+4. 按语义、声音与图片节拍写入 Episode 根目录的 `captions.json`：包含 Display Text、自然英文、时间、人工换行和关联 Beat；
+5. 让 HyperFrames 只读取 `captions.json` 显示双语字幕，不在 Composition 中从 `SCRIPT.md`、`STORYBOARD.md` 或固定字数临时重新切分；
+6. 将正式声音与 `captions.json` 字幕加入同一 HyperFrames 工程；
+7. 依据真实时间重新导演图片停留、运动和转场。
 
 实际 TTS 使某段过长时，Locked Script Mode 先调整节拍、停留、声音分段、目标时长或建议拆集；只有用户明确允许才改稿。Development / Revision Mode 才考虑删减或重写内容；只有语气问题才调整语速。
 
