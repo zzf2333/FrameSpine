@@ -1,5 +1,7 @@
 # 系列工作区
 
+当前项目根目录就是系列根目录；一个项目只容纳一个系列，不再额外创建系列名子目录。
+
 1. Agent 阅读 `references/core/series-initialization.md`，先建立长期可复用的系列配置，不策划第一期。
 2. 分析用户已有账号、品牌、参考和资产；用推荐先行、一次一问的方式确认长期决定。
 3. 将 Series Identity、Audience Profile、Narrative Contract、Image / Visual / Voice Identity 与 Production Configuration 整理到 `SERIES.md`。

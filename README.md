@@ -14,12 +14,16 @@
 
 ## 初始化系列
 
+一个项目只容纳一个系列，项目根目录就是系列根目录。初始化命令直接在当前项目中创建 `SERIES.md`、`DESIGN.md`、`CALIBRATION.md`、`calibration/` 和 `episodes/`，不会再创建系列名子目录。
+
 ```bash
-node scripts/init-series.mjs \
-  --path /path/to/my-series \
+cd /path/to/my-project
+node /path/to/FrameSpine/scripts/init-series.mjs \
   --name "我的系列" \
   --slug my-series
 ```
+
+项目中可以已经存在 `.agents/` 等工具配置；如果系列文件或目录已经存在，初始化会停止并列出冲突项。
 
 Agent 先阅读 `references/core/series-initialization.md`。达到 Series Ready 后停止追问，在 `calibration/` 用 HyperFrames 做不依赖具体选题的动态风格校准；主题、Hook 和故事留给 Episode。
 

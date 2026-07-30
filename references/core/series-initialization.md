@@ -7,6 +7,8 @@ episode.
 
 它的输出是未来所有单集继承的稳定系列身份，而不是第一条视频的策划案。
 
+一个项目只容纳一个系列。项目根目录就是系列根目录，系列配置、风格校准与 `episodes/` 直接放在项目根目录，不再创建系列名称子目录。
+
 ```text
 Series
 = 长期世界观 + 制作规范
@@ -243,6 +245,16 @@ Meaning Anchor 是观众最终要带走、且系列必须长期保持一致的�
 也不要为了校准而推荐“最适合测试的选题”。用户想制作具体内容时，切换到 `episode-production.md`。
 
 ## 最终项目产物
+
+```text
+project-root/
+├── SERIES.md
+├── DESIGN.md
+├── CALIBRATION.md
+├── .env
+├── calibration/
+└── episodes/
+```
 
 ### `SERIES.md`
 
