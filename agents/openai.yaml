@@ -1,0 +1,4 @@
+interface:
+    display_name: "FrameSpine"
+    short_description: "以注意力主干、有限系列共创和 HyperFrames 动态预演制作系列短视频"
+    default_prompt: "使用 $FrameSpine 与我共创图片主导的抖音系列视频。先读取已有资料，一次解决一个高影响问题并给出推荐；问到足以制作 HyperFrames 校准片就停止追问，通过真实预览持续迭代。"

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "beat-01",
+    "purpose": "这张图片在故事中承担什么，以及必须让观众看见什么",
+    "prompt": "",
+    "output": "assets/images/beat-01.png",
+    "size": "1024x1536",
+    "quality": "high",
+    "extra": {}
+  }
+]
