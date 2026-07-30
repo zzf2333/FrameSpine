@@ -16,7 +16,8 @@
 12. [用户素材、截图和证据](#用户素材截图和证据)
 13. [HyperFrames 实现映射](#hyperframes-实现映射)
 14. [图片审片方法](#图片审片方法)
-15. [常见失败模式](#常见失败模式)
+15. [Narrative-Aware Image Design](#narrative-aware-image-design)
+16. [常见失败模式](#常见失败模式)
 
 ## 图片主导的真正含义
 
@@ -52,6 +53,29 @@
 - 去掉编辑文字后，核心结构仍成立；
 - 图片不是重复字幕；
 - 图片运动释放新信息，而不只是让静态图“动起来”。
+
+## Narrative-Aware Image Design
+
+在写图片任务或 Prompt 前，先读取系列的 **Narrative Contract**。它决定这张图让观众进入什么现实，而不是给图片生成增加一层真实性审核。
+
+先问：
+
+```text
+这个系列使用什么 Narrative Mode？
+这张图是 evidence、representation、metaphor、emotional environment，还是 imagined world？
+它怎样让观众更理解主题，而不是只展示创作自由？
+```
+
+不同模式的图片策略：
+
+| Narrative Mode | 图片优先级 | 常见图片策略 |
+| --- | --- | --- |
+| Documentary Reality | 真实对象、证据、来源语境 | 原始照片、文件、界面、档案与可读证据；不让合成画面代替关键事实。 |
+| Educational Narrative | 机制真实、典型处境与可见因果 | 综合人物、场景模拟、前后对比、机制可视化；让观众理解“这类问题如何发生”。 |
+| Cinematic Storytelling | 情绪、体验、人物冲突 | 戏剧构图、光影、创造的人物与场景；故事服务主题，不假装成纪实。 |
+| Conceptual / Fantasy | 象征、世界构建、观念体验 | 超现实关系、概念空间与创造规则；视觉自由仍要导向一个明确的观看理解。 |
+
+一条视频可以在同一契约内组合真实证据、综合场景和象征画面，但要让它们各自承担清楚角色。真实锚点是机制时，合成人物可以承担体验；真实锚点是事件时，生成气氛图不能取代事件证据。
 
 ## 从内容到图片任务
 
@@ -707,7 +731,7 @@ Prompt 可明确：
 具体实现遵循 HyperFrames Skill。这里描述导演用途。
 
 | 图片任务 | HyperFrames / GSAP 方法 |
-|---|---|
+| --- | --- |
 | 拉远揭示环境 | 大图容器 scale 与位置变化，或多层场景 |
 | 局部证据聚焦 | 裁切 wrapper、scale、遮罩、对比度、高亮框 |
 | 前后对比 | split frame、同构替换、匹配构图、clip reveal |

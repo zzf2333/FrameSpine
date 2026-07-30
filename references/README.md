@@ -11,7 +11,7 @@
 3. `core/image-storytelling.md`
 4. `core/hyperframes-directing.md`
 
-达到 calibration-ready 后开始制作，不需要把所有文件读完才行动。
+先定义系列的 Narrative Contract（观众进入什么现实、应相信什么）后，达到 calibration-ready 就开始制作，不需要把所有文件读完才行动。
 
 ## 新单集
 

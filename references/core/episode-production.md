@@ -130,11 +130,27 @@ Image Animatic、少量样图、临时 TTS
 - 主题；
 - 目标观众；
 - 观众当前误解、困惑或需求；
-- 事实和来源边界；
+- 系列的 Narrative Contract：观众应进入的现实、故事自由度与真实锚点；
+- 本期是否需要补充来源、案例或虚构/象征表达的语境；
 - 目标时长；
 - 该系列的相关规则；
 - 用户特别要求；
 - 最终回报。
+
+### 先检查 Narrative Contract
+
+在写 Hook、人物与事实性措辞前，读取 `SERIES.md` 中的 Narrative Contract。
+
+每个故事决定都要匹配系列的 Narrative Mode、Reality Level、Story License 与 Truth Anchor。
+
+例如：
+
+- **Educational Narrative**：可以写“很多创业者都会经历这样的阶段”，或让综合人物承载机制；除非有可用来源，不要把合成场景说成“2024 年某创业者真实经历”。
+- **Cinematic Storytelling**：可以从“一个年轻创业者发现……”进入虚构人物和戏剧冲突，但不要把它包装成纪实事件。
+- **Documentary Reality**：事件、人物、数据和来源本身就是真实锚点；图片与叙事应优先让证据可见。
+- **Conceptual / Fantasy**：允许创造世界与规则，但每个幻想元素仍应服务已经定义的观念、问题或体验。
+
+这不是审核步骤。目标是让观众从第一帧就进入系列承诺的现实，而不是在叙事方式上被误导或打断。
 
 ### 最终回报写法
 

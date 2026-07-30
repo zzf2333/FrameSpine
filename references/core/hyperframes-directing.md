@@ -34,7 +34,7 @@ Studio 可播放预览
 不要一次加载所有资料。根据当前任务读取。
 
 | 当前任务 | 必须或建议读取的 HyperFrames 能力 |
-|---|---|
+| --- | --- |
 | 建立项目、composition、媒体和时间线 | `hyperframes` |
 | 初始化、转写、检查、预览和渲染 | `hyperframes-cli` |
 | 图片推拉、分层、遮罩、图形和精细时间线 | `gsap` |
@@ -60,12 +60,12 @@ Studio 可播放预览
 
 # 二、先建立视觉身份
 
-在任何正式 composition 之前，读取并完善系列 `DESIGN.md`。
+在任何正式 composition 之前，读取系列 `SERIES.md` 中的 Narrative Contract，再完善 `DESIGN.md`。
 
-`DESIGN.md` 必须来自用户系列方向和 calibration 反馈，包括：
+`DESIGN.md` 必须把用户系列方向、Narrative Contract 和 calibration 反馈编译为可执行的视觉身份，包括：
 
 - Style Prompt；
-- 图片世界与质感；
+- 图片世界与质感，以及它对应的 Narrative Mode；
 - 色彩角色；
 - 字体和排版；
 - 竖屏构图；
@@ -78,7 +78,7 @@ Studio 可播放预览
 
 不要使用通用蓝色、默认字体和随手选择的渐变。
 
-HyperFrames 自身要求先有视觉身份，再开始 composition；本 Skill 的系列初始化负责让这份视觉身份来自用户，而不是模板。
+HyperFrames 自身要求先有视觉身份，再开始 composition；本 Skill 的系列初始化负责让这份视觉身份来自用户的目标与叙事契约，而不是模板。
 
 # 三、一个单集只维护一个持续演进的 HyperFrames 项目
 

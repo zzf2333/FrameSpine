@@ -10,7 +10,7 @@
 
 # 2. 图片节拍
 
-## Beat B01 — 
+## Beat B01 —
 
 - 注意力作用：Hook / Reveal / Evidence / Contrast / Reframe / Payoff / Callback / 其他
 - 对应旁白：
@@ -19,6 +19,7 @@
 - 主体、动作与环境：
 - 第一眼焦点：
 - 后续揭示：
+- Narrative Contract 角色：evidence / representation / metaphor / emotional environment / imagined world；本拍继承或覆盖的 Reality Level / Story License；怎样服务本期 Truth Anchor：
 - 图片结构：单图揭示 / 同构替换 / 多图累积 / 证据放大 / 拼贴 / 图形层 / 其他
 - Entry：
 - Development：
@@ -30,8 +31,7 @@
 - HyperFrames 实现提示：
 - 失败条件：什么样的画面会变成普通配图或无法证明内容
 
-## Beat B02 — 
-
+## Beat B02 —
 
 # 3. 图片生成 Brief
 
@@ -43,16 +43,16 @@
 
 # 4. Story Flow 反馈
 
-- 
+-
 
 # 5. Image Animatic 反馈
 
-- 
+-
 
 # 6. 正式 TTS 后的时间调整
 
-- 
+-
 
 # 7. Final 图片和动效修改
 
-- 
+-

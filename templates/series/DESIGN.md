@@ -1,11 +1,18 @@
 # DESIGN.md
 
-> 根据 `SERIES.md` 和 HyperFrames 校准片反馈由 Agent 编写。写任何正式 composition 前先完成。这里是可执行视觉身份，不是抽象情绪词清单。
+> 根据 `SERIES.md` 中的 Narrative Contract 与 HyperFrames 校准片反馈由 Agent 编写。写任何正式 composition 前先完成。这里是可执行视觉身份，不是抽象情绪词清单。
+
+## Narrative-to-Visual Translation
+
+- 继承的 Narrative Mode：
+- Reality Level：
+- Story License：
+- Truth Anchor：
+- 图片世界怎样让观众自然理解这份叙事契约：
 
 ## Style Prompt
 
 用一段话描述画面世界、观看气质、内容与形式的关系。
-
 
 ## Visual Rationale
 
@@ -112,4 +119,4 @@
 
 至少写 5 条具体反模式。
 
-- 
+-

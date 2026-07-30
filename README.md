@@ -8,7 +8,7 @@
 一个底座：HyperFrames 全套 Skills 与 CLI
 ```
 
-本版本把主要能力放在 `references/`：它们指导 Agent 如何有限追问、帮助用户设计系列、构建短视频注意力、把内容翻译成图片、直接使用 HyperFrames 创作，并根据用户观看反馈持续提高质量。
+本版本把主要能力放在 `references/`：它们指导 Agent 如何有限追问、帮助用户设计系列的 Narrative Contract（观众进入什么现实、应相信什么）、构建短视频注意力、把内容翻译成图片、直接使用 HyperFrames 创作，并根据用户观看反馈持续提高质量。
 
 字幕和 Provider 脚本只是基础执行能力。
 
