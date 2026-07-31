@@ -52,12 +52,9 @@
 - 第一眼焦点：
 - 后续揭示：
 - Narrative Contract 角色：evidence / representation / metaphor / emotional environment / imagined world；本拍继承或覆盖的 Reality Level / Story License；怎样服务本期 Meaning Anchor：
-- 图片角色：场景建立 / 人物处境 / 行为过程 / 对比 / 证据 / 机制 / 后果 / 情绪承载 / 过渡 / 回收
+- 图片组合：本拍需要哪些素材类型、它们一起怎样完成发现；不要假设一拍只用一张图
+- 图片角色分布：场景建立 / 人物处境 / 行为过程 / 对比 / 证据 / 机制 / 后果 / 情绪承载 / 过渡 / 回收
 - 图片结构：单图揭示 / 同构替换 / 多图累积 / 证据放大 / 拼贴 / 图形层 / 其他
-- 连续性锚点：继承哪些 Character / Space / Object Anchor；本拍允许变化什么
-- 镜头功能：这一素材相对前后素材新增什么观看任务；不是“与 Beat 一一对应”
-- 必须出现的现实细节：实际使用痕迹、手与物件关系、光线、材质或空间功能关系
-- AI 味风险：最容易变成图库、广告摆拍、塑料质感、身份漂移或不可信空间的原因
 - 主视觉事件：本拍唯一主要变化；次要运动只服务它
 - 媒体适配：full-bleed cover / intentional frame；若留黑或不铺满，说明叙事原因
 - Scene / Transition 关系：同一 Scene / hard cut / 官方 transition；前后关系是什么
@@ -77,13 +74,43 @@
 
 # 3. 图片素材 Brief
 
-按实际生成素材而非 Beat 一一整理。一个 Beat 可用多张素材；一张素材也可跨多个 Beat、通过裁切、Reveal 或 Handoff 重复使用。每项先写导演任务与锚点，再整理进 `image-prompts.json`。
+按实际生成素材而非 Beat 一一整理。一个 Beat 可用多张素材；一张素材也可跨多个 Beat、通过裁切、Reveal 或 Handoff 重复使用。每项先写导演任务与锚点，再整理进 `image-prompts.json`。以下是人类导演 Brief，不是新 Schema：它的每个实际生成要求都必须由 Agent 写入该素材的最终 `prompt`。
 
-| 图片 ID | 使用 Beat | 角色 / 用途与可见证据 | 继承锚点 / 参考 | 构图和运动余量 | 输出路径 |
-|---|---|---|---|---|---|
-| img-world-anchor | B01–B03 | world-anchor /  | Character 01, Space 01 |  | assets/images/world-anchor.png |
+## Asset `img-world-anchor`
 
-# 4. 仍影响后续制作的用户决定
+- 使用 Beat：`B01–B03`
+- 图片角色：world-anchor / 场景建立
+- 叙事任务：
+- 必须可见的事实和证据：
+- 继承锚点 / 参考：Character Anchor 01、Space Anchor 01、
+- 允许变化：机位 / 动作 / 时间状态 / 空间累积程度；具体为：
+- 镜头设计：景别、机位、构图、第一眼和第二层发现：
+- 物理真实细节 / 概念世界的一致性：
+- 字幕、裁切、运动、分层与 Handoff 余量：
+- AI 味 / 世界规则风险：
+- 失败条件：
+- 输出路径：`assets/images/world-anchor.png`
+
+## Asset `img-…`
+
+按上面字段继续添加。不要把某张素材专属的锚点、镜头、真实细节、制作余量或 AI 风险写回 Beat；Beat 只定义图片组合的观看任务。
+
+# 4. Image Set Audit｜整组图片导演检查
+
+在素材 Brief 完成、调用 Provider 前，作为人工导演检查整组素材；不评分、不记录批准状态，也不由脚本自动执行。
+
+```text
+- 场景建立、证据、过程、情绪、回报 / 回收的分布是否足以支撑故事？
+- 景别、机位、人物姿态、构图和完成状态是否过度重复？
+- 是否所有素材都落入同一种暖光、浅景深或“完整英雄构图”？
+- 是否有足够桌面、手部、物件、界面、局部证据和过程镜头，而不全是封面图？
+- 前后素材是否属于同一世界，同时各自完成不同观看任务？
+- 哪些素材需要先作为高风险候选放入真实竖屏 Composition 测试？
+```
+
+> Prompt Audit 保证单张素材成立；Image Set Audit 防止整条视频变成同一批 AI 图库。
+
+# 5. 仍影响后续制作的用户决定
 
 只记录会改变 Beat、图片关系、Scene、声音或节奏的创作选择；解决后更新正文或删除。不要记录批准历史、Studio route、播放次数或工具日志。
 
@@ -91,18 +118,18 @@
 - 不采用：
 - 后续影响：
 
-# 5. Story Flow 反馈
+# 6. Story Flow 反馈
 
 -
 
-# 6. Image Animatic 反馈
+# 7. Image Animatic 反馈
 
 -
 
-# 7. 正式 TTS 后的时间调整
+# 8. 正式 TTS 后的时间调整
 
 -
 
-# 8. Final 图片和动效修改
+# 9. Final 图片和动效修改
 
 -

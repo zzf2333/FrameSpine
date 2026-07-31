@@ -12,7 +12,7 @@
 
 ## Image Prompt Baseline
 
-这是系列所属世界的基线，不是一段应机械复制到每张图片开头的 Style Prompt。单张素材先写它要证明的事件、证据和镜头任务；只继承与该素材相关的基线，并允许景别、机位、光线和构图为叙事角色变化。
+这是系列所属世界的基线，不是一段应机械复制到每张图片开头的 Style Prompt。Prompt 组装优先级为：**当前 Asset 的叙事任务 → Episode Visual Anchors → 与该素材相关的 Image Prompt Baseline → 其他 DESIGN 规则**。单张素材先写它要证明的事件、证据和镜头任务；只继承真正相关的 2–4 项系列约束，并允许景别、机位、光线和构图为叙事角色变化。不要把整个 `DESIGN.md` 或整个基线复制进每条 Prompt。
 
 ### World Invariants
 
