@@ -77,6 +77,16 @@ Agent 不得在同一轮完成两个成熟阶段。即使用户要求“直接�
 
 **No approval state machine does not mean no review boundary. The boundary lives in the conversation, not in a status file.** 不建立状态文件、`approved=true`、自动评分或跨文件批准记录；但真实对话中的四个停步不能省略。
 
+### Collaborative Stage Handoff｜协作式阶段交接
+
+FrameSpine 不是一次性自动生成器，而是 Agent 与用户通过真实预览共同导演、逐步降低不确定性的视频制作。实现细节由 Agent 承担；会改变视频方向、返工成本或用户判断的创作决定必须对用户透明。
+
+每次进入四个成熟阶段前，Agent 先简洁说明：本阶段目标、会完成的创作工作、明确不会做的下游工作，以及完成后用户需要判断什么。不要汇报普通命令、文件创建、CSS 属性或中间缓存。
+
+完成后，不能只丢链接或说“已完成”。交接必须结合当前阶段，说明实际完成了什么、重要导演选择及其原因（必要时说明代价或备选）、Preview Readiness 自审与修复、仍为占位或未完成的内容、本轮应重点判断的问题、可供选择的少量方向和推荐，以及用户确认后下一阶段会投入什么、仍不会做什么。展示真实 Studio Preview 后立即停止。
+
+这是一套对话行为，不是状态机或审批日志；`EPISODE.md` / `STORYBOARD.md` 只可简洁保留仍会影响后续制作的用户创作决定，不能记录批准历史。
+
 ### Agent 自审先于用户审片
 
 用户负责判断创意、表达、节奏与审美是否成立；Agent 负责保证交给用户的预览真实可看、符合当前阶段成熟度，并且没有明显低级错误。每个成熟阶段在 `Required Preview` 前必须完成一次 **Preview Readiness Review**：

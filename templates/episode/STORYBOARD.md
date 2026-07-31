@@ -55,18 +55,26 @@
 |---|---|---|---|---|---|
 | beat-01 | B01 |  |  |  | assets/images/beat-01.png |
 
-# 4. Story Flow 反馈
+# 4. 仍影响后续制作的用户决定
+
+只记录会改变 Beat、图片关系、Scene、声音或节奏的创作选择；解决后更新正文或删除。不要记录批准历史、Studio route、播放次数或工具日志。
+
+- 选择：
+- 不采用：
+- 后续影响：
+
+# 5. Story Flow 反馈
 
 -
 
-# 5. Image Animatic 反馈
+# 6. Image Animatic 反馈
 
 -
 
-# 6. 正式 TTS 后的时间调整
+# 7. 正式 TTS 后的时间调整
 
 -
 
-# 7. Final 图片和动效修改
+# 8. Final 图片和动效修改
 
 -
