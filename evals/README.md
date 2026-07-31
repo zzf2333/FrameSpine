@@ -86,7 +86,7 @@ evals/
 | **E2** Image Animatic | **硬门禁可跑** | `npm run eval:animatic`；soft/Studio 人审不足 |
 | **E2** Timed Animatic | **硬门禁可跑** | `npm run eval:timed`；无 live 正式 TTS 套件 |
 | **E2** Final | **硬门禁可跑** | `npm run eval:final`；无 live Final Preview 人审 |
-| **E3** 轨迹 | **部分** | `graders/trace/` schema；gates 读 tool-trace；无完整多 trial harness |
+| **E3** 轨迹 / multi-trial | **约定 + CLI 可跑** | `graders/trace/HARNESS.md`；init/validate/grade/aggregate；Agent 执行仍外部 |
 | **E4** 端到端 | **未建** | — |
 | **E5** 对抗/回归 | **部分** | 阶段负例 baseline + `cases/adversarial/` placeholder |
 
@@ -214,7 +214,27 @@ video/composition.html
 `board-manifest.json` 的 `frames[].canvas.kind`：`empty | generic | concrete`。  
 Deterministic grader 信任结构化 claim 做回归；Vision / Human 核对与真实 Studio 一致。
 
-完整 harness 布局见 `graders/trace/README.md`。
+完整 harness 布局见 `graders/trace/README.md` 与 `graders/trace/HARNESS.md`。
+
+### E3 Multi-trial harness（不跑 Agent）
+
+```bash
+# 1) 初始化 N 个 trial 目录（默认 recommended_trials 或 3）
+npm run eval:harness:init -- --case evals/cases/storyboard/storyboard-locked-001.yaml
+
+# 2) 外部 Agent 写入各 trial-N/workspace + eval-artifacts
+
+# 3) 布局校验
+npm run eval:harness:validate -- --trial-dir evals/runs/storyboard-locked-001/trial-1
+
+# 4) 对所有 trial 跑对应阶段 deterministic gates
+npm run eval:harness:grade -- --case-id storyboard-locked-001
+
+# 5) 聚合稳定性（无单一总分）
+npm run eval:harness:aggregate -- --case-id storyboard-locked-001
+```
+
+已有 live 目录（如 `evals/runs/storyboard-locked-001/trial-1`）可直接 grade + aggregate；init 仅用于新 case。
 
 ## 评分与 grader
 
@@ -266,6 +286,6 @@ P0 与软维度定义见 `DESIGN.md` §6 与 `rubrics/`。
 
 1. **守住 v1 Storyboard** — 保持 offline 绿；Studio Visual-Only 人审；真实失败再加 case。  
 2. **四阶段边界** — Story/Image/Timed/Final 硬门禁均可跑；feedback 返回路径与 live Final 仍待。  
-3. **E3 harness** — 外部多 trial 写入 `runs/`；不把 harness 塞进 Skill。  
+3. **E3 harness** — 约定 + CLI 已有；用外部 runner 填满 trial-2/3 再看 cross_trial_stability。  
 4. **E4** — 25–40 稳定 case 的高风险交叉，而非全排列。  
 5. **瘦身** — 共享 synthetic/gate 脚手架，避免每阶段再复制一套。

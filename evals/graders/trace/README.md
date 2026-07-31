@@ -3,26 +3,33 @@
 Agent trial harness 应写入完整轨迹，供阶段边界与协作检查。  
 **仅离线**；不进入运行时 Skill。
 
+**Multi-trial 合同与 CLI：** [`HARNESS.md`](./HARNESS.md)
+
 ## Trial 布局
 
 ```text
-evals/runs/<case-id>/<trial>/
-  workspace/                 # episode project
-  eval-artifacts/
-    tool-trace.json
-    preview-manifest.json
-    board-manifest.json      # Story Flow
-    composition-manifest.json  # Image Animatic
-    timed-manifest.json      # Timed Animatic
-    storyboard-route.txt | composition-route.txt
-    file-diff.patch          # optional
-    conversation.md          # optional
-  human/
-    review-sheet.md
-  grades/
-    deterministic.json
-    vision.json
-    human.json
+evals/runs/<case-id>/
+  suite-manifest.json
+  trial-1/
+    trial-manifest.json
+    workspace/                 # episode project
+      eval-artifacts/
+        tool-trace.json
+        preview-manifest.json
+        board-manifest.json | composition-manifest.json | timed-manifest.json | final-manifest.json
+        storyboard-route.txt | composition-route.txt
+        file-diff.patch        # optional
+        conversation.md        # optional
+    human/
+      review-sheet.md
+    grades/
+      deterministic.json
+      vision.json              # optional
+      human.json               # optional
+      summary.json
+  trial-2/
+  aggregate.json
+  aggregate.md
 ```
 
 ## tool-trace.json 最小约定
@@ -50,16 +57,30 @@ evals/runs/<case-id>/<trial>/
 
 - 用户确认前跨阶段
 - 错误 surface（自定义网页 / 过早 Composition）
-- Story Flow 时 TTS / 正式 captions
+- Story Flow 时调用 TTS
 - 静默改稿
-- 虚构 Provider 能力
-- 多权威位置重复修复
+- 虚构 Provider 能力 / 假装已上传 reference
+- 修改多个权威位置修同一问题
 - Final Preview 前 export
+
+## CLI
+
+```bash
+npm run eval:harness:init -- --case evals/cases/storyboard/storyboard-locked-001.yaml
+npm run eval:harness:validate -- --trial-dir evals/runs/storyboard-locked-001/trial-1
+npm run eval:harness:grade -- --case-id storyboard-locked-001
+npm run eval:harness:aggregate -- --case-id storyboard-locked-001
+```
 
 ## 当前实现
 
-- Deterministic stage gates **已读取** `tool-trace.json` 中的 `stage_stop` / `user_confirmation` / 禁止工具名
-- **尚未**：独立 trace scorer、完整 conversation 解析、自动多 trial harness
+| 能力 | 状态 |
+| --- | --- |
+| 布局约定 + init/validate/grade/aggregate | **可跑** |
+| Stage gates 读 tool-trace | **已有**（E2） |
+| 外部 Agent 自动驱动 | **不做**（外部 runner） |
+| 独立全文 conversation scorer | 后续 |
+| Vision 批跑 | 后续 |
 
 ## preview-manifest 最小约定
 
@@ -74,4 +95,4 @@ Story Flow：
 }
 ```
 
-Image / Timed：见 `fixtures/trial-schema/` 示例。
+其他阶段：见 `fixtures/trial-schema/`。

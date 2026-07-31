@@ -95,4 +95,4 @@ npm run eval:timed
 npm run eval:final
 ```
 
-当前可跑：E0 静态合同 + Storyboard / Image Animatic / Timed Animatic / Final 硬门禁。E3 完整 harness、E4 端到端、Studio 软质量人审仍按设计后续推进。
+当前可跑：E0 静态合同 + Storyboard / Image Animatic / Timed Animatic / Final 硬门禁 + E3 multi-trial harness CLI（`eval:harness:*`，不跑 Agent）。E4 端到端、Studio 软质量人审仍按设计后续推进。

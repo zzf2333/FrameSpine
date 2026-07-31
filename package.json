@@ -29,6 +29,10 @@
         "eval:final:build": "node evals/graders/deterministic/build-synthetic-final.mjs",
         "eval:final:grade": "node evals/graders/deterministic/grade-synthetic-final.mjs",
         "eval:final": "node evals/run-final-suite.mjs",
-        "eval:gates:final": "node evals/graders/deterministic/final-gates.mjs"
+        "eval:gates:final": "node evals/graders/deterministic/final-gates.mjs",
+        "eval:harness:init": "node evals/graders/trace/init-trials.mjs",
+        "eval:harness:validate": "node evals/graders/trace/validate-trial.mjs",
+        "eval:harness:grade": "node evals/graders/trace/grade-trials.mjs",
+        "eval:harness:aggregate": "node evals/graders/trace/aggregate-trials.mjs"
     }
 }
