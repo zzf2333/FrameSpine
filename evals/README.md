@@ -51,6 +51,7 @@ evals/
 │   ├── storyboard/           # E2 Story Flow（v1 优先）
 │   ├── animatic/             # E2 Image Animatic
 │   ├── timed/                # E2 Timed Animatic
+│   ├── final/                # E2 Final Composition
 │   ├── providers/            # E1
 │   └── adversarial/          # E5
 ├── fixtures/
@@ -84,7 +85,7 @@ evals/
 | **E2** Story Flow | **已稳** | `npm run eval:storyboard`；live trial 有限 |
 | **E2** Image Animatic | **硬门禁可跑** | `npm run eval:animatic`；soft/Studio 人审不足 |
 | **E2** Timed Animatic | **硬门禁可跑** | `npm run eval:timed`；无 live 正式 TTS 套件 |
-| **E2** Final | **未建** | `rubrics/final.md` only |
+| **E2** Final | **硬门禁可跑** | `npm run eval:final`；无 live Final Preview 人审 |
 | **E3** 轨迹 | **部分** | `graders/trace/` schema；gates 读 tool-trace；无完整多 trial harness |
 | **E4** 端到端 | **未建** | — |
 | **E5** 对抗/回归 | **部分** | 阶段负例 baseline + `cases/adversarial/` placeholder |
@@ -125,6 +126,7 @@ node evals/graders/deterministic/validate-cases.mjs
 npm run eval:storyboard   # E0 + cases + storyboard synthetic matrix
 npm run eval:animatic     # cases + image-animatic synthetic matrix
 npm run eval:timed        # cases + timed-animatic synthetic matrix
+npm run eval:final        # cases + final synthetic matrix
 ```
 
 分项：
@@ -135,6 +137,8 @@ npm run eval:animatic:build
 npm run eval:animatic:grade
 npm run eval:timed:build
 npm run eval:timed:grade
+npm run eval:final:build
+npm run eval:final:grade
 ```
 
 ### 单 trial workspace
@@ -152,6 +156,10 @@ node evals/graders/deterministic/timed-animatic-gates.mjs \
   --case evals/cases/timed/timed-animatic-locked-001.yaml \
   --workspace evals/runs/synthetic-timed/timed-animatic-locked-001/workspace \
   --source-script evals/fixtures/inputs/locked-script-a.md
+
+node evals/graders/deterministic/final-gates.mjs \
+  --case evals/cases/final/final-locked-001.yaml \
+  --workspace evals/runs/synthetic-final/final-locked-001/workspace
 ```
 
 ## Trial 产物约定
@@ -161,6 +169,7 @@ node evals/graders/deterministic/timed-animatic-gates.mjs \
 | Synthetic Storyboard | `evals/runs/synthetic/<case-id>/` | gate 逻辑回归 |
 | Synthetic Image Animatic | `evals/runs/synthetic-animatic/<case-id>/` | gate 逻辑回归 |
 | Synthetic Timed | `evals/runs/synthetic-timed/<case-id>/` | gate 逻辑回归 |
+| Synthetic Final | `evals/runs/synthetic-final/<case-id>/` | gate 逻辑回归 |
 | Live agent | `evals/runs/<case-id>/<trial>/` | 真实 Agent + Studio |
 
 ### Story Flow
@@ -190,6 +199,16 @@ eval-artifacts/tool-trace.json
 eval-artifacts/composition-route.txt
 captions.json
 audio/ 或 formal TTS claim
+```
+
+### Final
+
+```text
+eval-artifacts/preview-manifest.json
+eval-artifacts/final-manifest.json
+eval-artifacts/tool-trace.json
+eval-artifacts/composition-route.txt
+video/composition.html
 ```
 
 `board-manifest.json` 的 `frames[].canvas.kind`：`empty | generic | concrete`。  
@@ -246,7 +265,7 @@ P0 与软维度定义见 `DESIGN.md` §6 与 `rubrics/`。
 ## 下一步（按 DESIGN §11，不抢跑）
 
 1. **守住 v1 Storyboard** — 保持 offline 绿；Studio Visual-Only 人审；真实失败再加 case。  
-2. **四阶段边界** — Image/Timed 已有硬门禁；Final 与 feedback 返回路径待建。  
+2. **四阶段边界** — Story/Image/Timed/Final 硬门禁均可跑；feedback 返回路径与 live Final 仍待。  
 3. **E3 harness** — 外部多 trial 写入 `runs/`；不把 harness 塞进 Skill。  
 4. **E4** — 25–40 稳定 case 的高风险交叉，而非全排列。  
 5. **瘦身** — 共享 synthetic/gate 脚手架，避免每阶段再复制一套。

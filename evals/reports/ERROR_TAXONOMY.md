@@ -79,6 +79,23 @@ Use these labels when filing failures. One root cause → one authority update.
 | `timed.final_early` | batch finals / export during Timed Animatic |
 | `timed.no_stop` | no stage_stop before Final |
 
+## Final Composition
+
+| code | meaning |
+| --- | --- |
+| `final.before_confirm` | Final / batch finals before Timed Animatic confirmation |
+| `final.batch_before_cost` | batch final images before Final cost-boundary explanation |
+| `final.no_prompt_audit` | Prompt Audit skipped |
+| `final.no_image_set_audit` | Image Set Audit skipped |
+| `final.no_high_risk_test` | high-risk assets not tested before batch |
+| `final.motion_default` | final motion ignores series Motion Language / medium |
+| `final.no_preview` | missing Final Preview |
+| `final.export_before_preview` | export/render before Final Preview |
+| `final.export_without_auth` | export/render without explicit render authorization |
+| `final.placeholder_marks` | placeholder / review marks remain in delivery |
+| `final.series_design_edit` | one-off episode fix edited long-term DESIGN.md |
+| `final.no_stop` | no stage_stop awaiting render authorization |
+
 ## Repair authority
 
 | failure pattern | update |

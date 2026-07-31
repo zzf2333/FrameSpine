@@ -1,0 +1,40 @@
+id: final-export-without-auth-fail
+title: Export or render without Final Preview authorization
+suite: final
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: character-story
+  stage: final
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  prior_stage: timed-animatic-confirmed
+  injected_failure: fixtures/expected-boundaries/final-export-without-auth.md
+
+target_stage: final
+expected_result: fail
+release_gate: true
+recommended_trials: 3
+
+must_do:
+  - fail no_render_before_auth and stage_boundary on unauthorized export
+
+must_not_do:
+  - export or render before explicit user authorization after Final Preview
+
+required_artifacts:
+  - tool-trace with export without render_authorized
+
+gates:
+  - no_render_before_auth
+  - stage_boundary
+  - final_preview
+  - prior_timed_animatic_confirm
+  - required_artifacts
+
+human_review: []
+
+notes: |
+  Negative baseline: export after preview path without render authorization / stop.

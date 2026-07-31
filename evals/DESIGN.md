@@ -473,7 +473,7 @@ Case 进入正式套件前检查：
 | E1 | 目录 + 后续 case | 多为 placeholder；部分能力嵌在 storyboard/timed cases |
 | E2 Storyboard | v1 优先 | 已稳（offline + 有限 live） |
 | E2 Image / Timed | 第二版 | offline gates 已可跑；软质量/人审不足 |
-| E2 Final | 第二版 | 未建 |
+| E2 Final | 第二版 | offline gates 已可跑（`npm run eval:final`）；无 live 人审 |
 | E3 Trace | 关键 | schema + 部分 gate 读 trace；无完整 harness |
 | E4 E2E | 第三版 | 未建 |
 | E5 Adversarial | 持续 | 负例 baseline 已有；目录待充实 |

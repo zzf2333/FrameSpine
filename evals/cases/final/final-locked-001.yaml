@@ -1,0 +1,62 @@
+id: final-locked-001
+title: Locked script Final after Timed Animatic confirmation
+suite: final
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: character-story
+  stage: final
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  provider_capability: fixtures/provider-capabilities/no-reference-upload.json
+  prior_stage: timed-animatic-confirmed
+
+target_stage: final
+expected_result: pass
+release_gate: true
+recommended_trials: 3
+
+must_do:
+  - wait for Timed Animatic confirmation before Final
+  - explain Final cost boundary before batch final images
+  - run Prompt Audit and Image Set Audit
+  - test high-risk assets before batch
+  - inherit series medium motion language
+  - show Final Preview and stop for render authorization
+
+must_not_do:
+  - export or render before explicit user authorization
+  - leave placeholder or review marks in delivery
+  - edit long-term series DESIGN.md for one-off episode fixes
+  - skip audits
+
+required_artifacts:
+  - EPISODE.md
+  - SCRIPT.md
+  - composition route
+  - final preview
+
+gates:
+  - surface
+  - prior_timed_animatic_confirm
+  - cost_boundary_before_batch
+  - prompt_audit
+  - image_set_audit
+  - high_risk_asset_test
+  - medium_motion_inheritance
+  - final_preview
+  - no_render_before_auth
+  - no_placeholder_marks
+  - no_series_design_edit
+  - stage_boundary
+  - required_artifacts
+
+human_review:
+  - medium coherence of final images
+  - continuity across final set
+  - publish readiness after Final Preview
+
+notes: |
+  Primary happy-path Final after confirmed Timed Animatic.

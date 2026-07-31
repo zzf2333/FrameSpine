@@ -90,3 +90,18 @@ evals/runs/<case-id>/<trial>/workspace/
     composition-route.txt
 ```
 
+## Final Composition
+
+```text
+evals/runs/<case-id>/<trial>/workspace/
+  EPISODE.md
+  SCRIPT.md
+  captions.json                   # from Timed Animatic
+  video/composition.html
+  eval-artifacts/
+    preview-manifest.json         # surface=composition, final_preview, audits
+    final-manifest.json
+    tool-trace.json               # timed confirm → cost → audits → batch → final_preview → stage_stop
+    composition-route.txt
+```
+

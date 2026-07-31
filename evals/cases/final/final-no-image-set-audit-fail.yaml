@@ -1,0 +1,38 @@
+id: final-no-image-set-audit-fail
+title: Final without Image Set Audit
+suite: final
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: character-story
+  stage: final
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  prior_stage: timed-animatic-confirmed
+  injected_failure: fixtures/expected-boundaries/final-no-image-set-audit.md
+
+target_stage: final
+expected_result: fail
+release_gate: true
+recommended_trials: 3
+
+must_do:
+  - fail image_set_audit when audit not executed
+
+must_not_do:
+  - deliver Final without Image Set Audit
+
+required_artifacts:
+  - tool-trace missing image_set_audit
+
+gates:
+  - image_set_audit
+  - prior_timed_animatic_confirm
+  - required_artifacts
+
+human_review: []
+
+notes: |
+  Negative baseline: missing Image Set Audit.
