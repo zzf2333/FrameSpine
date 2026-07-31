@@ -1,291 +1,74 @@
-# FrameSpine Eval Suite
+# FrameSpine Eval（精简）
 
-**Skill 负责生产视频；Eval 负责验证 Skill 有没有按照设计生产。**
-
-设计权威：[`DESIGN.md`](./DESIGN.md)  
-本文件是**运行入口与实现状态**；与设计冲突时以 `DESIGN.md` 为准，并修正实现或更新设计版本说明。
-
-评分器、测试案例、失败样例与报告只存在于 `evals/`，不得写回：
+离线工具，**不进入运行时 Skill**。
 
 ```text
-SKILL.md
-references/
-templates/
-scripts/
+Skill 负责生产
+Eval  只做两件事：
+  1. E0：文档合同有没有漂
+  2. 对真实 episode workspace 跑阶段硬门禁（尸检）
 ```
 
-运行时 Skill 继续由真实用户预览验收；离线 Eval 可以评分，两者不冲突。
+**不解决**：对话里 Agent 是否守流程。那要靠 Skill 写法与人工阶段确认。
 
-## 六层结构
-
-```text
-E0  静态合同检查
-E1  单能力测试
-E2  阶段产物测试
-E3  Agent 轨迹测试
-E4  端到端生产测试
-E5  鲁棒性与回归测试
-```
-
-正式报告输出（**不要**一个掩盖问题的总分）：
-
-```text
-硬性违规
-各阶段通过情况
-不同能力切片表现
-人工审片结果
-失败根因与唯一修复位置
-```
-
-## 目录
+## 保留内容
 
 ```text
 evals/
-├── DESIGN.md                 # 第一版设计权威
-├── README.md                 # 本文件
-├── cases/
-│   ├── series/               # E1/E4
-│   ├── locked-script/        # E1
-│   ├── development/          # E1
-│   ├── revision/             # E1
-│   ├── storyboard/           # E2 Story Flow（v1 优先）
-│   ├── animatic/             # E2 Image Animatic
-│   ├── timed/                # E2 Timed Animatic
-│   ├── final/                # E2 Final Composition
-│   ├── providers/            # E1
-│   └── adversarial/          # E5
-├── fixtures/
-├── rubrics/
+├── README.md
+├── cases/                 # 4 个 happy-path 金标准（给 gate 对照）
+│   ├── storyboard/storyboard-locked-001.yaml
+│   ├── animatic/image-animatic-locked-001.yaml
+│   ├── timed/timed-animatic-locked-001.yaml
+│   └── final/final-locked-001.yaml
+├── fixtures/              # 最小 series + locked script
 ├── graders/
 │   ├── deterministic/
-│   ├── trace/
-│   ├── visual/
-│   └── human/
-├── baselines/
-├── runs/                     # gitignored
-└── reports/
+│   │   ├── e0-static-contracts.mjs
+│   │   ├── storyboard-gates.mjs
+│   │   ├── image-animatic-gates.mjs
+│   │   ├── timed-animatic-gates.mjs
+│   │   └── final-gates.mjs
+│   ├── lib/               # manifest / case yaml / paths
+│   └── visual/board-claim-check.mjs
+└── runs/                  # gitignored 本地产物
 ```
+
+已删除：synthetic suite、multi-trial harness、负例矩阵、长报告、rubrics、human sheets、骨架 case 区。
+
+## 日常命令
+
+```bash
+# 改 Skill / references 后：文档合同
+npm run eval:e0
+
+# 对真实单集 workspace 尸检（按阶段选一个）
+npm run eval:gates -- \
+  --case evals/cases/storyboard/storyboard-locked-001.yaml \
+  --workspace /path/to/episode \
+  --source-script evals/fixtures/inputs/locked-script-a.md
+
+npm run eval:gates:animatic -- \
+  --case evals/cases/animatic/image-animatic-locked-001.yaml \
+  --workspace /path/to/episode
+
+npm run eval:gates:timed -- \
+  --case evals/cases/timed/timed-animatic-locked-001.yaml \
+  --workspace /path/to/episode \
+  --source-script /path/to/SCRIPT.md
+
+npm run eval:gates:final -- \
+  --case evals/cases/final/final-locked-001.yaml \
+  --workspace /path/to/episode
+
+# Story Flow 画布 claim 粗检（非 Studio 像素）
+node evals/graders/visual/board-claim-check.mjs --workspace /path/to/episode
+```
+
+Workspace 需含阶段 `eval-artifacts/`（preview / board|composition|timed|final manifest、tool-trace 等）。没有 artifacts 时 gate 可能 `inconclusive`——那说明 Agent 没按可验方式落盘，不是“质量高”。
 
 ## 原则
 
-1. **Eval 不污染 Skill** — 具体故事、错误样例、评分标准只在本目录。  
-2. **沿真实阶段测试** — Locked / Development / Revision + 四成熟阶段，不只看最终导出。  
-3. **轨迹与产物并重** — 跨阶段、错误 surface、虚构 Provider、静默改稿必须可抓。  
-4. **硬门禁与软质量分离** — P0 不可被高分抵消；软质量 0/1/2，先看切片。  
-5. **同一 case 多 trial** — smoke ≥3；回归 3–5；高风险 5。不挑最好一次。  
-6. **失败回写唯一权威位置** — Skill 文档一处，或“只加 regression case”。  
-7. **新增 case 来自真实失败** — 不为凑覆盖率线性扩脚手架；稳态约 25–40 稳定 case。
-
-## 实现状态（对照 DESIGN）
-
-| 层 | 状态 | 入口 / 位置 |
-| --- | --- | --- |
-| **E0** 静态合同 | **可跑** | `npm run eval:e0` |
-| **E1** 单能力 | **骨架** | `cases/{locked-script,development,revision,series,providers}/` 多为 README；部分能力嵌在阶段 case |
-| **E2** Story Flow | **已稳** | `npm run eval:storyboard`；live trial 有限 |
-| **E2** Image Animatic | **硬门禁可跑** | `npm run eval:animatic`；soft/Studio 人审不足 |
-| **E2** Timed Animatic | **硬门禁可跑** | `npm run eval:timed`；无 live 正式 TTS 套件 |
-| **E2** Final | **硬门禁可跑** | `npm run eval:final`；无 live Final Preview 人审 |
-| **E3** 轨迹 / multi-trial | **约定 + CLI 可跑** | `graders/trace/HARNESS.md`；init/validate/grade/aggregate；Agent 执行仍外部 |
-| **E4** 端到端 | **未建** | — |
-| **E5** 对抗/回归 | **部分** | 阶段负例 baseline + `cases/adversarial/` placeholder |
-
-### Storyboard 五门（v1 优先，设计 §5）
-
-```text
-Surface Gate
-Frame Canvas Gate
-Sequence Gate
-Source Separation Gate
-Stage Boundary Gate
-```
-
-主软指标：`Visual-Only Comprehension Rate`（需 Studio 人审，不可仅靠 synthetic）。
-
-## 运行
-
-### E0
-
-```bash
-npm run eval:e0
-# 或
-node evals/graders/deterministic/e0-static-contracts.mjs
-```
-
-### Case 校验
-
-```bash
-npm run eval:cases
-# 或
-node evals/graders/deterministic/validate-cases.mjs
-```
-
-### E2 阶段套件（当前可自动跑）
-
-```bash
-npm run eval:storyboard   # E0 + cases + storyboard synthetic matrix
-npm run eval:animatic     # cases + image-animatic synthetic matrix
-npm run eval:timed        # cases + timed-animatic synthetic matrix
-npm run eval:final        # cases + final synthetic matrix
-```
-
-分项：
-
-```bash
-npm run eval:synthetic          # storyboard synthetic only
-npm run eval:animatic:build
-npm run eval:animatic:grade
-npm run eval:timed:build
-npm run eval:timed:grade
-npm run eval:final:build
-npm run eval:final:grade
-```
-
-### 单 trial workspace
-
-```bash
-node evals/graders/deterministic/storyboard-gates.mjs \
-  --case evals/cases/storyboard/storyboard-locked-001.yaml \
-  --workspace evals/runs/synthetic/storyboard-locked-001/workspace
-
-node evals/graders/deterministic/image-animatic-gates.mjs \
-  --case evals/cases/animatic/image-animatic-locked-001.yaml \
-  --workspace evals/runs/synthetic-animatic/image-animatic-locked-001/workspace
-
-node evals/graders/deterministic/timed-animatic-gates.mjs \
-  --case evals/cases/timed/timed-animatic-locked-001.yaml \
-  --workspace evals/runs/synthetic-timed/timed-animatic-locked-001/workspace \
-  --source-script evals/fixtures/inputs/locked-script-a.md
-
-node evals/graders/deterministic/final-gates.mjs \
-  --case evals/cases/final/final-locked-001.yaml \
-  --workspace evals/runs/synthetic-final/final-locked-001/workspace
-```
-
-## Trial 产物约定
-
-| 类型 | 路径 | 用途 |
-| --- | --- | --- |
-| Synthetic Storyboard | `evals/runs/synthetic/<case-id>/` | gate 逻辑回归 |
-| Synthetic Image Animatic | `evals/runs/synthetic-animatic/<case-id>/` | gate 逻辑回归 |
-| Synthetic Timed | `evals/runs/synthetic-timed/<case-id>/` | gate 逻辑回归 |
-| Synthetic Final | `evals/runs/synthetic-final/<case-id>/` | gate 逻辑回归 |
-| Live agent | `evals/runs/<case-id>/<trial>/` | 真实 Agent + Studio |
-
-### Story Flow
-
-```text
-eval-artifacts/preview-manifest.json
-eval-artifacts/board-manifest.json
-eval-artifacts/tool-trace.json
-eval-artifacts/storyboard-route.txt
-```
-
-### Image Animatic
-
-```text
-eval-artifacts/preview-manifest.json
-eval-artifacts/composition-manifest.json
-eval-artifacts/tool-trace.json
-eval-artifacts/composition-route.txt
-```
-
-### Timed Animatic
-
-```text
-eval-artifacts/preview-manifest.json
-eval-artifacts/timed-manifest.json
-eval-artifacts/tool-trace.json
-eval-artifacts/composition-route.txt
-captions.json
-audio/ 或 formal TTS claim
-```
-
-### Final
-
-```text
-eval-artifacts/preview-manifest.json
-eval-artifacts/final-manifest.json
-eval-artifacts/tool-trace.json
-eval-artifacts/composition-route.txt
-video/composition.html
-```
-
-`board-manifest.json` 的 `frames[].canvas.kind`：`empty | generic | concrete`。  
-Deterministic grader 信任结构化 claim 做回归；Vision / Human 核对与真实 Studio 一致。
-
-完整 harness 布局见 `graders/trace/README.md` 与 `graders/trace/HARNESS.md`。
-
-### E3 Multi-trial harness（不跑 Agent）
-
-```bash
-# 1) 初始化 N 个 trial 目录（默认 recommended_trials 或 3）
-npm run eval:harness:init -- --case evals/cases/storyboard/storyboard-locked-001.yaml
-
-# 2) 外部 Agent 写入各 trial-N/workspace + eval-artifacts
-
-# 3) 布局校验
-npm run eval:harness:validate -- --trial-dir evals/runs/storyboard-locked-001/trial-1
-
-# 4) 对所有 trial 跑对应阶段 deterministic gates
-npm run eval:harness:grade -- --case-id storyboard-locked-001
-
-# 5) 聚合稳定性（无单一总分）
-npm run eval:harness:aggregate -- --case-id storyboard-locked-001
-```
-
-已有 live 目录（如 `evals/runs/storyboard-locked-001/trial-1`）可直接 grade + aggregate；init 仅用于新 case。
-
-## 评分与 grader
-
-| Grader | 位置 | 角色 |
-| --- | --- | --- |
-| Deterministic | `graders/deterministic/` | P0 文件/工具/route/阶段边界 |
-| Trace | `graders/trace/` | 轨迹约定与（后续）轨迹规则 |
-| Visual / LLM | `graders/visual/` | 离线初筛，非 release 唯一真理 |
-| Human | `graders/human/` | Visual-Only、sync、pairwise |
-
-P0 与软维度定义见 `DESIGN.md` §6 与 `rubrics/`。
-
-## 核心指标（10）
-
-```text
-1. P0-Free Trial Rate
-2. Input Routing Accuracy
-3. Locked Script Preservation Rate
-4. Correct Preview Surface Rate
-5. Storyboard Visual-Only Comprehension Rate
-6. Stage Stop Accuracy
-7. Medium Transfer Success Rate
-8. Root-Cause Repair Accuracy
-9. Human Pairwise Preference Win Rate
-10. Cross-Trial Stability
-```
-
-切片：Locked / Development / Revision × 媒介 × 内容类型 × 阶段 × Provider。
-
-## 报告
-
-- 模板：`reports/REPORT_TEMPLATE.md`
-- 错误分类：`reports/ERROR_TAXONOMY.md`
-- 阶段 offline 报告：`reports/STORYBOARD_*`、`IMAGE_ANIMATIC_*`、`TIMED_ANIMATIC_*`
-
-## 与 Skill 的边界
-
-| 位置 | 职责 |
-| --- | --- |
-| Skill / references / templates | 抽象生产工艺与合同 |
-| Eval cases | 具体测试内容与金标准 |
-| Rubrics | 判断标准 |
-| Graders | 离线检查器 |
-| Reports | 结果、失败分类、唯一修复位置 |
-
-**Eval 不判断 Agent 有没有“看起来很努力”，而是判断它是否在正确阶段、使用正确表面、生产正确产物、遵守正确边界，并让用户能够做出当前阶段真正应该做的判断。**
-
-## 下一步（按 DESIGN §11，不抢跑）
-
-1. **守住 v1 Storyboard** — 保持 offline 绿；Studio Visual-Only 人审；真实失败再加 case。  
-2. **四阶段边界** — Story/Image/Timed/Final 硬门禁均可跑；feedback 返回路径与 live Final 仍待。  
-3. **E3 harness** — 约定 + CLI 已有；用外部 runner 填满 trial-2/3 再看 cross_trial_stability。  
-4. **E4** — 25–40 稳定 case 的高风险交叉，而非全排列。  
-5. **瘦身** — suite-runner + grade-synthetic-suite 已共享；build-synthetic-* 阶段特有逻辑仍分文件。
+1. Eval 不污染 `SKILL.md` / `references/` / `templates/` / `scripts/`
+2. 不为覆盖率堆 case；真实反复翻车再加 1 个回归
+3. 全绿 ≠ 单集好用；只表示合同/门禁没漂、或该 workspace 硬边界过了

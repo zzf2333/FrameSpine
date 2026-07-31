@@ -79,20 +79,16 @@ npx hyperframes render --quality high --output final.mp4
 
 技术工具发现实现问题；内容、图片、节奏和风格由用户观看真实预览后判断。
 
-## Eval（离线，不进入运行时）
+## Eval（离线，精简）
 
-**Skill 负责生产视频；Eval 负责验证 Skill 有没有按照设计生产。**
+`evals/` 不进入运行时。只保留：
 
-`evals/` 独立于运行时：评分器、测试案例与报告不得写回 `SKILL.md` / `references/` / `templates/` / `scripts/`。
-设计权威：`evals/DESIGN.md`；运行说明：`evals/README.md`。
+1. **E0** — Skill 文档合同是否漂了
+2. **阶段 gate** — 对真实 episode workspace 做硬边界尸检
+
+说明见 `evals/README.md`。全绿 ≠ 单集协作好用。
 
 ```bash
 npm run eval:e0
-npm run eval:cases
-npm run eval:storyboard
-npm run eval:animatic
-npm run eval:timed
-npm run eval:final
+npm run eval:gates -- --case evals/cases/storyboard/storyboard-locked-001.yaml --workspace /path/to/episode
 ```
-
-当前可跑：E0 静态合同 + Storyboard / Image Animatic / Timed Animatic / Final 硬门禁 + E3 multi-trial harness CLI（`eval:harness:*`，不跑 Agent）。E4 端到端、Studio 软质量人审仍按设计后续推进。

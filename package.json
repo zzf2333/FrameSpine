@@ -12,27 +12,9 @@
         "generate-tts": "node scripts/generate-tts.mjs",
         "generate-images": "node scripts/generate-images.mjs",
         "eval:e0": "node evals/graders/deterministic/e0-static-contracts.mjs",
-        "eval:cases": "node evals/graders/deterministic/validate-cases.mjs",
-        "eval:synthetic:build": "node evals/graders/deterministic/build-synthetic-trials.mjs",
-        "eval:synthetic:grade": "node evals/graders/deterministic/grade-synthetic.mjs",
-        "eval:synthetic": "npm run eval:synthetic:build && npm run eval:synthetic:grade",
-        "eval:storyboard": "node evals/run-storyboard-suite.mjs",
-        "eval:animatic:build": "node evals/graders/deterministic/build-synthetic-animatic.mjs",
-        "eval:animatic:grade": "node evals/graders/deterministic/grade-synthetic-animatic.mjs",
-        "eval:animatic": "node evals/run-image-animatic-suite.mjs",
-        "eval:timed:build": "node evals/graders/deterministic/build-synthetic-timed.mjs",
-        "eval:timed:grade": "node evals/graders/deterministic/grade-synthetic-timed.mjs",
-        "eval:timed": "node evals/run-timed-animatic-suite.mjs",
         "eval:gates": "node evals/graders/deterministic/storyboard-gates.mjs",
         "eval:gates:animatic": "node evals/graders/deterministic/image-animatic-gates.mjs",
         "eval:gates:timed": "node evals/graders/deterministic/timed-animatic-gates.mjs",
-        "eval:final:build": "node evals/graders/deterministic/build-synthetic-final.mjs",
-        "eval:final:grade": "node evals/graders/deterministic/grade-synthetic-final.mjs",
-        "eval:final": "node evals/run-final-suite.mjs",
-        "eval:gates:final": "node evals/graders/deterministic/final-gates.mjs",
-        "eval:harness:init": "node evals/graders/trace/init-trials.mjs",
-        "eval:harness:validate": "node evals/graders/trace/validate-trial.mjs",
-        "eval:harness:grade": "node evals/graders/trace/grade-trials.mjs",
-        "eval:harness:aggregate": "node evals/graders/trace/aggregate-trials.mjs"
+        "eval:gates:final": "node evals/graders/deterministic/final-gates.mjs"
     }
 }
