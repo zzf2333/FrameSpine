@@ -10,44 +10,64 @@
 - Meaning Anchor：
 - 图片世界怎样让观众自然理解这份叙事契约：
 
-## Image Prompt Baseline
+## Visual Expression Contract｜视觉表达契约
 
-这是系列所属世界的基线，不是一段应机械复制到每张图片开头的 Style Prompt。Prompt 组装优先级为：**当前 Asset 的叙事任务 → Episode Visual Anchors → 与该素材相关的 Image Prompt Baseline → 其他 DESIGN 规则**。单张素材先写它要证明的事件、证据和镜头任务；只继承真正相关的 2–4 项系列约束，并允许景别、机位、光线和构图为叙事角色变化。不要把整个 `DESIGN.md` 或整个基线复制进每条 Prompt。
+这是系列所属媒介的可执行配方，不是一段应机械复制到每张图片开头的 Style Prompt。Prompt 组装优先级为：**当前 Asset 的叙事任务 → Episode Visual Anchors → 与该素材相关的 Visual Expression Contract → 其他 DESIGN 规则**。单张素材先写它要证明的事件、证据和观看任务；只继承真正相关的 2–4 项系列约束。不要把整个 `DESIGN.md` 或整个配方复制进每条 Prompt。
 
-### World Invariants
+### Visual Medium
 
-- 长期存在的空间、人物与物件逻辑：
-- 可复用的世界规则与连续性：
-- 不可随意改变的身份、比例、时代或使用关系：
+- 画面以什么视觉媒介存在：
+- 它适合怎样表达 Narrative Contract：
+- 不可混入的媒介或默认 AI 风格：
 
-### Camera Language
+### Form & Edge Language
 
-- 常用景别、机位与观察距离：
-- 允许的景别 / 机位 / 观察距离变化：
-- 何时接近、何时保持自然观察距离：
+- 人物、物件与环境通过什么轮廓、形状、细节与边缘规则构成：
+- 哪些形式特征必须跨素材保持：
+- 哪些形式变化可随图片角色改变：
 
-### Material Reality
+### Framing & Viewpoint Language
 
-- 皮肤、纸张、屏幕、桌面、织物、塑料等的真实质感：
-- 光线、磨损、反光、使用痕迹与物件功能关系：
+- 常用观看距离、方向、构图与观察方式：
+- 允许的观察方式变化：
+- 何时靠近、何时拉开、何时用平面或舞台式观看：
+
+### Material & Surface Logic
+
+- 表面、材质、线条、纹理、光影或渲染规则：
+- 它们怎样证明当前媒介与世界真的成立：
 - 真实证据、截图和精确文字应如何处理：
 
-### Controlled Imperfection
+### Space & Depth Model
 
-- 允许的普通光线、轻微不对称、遮挡、折痕、磨损与自然裁切：
-- 必须保持清楚的关键证据、人物身份与空间逻辑：
+- 空间通过真实透视、平面分格、层叠舞台、等距结构或其他方式成立：
+- 主体、背景与证据怎样维持可读关系：
+- 可用于 HyperFrames 分层与运动的结构：
 
-### Anti-Patterns
+### Continuity System
 
-- 广告摆拍 / 海报构图：
-- 塑料皮肤 / 样板房 / 完美摆放：
-- 统一暖灰滤镜 / 过度浅景深 / 无意义电影布光：
-- 其他会让所有镜头长得一样的模式：
+- 人物、物件、空间、关系与视觉世界依靠什么保持一致：
+- 不可随意改变的身份、比例、时代、位置或世界规则：
 
-### Shot Variety
+### Controlled Irregularity
+
+- 哪些不规则属于媒介手感：
+- 哪些不规则是错误、会破坏关键证据、主体身份或世界逻辑：
+
+### Motion Affordances
+
+- 这种媒介天然适合怎样进入、揭示、发展、强调与交接：
+- 哪些运动会破坏媒介感或没有叙事作用：
+
+### Medium Failure Modes
+
+- 什么会变成廉价模仿、媒介混杂或通用 AI 图：
+- 系列特有的反模式：
+
+### Visual Variety
 
 - 场景建立、证据、行为过程、情绪与回报图应怎样有意变化：
-- 不应重复的景别、构图、色调或人物姿态：
+- 不应重复的观察方式、构图、媒介手感、色调或主体状态：
 
 ## Visual Rationale
 

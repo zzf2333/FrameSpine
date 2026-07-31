@@ -20,8 +20,8 @@
 - Series Identity：
 - Audience Profile：
 - Narrative Contract：Narrative Mode / Reality Level / Story License / Meaning Anchor：
-- Image Language：
-- Visual Identity：
+- Visual Medium / Image Language：
+- Visual Expression Contract：
 - Voice Identity：
 - 生产约束与禁止项：
 
@@ -37,7 +37,7 @@
 
 使用非叙事化的素材、抽象关系、通用占位文案或组件演示；不要选用未来要发布的 Episode 内容。
 
-- 图片处理 / 质感测试：
+- Visual Medium / 造型、表面、空间与媒介一致性测试：
 - 字幕与布局测试：
 - 运动与转场测试：
 - 声音与音乐测试：

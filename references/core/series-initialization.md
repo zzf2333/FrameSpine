@@ -41,9 +41,9 @@ Step 2  Audience Profile
     ↓
 Step 3  Narrative Contract
     ↓
-Step 4  Image Language
+Step 4  Visual Medium & Image Language
     ↓
-Step 5  Visual Identity
+Step 5  Visual Expression Contract
     ↓
 Step 6  Voice Identity
     ↓
@@ -151,35 +151,38 @@ Meaning Anchor 是观众最终要带走、且系列必须长期保持一致的�
 
 单集可以因题材改变 Reality Level 或 Story License，但不得因为一条视频就改写系列契约；单集需要在 `EPISODE.md` 说明例外及它如何仍服务 Meaning Anchor。
 
-## Step 4：Image Language
+## Step 4：Visual Medium & Image Language｜视觉媒介与图片语言
 
-这是长期图片规则，不是某一期的分镜。
+这是长期图片规则，不是某一期的分镜。先确定画面通过什么**视觉媒介**存在：摄影、漫画、剪纸、3D、黏土、拼贴或其他；FrameSpine 不把其中任何一种设为默认。
 
 确定：
 
-- 图片世界、质感和主要类型；
-- 构图倾向与字幕安全区；
+- 视觉媒介如何自然表达 Narrative Contract；
 - 人物、环境、物件、证据、机制图和视觉隐喻的长期分工；
 - 图片主要承担人物处境、环境关系、机制解释或视觉隐喻中的哪些角色；
-- 允许的图片结构与明确避免的方式；
-- 如何让图片语言自然表达 Narrative Contract。
+- 构图与观察方式、字幕安全区；
+- 允许的图片结构与明确避免的媒介混杂；
+- 如何让图片语言自然表达 Meaning Anchor。
 
 不要在这里选择某期具体使用什么图、什么人物或什么 Beat。那些属于 Storyboard。
 
-## Step 5：Visual Identity
+## Step 5：Visual Expression Contract｜视觉表达契约
 
-把系列方向编译到 `DESIGN.md`，成为 HyperFrames 可复用的视觉身份：
+把系列的具体媒介配方编译到 `DESIGN.md`，成为 HyperFrames 与未来 Episode 可复用的视觉身份。它需要为以下**类别**提供系列的具体答案：
 
-- 色彩角色；
-- 字体与排版；
-- 竖屏布局；
-- 双语字幕基础样式；
-- 运动气质；
-- 转场语言；
-- 可复用组件；
-- What NOT to Do。
+- Visual Medium；
+- Form & Edge Language；
+- Framing & Viewpoint Language；
+- Material & Surface Logic；
+- Space & Depth Model；
+- Continuity System；
+- Controlled Irregularity；
+- Motion Affordances；
+- Medium Failure Modes；
+- Visual Variety；
+- 色彩、字体、竖屏布局、字幕、转场和可复用组件。
 
-视觉身份定义系列如何被看见，不定义某一期的场景、镜头或故事节奏。
+例如，Material & Surface Logic 可以在电影写实系列写皮肤、织物与屏幕反光；在漫画系列写墨线、网点与阴影块；在剪纸系列写纸张纤维、切边与层间投影。类别属于模板，具体原料属于系列实例。视觉表达契约定义系列如何被看见，不定义某一期的场景、镜头或故事节奏。
 
 ## Step 6：Voice Identity
 
@@ -226,7 +229,7 @@ Meaning Anchor 是观众最终要带走、且系列必须长期保持一致的�
 1. 系列身份、内容范围与长期价值清楚；
 2. Audience Profile 可指导长期取舍；
 3. Narrative Contract 与 Meaning Anchor 清楚；
-4. Image、Visual 与 Voice Identity 可以复用；
+4. Visual Medium、Visual Expression Contract 与 Voice Identity 可以复用；
 5. Production Configuration 和长期照护约束明确；
 6. 风格校准已解决需要通过观看判断的视觉与声音问题。
 
@@ -258,11 +261,11 @@ project-root/
 
 ### `SERIES.md`
 
-长期系列配置：Series Identity、Audience Profile、Narrative Contract、Image / Visual / Voice Identity、Production Configuration、Style Calibration Notes 与 Future Decisions。
+长期系列配置：Series Identity、Audience Profile、Narrative Contract、Visual Medium / Image Language / Voice Identity、Production Configuration、Style Calibration Notes 与 Future Decisions。
 
 ### `DESIGN.md`
 
-供 HyperFrames 与未来 Episodes 继承的视觉身份和可复用组件。
+供 HyperFrames 与未来 Episodes 继承的 Visual Expression Contract、视觉身份和可复用组件。
 
 ### `CALIBRATION.md`
 
