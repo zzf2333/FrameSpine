@@ -1,0 +1,48 @@
+{
+  "visual_only_readable": true,
+  "sequence_roles_present": ["entry", "development", "handoff"],
+  "frames": [
+    {
+      "id": "B08-F1",
+      "beat": "B08",
+      "src": "video/compositions/frames/b08-f1.html",
+      "status": "built",
+      "sequence_role": "entry",
+      "canvas": {
+        "kind": "concrete",
+        "subjects": ["small shop still open", "core product on counter"],
+        "text_on_canvas": [],
+        "text_roles": [],
+        "inspector_dependency": false
+      }
+    },
+    {
+      "id": "B08-F2",
+      "beat": "B08",
+      "src": "video/compositions/frames/b08-f2.html",
+      "status": "built",
+      "sequence_role": "development",
+      "canvas": {
+        "kind": "concrete",
+        "subjects": ["reviews accumulating", "user works", "new cities"],
+        "text_on_canvas": [],
+        "text_roles": [],
+        "inspector_dependency": false
+      }
+    },
+    {
+      "id": "B08-F3",
+      "beat": "B08",
+      "src": "video/compositions/frames/b08-f3.html",
+      "status": "built",
+      "sequence_role": "handoff",
+      "canvas": {
+        "kind": "concrete",
+        "subjects": ["core product", "wall of reviews", "ending handoff"],
+        "text_on_canvas": ["order ledger stamp"],
+        "text_roles": ["story_object"],
+        "inspector_dependency": false
+      }
+    }
+  ]
+}

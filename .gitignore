@@ -8,3 +8,5 @@ node_modules/
 # Eval trial outputs (keep fixtures/cases; ignore run artifacts)
 evals/runs/**
 !evals/runs/.gitkeep
+# synthetic matrix is regenerated locally; do not commit noise
+!evals/reports/storyboard-synthetic-latest.md

@@ -108,11 +108,52 @@ node evals/graders/deterministic/validate-cases.mjs
 ### 一次性跑 v1 Storyboard 套件入口
 
 ```bash
-node evals/run-storyboard-suite.mjs
+npm run eval:storyboard
 ```
 
-当前 v1 可自动跑 E0、case 校验与 deterministic gates 的静态部分。  
-需要 Agent trajectory、Vision 初筛与 Human Expert 的部分，按 `rubrics/` 与 `graders/human/` 手工或外部 harness 执行，结果写入 `runs/` 与 `reports/`。
+当前 v1 自动跑：
+
+```text
+E0 静态合同
+→ case 校验
+→ 合成 trial 构建
+→ deterministic Storyboard gate matrix
+```
+
+```bash
+npm run eval:e0
+npm run eval:cases
+npm run eval:synthetic
+```
+
+对单个 trial workspace：
+
+```bash
+node evals/graders/deterministic/storyboard-gates.mjs \
+  --case evals/cases/storyboard/storyboard-locked-001.yaml \
+  --workspace evals/runs/synthetic/storyboard-locked-001/workspace
+```
+
+### 合成 trial 与真实 trial
+
+| 类型 | 路径 | 用途 |
+| --- | --- | --- |
+| Synthetic | `evals/runs/synthetic/<case-id>/` | 验证 gate 逻辑；负例必须 fail_as_expected |
+| Live agent | `evals/runs/<case-id>/<trial>/` | 真实 Agent 产物 + Studio 预览 |
+
+真实 trial 需写入：
+
+```text
+eval-artifacts/preview-manifest.json
+eval-artifacts/board-manifest.json
+eval-artifacts/tool-trace.json
+eval-artifacts/storyboard-route.txt
+```
+
+`board-manifest.json` 的 `frames[].canvas.kind` 取值：`empty | generic | concrete`。  
+Vision / Human 负责核对 manifest 与真实 Board 一致；deterministic grader 信任结构化 claim 做回归。
+
+需要 Agent trajectory、Vision 初筛与 Human Expert 的部分，按 `rubrics/` 与 `graders/human/` 执行，结果写入 `runs/` 与 `reports/`。
 
 ## v1 优先范围
 

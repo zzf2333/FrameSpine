@@ -1,0 +1,13 @@
+{
+  "case_id": "storyboard-locked-001",
+  "trial": 1,
+  "events": [
+    { "type": "tool", "tool": "read", "path": "SCRIPT.md" },
+    { "type": "tool", "tool": "write", "path": "STORYBOARD.md" },
+    {
+      "type": "stage_stop",
+      "stage": "story-flow",
+      "route": "https://studio.example/storyboard/episode-001"
+    }
+  ]
+}

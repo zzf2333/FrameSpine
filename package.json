@@ -13,6 +13,10 @@
         "generate-images": "node scripts/generate-images.mjs",
         "eval:e0": "node evals/graders/deterministic/e0-static-contracts.mjs",
         "eval:cases": "node evals/graders/deterministic/validate-cases.mjs",
-        "eval:storyboard": "node evals/run-storyboard-suite.mjs"
+        "eval:synthetic:build": "node evals/graders/deterministic/build-synthetic-trials.mjs",
+        "eval:synthetic:grade": "node evals/graders/deterministic/grade-synthetic.mjs",
+        "eval:synthetic": "npm run eval:synthetic:build && npm run eval:synthetic:grade",
+        "eval:storyboard": "node evals/run-storyboard-suite.mjs",
+        "eval:gates": "node evals/graders/deterministic/storyboard-gates.mjs"
     }
 }

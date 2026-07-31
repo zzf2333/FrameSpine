@@ -1,16 +1,14 @@
 #!/usr/bin/env node
 /**
  * Validate eval case YAML/JSON files without external dependencies.
- * Supports a minimal YAML subset used by this suite.
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { loadCaseFile } from '../lib/case-yaml.mjs';
+import { REPO_ROOT, EVALS_ROOT } from '../lib/paths.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '../../..');
-const CASES_DIR = path.join(ROOT, 'evals/cases');
+const CASES_DIR = path.join(EVALS_ROOT, 'cases');
 
 const REQUIRED_KEYS = [
   'id',
@@ -32,131 +30,9 @@ function walk(dir, out = []) {
   return out;
 }
 
-/**
- * Minimal YAML loader for this repo's case format:
- * - key: value
- * - nested objects by indentation
- * - lists with "- item"
- * - block scalars with "|"" are stored as strings starting after the marker
- */
-function parseMinimalYaml(text) {
-  const lines = text.replace(/\t/g, '  ').split(/\r?\n/);
-  const root = {};
-  const stack = [{ indent: -1, value: root, key: null, kind: 'map' }];
-  let i = 0;
-
-  function current() {
-    return stack[stack.length - 1];
-  }
-
-  while (i < lines.length) {
-    const line = lines[i];
-    i += 1;
-    if (!line.trim() || line.trim().startsWith('#')) continue;
-
-    const indent = line.match(/^ */)[0].length;
-    const trimmed = line.trim();
-
-    while (stack.length > 1 && indent <= current().indent) {
-      stack.pop();
-    }
-
-    const ctx = current();
-
-    if (trimmed.startsWith('- ')) {
-      const itemText = trimmed.slice(2);
-      if (!Array.isArray(ctx.value)) {
-        throw new Error(`list item without list context near: ${line}`);
-      }
-      if (itemText.includes(': ') && !itemText.startsWith('"') && !itemText.startsWith("'")) {
-        // object list item single-line not used; treat as string
-        ctx.value.push(parseScalar(itemText));
-      } else {
-        ctx.value.push(parseScalar(itemText));
-      }
-      continue;
-    }
-
-    const m = trimmed.match(/^([^:]+):(.*)$/);
-    if (!m) {
-      throw new Error(`cannot parse line: ${line}`);
-    }
-    const key = m[1].trim();
-    const rest = m[2].trim();
-
-    if (!rest) {
-      // Look ahead: list or map
-      const next = lines[i];
-      const nextIndent = next ? next.match(/^ */)[0].length : 0;
-      const nextTrim = next ? next.trim() : '';
-      let child;
-      if (nextTrim.startsWith('- ')) {
-        child = [];
-      } else if (next && nextTrim && nextIndent > indent) {
-        child = {};
-      } else {
-        child = null;
-      }
-      if (Array.isArray(ctx.value)) {
-        throw new Error(`map key inside list unsupported: ${key}`);
-      }
-      ctx.value[key] = child;
-      if (child && typeof child === 'object') {
-        stack.push({ indent, value: child, key, kind: Array.isArray(child) ? 'list' : 'map' });
-      }
-      continue;
-    }
-
-    if (rest === '|' || rest === '>') {
-      const collected = [];
-      while (i < lines.length) {
-        const nl = lines[i];
-        if (!nl.trim()) {
-          collected.push('');
-          i += 1;
-          continue;
-        }
-        const nIndent = nl.match(/^ */)[0].length;
-        if (nIndent <= indent) break;
-        collected.push(nl.slice(indent + 2));
-        i += 1;
-      }
-      ctx.value[key] = collected.join('\n').replace(/\s+$/, '');
-      continue;
-    }
-
-    ctx.value[key] = parseScalar(rest);
-  }
-
-  return root;
-}
-
-function parseScalar(v) {
-  if (v === 'true') return true;
-  if (v === 'false') return false;
-  if (v === 'null') return null;
-  if (/^-?\d+$/.test(v)) return Number(v);
-  if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
-    return v.slice(1, -1);
-  }
-  return v;
-}
-
-function loadCase(file) {
-  const raw = fs.readFileSync(file, 'utf8');
-  if (file.endsWith('.json')) {
-    try {
-      return JSON.parse(raw);
-    } catch (err) {
-      throw new Error(`invalid JSON: ${err.message}`);
-    }
-  }
-  return parseMinimalYaml(raw);
-}
-
 function validateCase(file, data, ids) {
   const errors = [];
-  const rel = path.relative(ROOT, file);
+  const rel = path.relative(REPO_ROOT, file);
 
   for (const key of REQUIRED_KEYS) {
     if (data[key] === undefined || data[key] === null) {
@@ -169,9 +45,15 @@ function validateCase(file, data, ids) {
     ids.add(data.id);
   }
 
-  if (data.must_do && !Array.isArray(data.must_do)) errors.push(`${rel}: must_do must be array`);
-  if (data.must_not_do && !Array.isArray(data.must_not_do)) errors.push(`${rel}: must_not_do must be array`);
-  if (data.gates && !Array.isArray(data.gates)) errors.push(`${rel}: gates must be array`);
+  if (data.must_do && !Array.isArray(data.must_do)) {
+    errors.push(`${rel}: must_do must be array`);
+  }
+  if (data.must_not_do && !Array.isArray(data.must_not_do)) {
+    errors.push(`${rel}: must_not_do must be array`);
+  }
+  if (data.gates && !Array.isArray(data.gates)) {
+    errors.push(`${rel}: gates must be array`);
+  }
 
   if (data.slice && typeof data.slice === 'object') {
     for (const k of ['input_mode', 'stage']) {
@@ -179,11 +61,10 @@ function validateCase(file, data, ids) {
     }
   }
 
-  // Resolve fixture paths if present
   const start = data.start_state || {};
   for (const v of Object.values(start)) {
     if (typeof v === 'string' && v.startsWith('fixtures/')) {
-      const full = path.join(ROOT, 'evals', v);
+      const full = path.join(EVALS_ROOT, v);
       if (!fs.existsSync(full)) {
         errors.push(`${rel}: missing fixture ${v}`);
       }
@@ -192,6 +73,15 @@ function validateCase(file, data, ids) {
 
   if (data.expected_result && !['pass', 'fail'].includes(data.expected_result)) {
     errors.push(`${rel}: expected_result must be pass|fail when set`);
+  }
+
+  if (data.expected_frame_development) {
+    const e = data.expected_frame_development;
+    if (typeof e !== 'object' || e === null) {
+      errors.push(`${rel}: expected_frame_development must be object`);
+    } else if (e.minimum_frames != null && typeof e.minimum_frames !== 'number') {
+      errors.push(`${rel}: expected_frame_development.minimum_frames must be number`);
+    }
   }
 
   return errors;
@@ -205,11 +95,16 @@ function main() {
 
   for (const file of files) {
     try {
-      const data = loadCase(file);
-      cases.push({ file: path.relative(ROOT, file), id: data.id, suite: data.suite });
+      const data = loadCaseFile(file, fs.readFileSync);
+      cases.push({
+        file: path.relative(REPO_ROOT, file),
+        id: data.id,
+        suite: data.suite,
+        expected_result: data.expected_result || 'pass',
+      });
       errors.push(...validateCase(file, data, ids));
     } catch (err) {
-      errors.push(`${path.relative(ROOT, file)}: parse error: ${err.message}`);
+      errors.push(`${path.relative(REPO_ROOT, file)}: parse error: ${err.message}`);
     }
   }
 

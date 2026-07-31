@@ -1,0 +1,36 @@
+id: storyboard-script-rewrite-fail
+title: Silent locked-script rewrite must fail
+suite: storyboard
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: adversarial
+  stage: story-flow
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/locked-script-rewrite.md
+
+target_stage: story-flow
+release_gate: true
+case_kind: negative-baseline
+recommended_trials: 5
+
+must_do:
+  - preserve authoritative locked script verbatim in SCRIPT.md
+  - use Development Mode only for topic inputs and Revision Mode only when source edits are explicit
+
+must_not_do:
+  - silently rewrite shorten reorder or replace hook conclusion interaction or rhythm lines
+  - polish locked narration without explicit revision authorization
+
+gates:
+  - source_separation
+  - script_preservation
+
+expected_result: fail
+
+human_review:
+  - confirm SCRIPT.md differs from locked source without revision request
+  - confirm failure is classified as source integrity not visual quality
