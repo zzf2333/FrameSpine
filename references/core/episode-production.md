@@ -8,7 +8,7 @@
 4. [阶段一：单集意图与最终回报](#阶段一单集意图与最终回报)
 5. [阶段二：注意力主干与 Hook Lab](#阶段二注意力主干与-hook-lab)
 6. [阶段三：旁白与故事段落](#阶段三旁白与故事段落)
-7. [阶段四：Story Flow](#阶段四story-flow)
+7. [阶段四：Story Flow / Storyboard Preview](#阶段四story-flow--storyboard-preview)
 8. [阶段五：图片节拍与 Image Animatic](#阶段五图片节拍与-image-animatic)
 9. [阶段六：正式 TTS 与双语字幕](#阶段六正式-tts-与双语字幕)
 10. [阶段七：Timed Animatic](#阶段七timed-animatic)
@@ -328,85 +328,84 @@ Development Mode 写下：
 
 可以用临时 TTS，但不要因临时声音参数过度调整内容。
 
-## 阶段四：Story Flow
+## 阶段四：Story Flow / Storyboard Preview
 
 ### 目的
 
-Story Flow 验证整条视频的观看动力与段落关系，不追求最终美术。
+让用户在投入时间播放、声音和后续资产前，审查 Agent 是否正确理解整条内容，并设计出成立的 Scene / Beat / Asset 与图片叙事路径。Story Flow 审的是**节拍设计**，不是一条粗视频的播放效果。
 
 ### Before Starting｜进入阶段前说明
 
-向用户说明：Story Flow 要验证整条视频的观看动力、段落推进、第一层回报和结尾回收；会制作可播放的粗略 Scene、图片顺序、临时声音/字幕占位与最小交接；不会制作最终图片、正式 TTS、`captions.json`、精细动画或导出。完成后请用户判断故事是否顺、哪里变平、回报是否及时、结尾是否兑现；不要求评价最终美术。
+向用户说明：Story Flow 会把整条视频的 Scene、Beat、对应原文、Attention 作用、图片任务、图片角色、前后 Handoff、连续性、占位状态与高风险素材整理到 HyperFrames 官方 Storyboard 页面；每个 Beat 会有一张可渲染的低成本 Frame 卡片。本阶段不会制作完整时间播放、临时 TTS、字幕时间轴、完整动画、最终图片或导出。完成后请用户判断 Agent 是否理解内容、Beat 顺序和图片叙事方案是否成立。
 
-### 直接创建真实 HyperFrames 项目
+### 建立官方 HyperFrames Storyboard
 
 在单集 `video/` 中：
 
-- 读取系列 `DESIGN.md`；
-- 使用占位图、参考图、简单图形和临时素材；
-- 先搭每个场景的静态英雄帧；
-- 加入粗略图片运动与场景转场；
-- 放入双语字幕占位；
-- 使用临时 TTS 或粗略时长。
+- 读取系列 `DESIGN.md` 与 Episode 的 Attention Spine、段落和 Visual Anchors；
+- 完成整条视频的 Scene、Beat 与 Asset 关系；
+- 将全部需要审查的 Beat 按顺序注册为 HyperFrames Storyboard items；
+- 每个 item 必须绑定项目内真正可渲染的 Frame composition `src`；
+- Frame 主体首先是占位图、参考图、简单构图或其他低成本视觉帧；
+- 卡片只配少量核心导演信息，详细字段保留在 `STORYBOARD.md` 或可展开内容中，不把说明文字做成画面主体。
 
-### Story Flow 必须接近真实播放
+每张卡片至少应让用户看见或查到：Beat / Scene、对应原文范围、Attention 作用、这拍要理解和感受什么、主要画面、第一眼与后续发现、前后 Handoff、继承的连续性、当前占位状态，以及是否属于高风险素材。无需把 `STORYBOARD.md` 的所有字段全部铺在卡片表面。
 
-不要只做一张段落时间线。至少表现：
+### 两种 surface 不可互相代替
 
-- 第一帧；
-- 图片出现顺序；
-- 主要视觉变化；
-- 段落转场；
-- 回报时的停顿；
-- 结尾回收。
+Story Flow 的正式产物是 **HyperFrames 官方 Storyboard URL / route**。不得用以下方式代替：
+
+- 创建一个自定义网页，把文案和设计说明排在页面上；
+- 创建一个叫“Storyboard”的普通 Composition；
+- 直接进入 Player / Preview 页面播放整条粗视频；
+- 只展示 `STORYBOARD.md` 文本；
+- 只展示 Beat 标题、outline、空白卡片或没有可渲染 `src` 的 item；
+- 在卡片里提前实现完整动画、正式声音或最终图片。
+
+正确要求是：使用 HyperFrames 官方 Storyboard surface，将全部 Beat 注册为按序排列、具有可渲染 `src` 的 Storyboard items。
 
 ### 这一轮审什么
 
-- 开头是否立刻发生事情；
-- 第一层回报是否来得足够早；
-- 段落是否推进；
-- 中段哪里平；
-- 证据是否出现；
-- 反转是否可信；
-- 结尾是否兑现。
+- Scene 划分和 Beat 顺序是否合理；
+- 每拍是否对应正确的原文范围与 Attention 作用；
+- 每拍具体让观众看见、理解和感受什么；
+- 场景、证据、过程、机制、情绪、回报等图片角色是否分布合理；
+- 前一拍怎样交给后一拍；
+- Entity / Environment / Medium / Relationship 连续性是否清楚；
+- 哪些 Frame 仍是占位，哪些素材风险最高；
+- 开头承诺、局部回报、核心重构和结尾回收是否在节拍设计上闭合。
 
-不必审：
-
-- 图片细节是否最终；
-- 每个 easing；
-- 最终字幕像素；
-- 音效混音；
-- 最终输出质量。
+不审：动画流畅度、TTS、字幕精确同步、转场精度、最终图片质感或完整播放节奏。
 
 ### 用户反馈后
 
-内容问题在 Development / Revision Mode 回到注意力或旁白；Locked Script Mode 则报告源文本风险，并优先通过图片、停留、声音、证据与场景关系承接。视觉关系问题回到图片任务；不要在 Story Flow 阶段用精细动画掩盖结构问题。
+内容理解问题在 Development / Revision Mode 回到 Attention Spine 或旁白；Locked Script Mode 报告源文本风险并调整图片任务、证据、Scene / Beat 关系，不静默改稿。节拍问题回到 Scene、Beat、图片角色、连续性或 Handoff；不要在 Story Flow 阶段用时间线、动画或自定义说明页面掩盖设计问题。
 
 ### Preview Readiness Review｜交付前自审
 
 ```text
-启动 Studio
-→ 完整播放一次
-→ 检查第一拍 / 第一层回报 / 中段最弱处 / 结尾
-→ 检查空白资源、Scene 顺序与段落交接
-→ 运行需要的 lint / inspect / preview
+启动 Studio 官方 Storyboard surface
+→ 检查全部 Scene / Beat 是否按序出现
+→ 检查每个 item 都有可渲染 src 和实际 Frame 画面
+→ 检查缺失、重复、错误原文范围与图片角色分布
+→ 检查前后 Handoff、连续性、高风险与占位标记
 → 修复
-→ 在同一路径再次完整播放
+→ 回到同一 Storyboard route 从上到下复查
 ```
 
-必须确认从头到尾可播放，第一帧、主要段落、第一层回报和结尾都可见，没有空卡片或错误资源，粗略 Scene 顺序与 Attention Spine 一致，并已列出仍为占位的内容。此阶段不要求最终图片或精细运动，但不能只有文档或 outline。
+Story Flow 不要求完整播放次数或时间点检查。必须确认全部主要 Beat 都存在、卡片顺序与 Attention Spine 一致、关键 Frame 不为空、每张卡片的核心图片任务可见，并明确仍为占位与高风险的内容。
 
 ### Required Preview｜必须可见
 
-Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一帧、主要段落、第一层回报和结尾都要真实可见。`STORYBOARD.md`、文字时间线、空卡片、CLI 日志或占位名称不构成 Story Flow Preview。
+必须交付 HyperFrames 官方 Storyboard URL / route。页面应按顺序展示整条视频的全部 Scene / Beat，每个需要审查的 Beat 都绑定可渲染 `src` 并出现低成本实际画面。Markdown、Prompt、资产路径、outline、空白卡片、只有标题的卡片、自定义说明网页或普通 Composition 均不构成 Story Flow Preview。
 
 ### Stage Handoff｜阶段交接
 
-交接时说明：实际建立了哪些故事段落、Hero Frame、回报、停顿与 Scene 交接；为何这样安排开头、关键证据与结尾回收；哪些素材/声音/字幕仍是占位；自审发现并修复了什么；以及用户本轮应只判断故事动力、段落推进、回报时机与结尾兑现。若有实质方向分歧，给出少量有取舍的选项和推荐。用户确认后才会用已确认的故事结构进入 Image Animatic，制作每个主要 Beat 的实际画面与图片关系；仍不会进入正式 TTS、`captions.json`、批量最终图、Final 精修或导出。
+交接时说明 Storyboard URL / route、Scene 数量、Beat 数量、这一版完成的节拍设计、主要导演选择、仍为占位或高风险的 Frame，以及用户应重点审查的 Beat 顺序、图片任务、角色分布、连续性和 Handoff。若有实质方向分歧，给出少量选项、取舍与推荐。用户确认后才会把已确认 Storyboard Cards 转为 Image Animatic 时间线，加入占位图 / 样图 / 用户素材、临时声音或估计时长，以及粗略 Entry / Development / Emphasis / Handoff；仍不会进入正式 TTS、`captions.json`、批量最终图、Final 精修或导出。
 
 ### Stop Here｜在此停止
 
-展示实际 Studio URL 与 route，完成上述协作式交接后，**结束当前回复**，等待用户在后续消息中明确同意进入 Image Animatic。此时允许占位图、参考图、简单图形、临时声音和粗略运动；禁止调用正式 `generate-tts.mjs`、写入正式 `captions.json`、批量 `generate-images.mjs` 最终图、Final 精修或最终 render。
+展示官方 Storyboard URL / route，完成上述协作式交接后，**结束当前回复**，等待用户在后续消息中明确同意进入 Image Animatic。用户未确认前，禁止开始完整 Composition 时间播放、临时或正式 TTS、正式 `captions.json`、批量最终图片、Final 精修与最终 render。
 
 ## 阶段五：图片节拍与 Image Animatic
 
@@ -414,7 +413,7 @@ Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一�
 
 ### Before Starting｜进入阶段前说明
 
-向用户说明：Image Animatic 要验证每个关键节拍是否有实际画面、图片能否证明旁白、人物/物件/视觉世界是否连续、相邻镜头如何交接，以及哪里需要最小 Motion 或 Reveal；会用样图、参考图或低成本图建立可播放的图片关系；不会生成正式 TTS、最终字幕时间轴、批量最终图片、精细动画或导出。完成后请用户判断图片叙事、连续性、镜头关系和情绪是否成立；不要求重点评价最终声音或最终画质。
+向用户说明：Image Animatic 是本期**第一次从头播放到尾的动态 Composition**。它会把已确认的 Storyboard Cards 转成 Scene / Beat 时间关系，用样图、参考图、低成本图或用户素材，加上临时声音或估计时长以及粗略 Entry / Development / Emphasis / Handoff，验证时间中的观看动力；不会生成正式 TTS、最终字幕时间轴、批量最终图片、精细动画或导出。完成后请用户判断节拍停留、图片切换、故事流动、中段是否变平、Reveal / Handoff 是否有效，以及整体是否像视频而不是幻灯片。
 
 ### 图片节拍不是一句一图
 
@@ -455,9 +454,9 @@ Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一�
 
 永远不要从动画开始。图片或构图本身不成立时，回到文案、图片任务或构图，而不是追加效果。
 
-### Image Animatic
+### Image Animatic：第一次完整时间播放
 
-使用：
+从已确认的 Storyboard Cards 建立时间线，使用：
 
 - 用户参考图；
 - 草图；
@@ -467,8 +466,14 @@ Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一�
 - 粗略裁切；
 - 接近真实的图片运动。
 
-这一轮要暴露：
+这是第一次从头到尾完整播放。除图片任务外，这一轮还要暴露：
 
+- 节拍停留是否足够；
+- 图片切换是否机械；
+- 故事是否在时间中流动；
+- 中段是否变平；
+- Reveal 与 Handoff 是否有效；
+- 整体是否像视频而不是幻灯片；
 - 图片是否只是气氛；
 - 反转是否有画面证明；
 - 一张图是否塞入过多任务；
@@ -497,7 +502,7 @@ Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一�
 
 ### Required Preview｜必须可见
 
-每个主要图片 Beat 都必须在 Studio 中有实际可见画面，能观看构图、观看顺序和图片交接；低成本样图、参考图或少量风险图可以使用。图片 Prompt、资产路径、静态列表或只有 outline 的 Storyboard 不能替代 Image Animatic Preview。
+Image Animatic 必须是 Studio 中可从头播放到尾的 Composition，也是本期第一次完整时间播放。每个主要图片 Beat 都要有实际可见画面，能够判断停留、构图、观看顺序、粗略 Motion / Reveal / Handoff 与图片交接；低成本样图、参考图或少量风险图可以使用。Storyboard contact sheet、图片 Prompt、资产路径、静态列表或 outline 不能替代 Image Animatic Preview。
 
 ### Stage Handoff｜阶段交接
 

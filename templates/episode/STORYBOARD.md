@@ -37,6 +37,21 @@
 
 > 每张素材可声明继承哪些 Anchor，并明确允许改变什么。先生成高风险视觉世界锚点，获得用户方向确认后，再扩展同一世界中的观察方式、过程、证据细节与回收图。
 
+# Story Flow / HyperFrames Storyboard 映射
+
+Story Flow 阶段将下面全部主要 Beat 按顺序注册为官方 HyperFrames Storyboard items。每个 item 必须填写 `src` 并绑定低成本、可渲染的 Frame composition；卡片主体是视觉 Frame，核心导演任务通过 `scene`、`voiceover`、narrative 或其他保留字段供用户直接查看或展开查看。不要另做自定义说明网页或普通 Composition 冒充 Storyboard。
+
+建议映射：
+
+```text
+Frame title → Beat ID + 简短动作 / 转折
+scene → 主要画面 + 这拍让观众理解什么
+voiceover → 对应 SCRIPT.md 原文范围或旁白 guide
+src → compositions/frames/NN-*.html
+narrative / extra → Attention 作用、第一眼 / 后续发现、Handoff、连续性、占位 / 高风险
+status → built（低成本可渲染 Frame 已存在；Story Flow 不要求 animated）
+```
+
 # 1. Scene 索引
 
 | Scene | 承担的图片节拍 | 空间 / 视觉问题 | 为什么保持或切换 Scene | 计划转场 |
@@ -49,6 +64,11 @@
 
 ## Beat B01 —
 
+- status: built
+- src: compositions/frames/01-beat-b01.html
+- scene: 主要画面 + 这拍让观众理解什么
+- voiceover: 对应 `SCRIPT.md` 原文范围或旁白 guide
+- 当前状态: 占位图 / 参考图 / 简单构图；是否高风险
 - 注意力作用：Hook / Reveal / Evidence / Contrast / Reframe / Payoff / Callback / 其他
 - 对应 `SCRIPT.md` 原文范围：
 - 图片要让观众理解：
@@ -79,6 +99,12 @@
 - 失败条件：什么样的画面会变成普通配图或无法证明内容
 
 ## Beat B02 —
+
+- status: built
+- src: compositions/frames/02-beat-b02.html
+- scene:
+- voiceover:
+- 当前状态:
 
 # 3. 图片素材 Brief
 

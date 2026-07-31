@@ -106,10 +106,13 @@ Locked Script Mode 默认关闭。可探索第一帧和图片关系，但不得�
 
 ## 段落 3 —
 
-# 10. 当前 Story Flow 自评
+# 10. 当前 Story Flow / Storyboard 自评
 
-- 最强位置：
-- 最弱位置：
+- 官方 Storyboard 中的 Scene / Beat / Frame 数量：
+- 缺失、重复、错误顺序或空白 Frame：
+- 最强的节拍设计：
+- 最弱的图片任务 / Handoff：
+- 连续性、占位和高风险状态：
 - 用户应重点判断：
 - 下一版建议：
 

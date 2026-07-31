@@ -60,7 +60,7 @@ Do not use HyperFrames effects to compensate for weak storytelling.
 Story Flow → Image Animatic → Timed Animatic → Final Composition
 ```
 
-每个阶段必须先产生用户能实际观看的 HyperFrames 预览，展示后立即结束当前回复，等待用户在后续消息中明确同意才能进入下一阶段。详细的阶段边界协议见 `references/core/episode-production.md`。
+每个阶段必须先产生与其成熟度匹配的真实 HyperFrames 预览：**Story Flow 使用 HyperFrames 官方 Storyboard Preview；Image Animatic、Timed Animatic 与 Final 使用可播放的 Composition Preview。** 展示后立即结束当前回复，等待用户在后续消息中明确同意才能进入下一阶段。详细的阶段边界协议见 `references/core/episode-production.md`。
 
 ### 协作式阶段交接
 
@@ -68,7 +68,7 @@ FrameSpine 是 Agent 与用户通过真实预览共同导演的视频制作。�
 
 ### Agent 自审先于用户审片
 
-每个成熟阶段在展示给用户前必须完成 Preview Readiness Review：在真实 Studio 中完整播放、检查关键时刻和技术问题、修复 P0 阻断后才展示。详细的自审流程见 `references/core/episode-production.md`。
+每个成熟阶段在展示给用户前必须完成与当前 surface 匹配的 Preview Readiness Review：Story Flow 检查官方 Storyboard 中全部 Scene / Beat 卡片的顺序、可渲染 Frame、缺失、重复、连续性和占位状态；Image Animatic 及之后才在真实 Studio 中完整播放并检查关键时刻。修复 P0 阻断后才展示。详细流程见 `references/core/episode-production.md`。
 
 ### 实质偏离才单独预览
 
@@ -84,7 +84,7 @@ FrameSpine 是 Agent 与用户通过真实预览共同导演的视频制作。�
 
 ### 同一个 HyperFrames 项目逐步成熟
 
-每期默认维护一个 `video/` 项目，从 Story Flow 占位图逐步替换为正式素材和精细动画。不要为每个阶段复制一套平行工程。
+每期默认维护一个 `video/` 项目：先在官方 Storyboard surface 建立全部低成本 Frame 卡片，再把已确认的 Storyboard 转为 Image Animatic 时间线，并继续成熟到 Timed Animatic 与 Final。不要为每个阶段复制一套平行工程。
 
 ### 一个项目只容纳一个系列
 
@@ -164,8 +164,8 @@ Series initialization 定义可复用的长期决定（系列身份、观众、�
 1. **按输入进入正确导演路径** — Locked Script Mode（完整文案）、Development Mode（选题 / 资料）、Revision Mode（明确要求改稿）。
 2. **设计或提取注意力主干** — Development Mode 先设计观看承诺和回报链；Locked Script Mode 从原文提取。详见 `references/core/attention-spine.md`。
 3. **发展旁白或导演定稿文案** — Development / Revision Mode 写短、具体、可视化的旁白；Locked Script Mode 保留原文，寻找其中的人物、动作、物件、环境和证据。详见 `references/core/narrative-directing.md`。
-4. **Story Flow** — 使用占位图和临时声音直接创建 HyperFrames Story Flow，让用户观看整条视频的观看动力。
-5. **Image Animatic** — 在 `STORYBOARD.md` 中设计图片节拍，把占位画面升级为 Image Animatic。详见 `references/core/image-storytelling.md`。
+4. **Story Flow** — 完成整条视频的 Scene、Beat、图片任务、连续性、视觉关系与低成本 Frame 设计；将全部 Beat 注册为按序排列、具有可渲染 `src` 的 HyperFrames Storyboard items，让用户在官方 Storyboard 页面审查节拍设计。本阶段不制作完整时间播放。
+5. **Image Animatic** — 把用户确认的 Storyboard Cards 转为 Scene / Beat 时间线，使用占位图、样图、用户素材、临时声音或估计时长以及粗略 Entry / Development / Emphasis / Handoff，形成第一次从头到尾可播放的 Composition。详见 `references/core/image-storytelling.md`。
 6. **Timed Animatic** — 生成正式 TTS、写入 `captions.json`、依据真实时间重新导演图片停留和节奏。详见 `references/technical/providers.md` 和 `references/technical/subtitles.md`。
 7. **最终图片与精修** — 整理 `image-prompts.json` 并生成最终图片，完成 Prompt Audit 和 Image Set Audit。详见 `references/core/image-storytelling.md`。
 8. **审片与渲染** — HyperFrames Studio Final Preview 后等待用户明确允许导出。

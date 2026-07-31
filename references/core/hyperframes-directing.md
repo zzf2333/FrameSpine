@@ -104,13 +104,22 @@ Hero Frame
 
 每个转场先声明关系，再选择正式 Transition 或同一 Scene 内连续构图：Object Continuity、Movement Continuity、Spatial Continuity、Cause → Effect、Question → Answer、Surface → Reveal、Before → After 或 Emotional Change。若说不清关系，默认使用干净 hard cut 或保持同一 Scene；不得堆 wipe、zoom、glitch、mask 和 shader。
 
+### Storyboard Surface 与 Composition Surface
+
+两种官方审查表面承担不同任务，不得互相代替：
+
+- **Storyboard Surface**：只用于 Story Flow，按顺序审查 Scene / Beat / Frame、对应原文、图片任务、图片角色、连续性、风险、占位状态和前后关系。每个 item 必须有可渲染 `src`，但不要求组成时间播放。
+- **Composition Surface**：从 Image Animatic 开始，用于审查时长、停留、运动、Reveal、转场、字幕、声音与从头到尾的完整播放。
+
+不得用自定义说明网页、名为“Storyboard”的普通 Composition、Player 粗视频、`STORYBOARD.md` 文本、outline 或空白卡片替代官方 Storyboard surface；也不得用 Storyboard contact sheet 替代 Image Animatic 及之后的 Composition 播放。
+
 ### Timeline Contract
 
-以 Scene、Beat 和正式 cue 组织时间，避免大量 magic offsets 与相互覆盖的绝对时间偏移。Story Flow、Image Animatic、Timed Animatic 和 Final 使用同一条逐步成熟的时间线；Final 只精修已通过的结构，不重建第二套剪辑。Timed Animatic 及其后的实际字幕只读取 `captions.json`；Story Flow 可使用清楚标示的临时字幕占位，但不得把占位文字或时间当作正式字幕时间轴。
+Story Flow 先在官方 Storyboard surface 确认 Scene / Beat / Frame 结构，不建立完整播放时间线。用户确认后，Image Animatic 才把 Storyboard Cards 转为以 Scene、Beat 和 cue 组织的第一条完整时间线；Timed Animatic 和 Final 在这条时间线上逐步成熟，避免大量 magic offsets 与相互覆盖的绝对时间偏移。Final 只精修已通过的结构，不重建第二套剪辑。Timed Animatic 及其后的实际字幕只读取 `captions.json`；Image Animatic 可以使用清楚标示的临时字幕或时间占位，但不得把它们当作正式字幕时间轴。
 
 ### HyperFrames Self-Review
 
-交付预览前，在 Studio 完整播放，并在每个 Scene 的进入前、进入完成、主要揭示时刻、转场重叠区、结束前和下一 Scene 稳定后检查旧层残留、露底、黑帧/空帧、主体越界、多个主运动、转场关系，以及 Timed Animatic 及之后由 `captions.json` 驱动的字幕。再按当前阶段与实际风险运行官方 lint / inspect / validate / preview；工具报告不能替代完整播放。
+Story Flow 交付前，在官方 Storyboard surface 从上到下检查全部 item 的顺序、可渲染 `src`、实际 Frame、缺失、重复、连续性、占位与高风险状态，不要求完整播放。Image Animatic 及之后才在 Studio 完整播放，并在每个 Scene 的进入前、进入完成、主要揭示时刻、转场重叠区、结束前和下一 Scene 稳定后检查旧层残留、露底、黑帧/空帧、主体越界、多个主运动、转场关系，以及 Timed Animatic 及之后由 `captions.json` 驱动的字幕。再按当前阶段与实际风险运行官方工具；工具报告不能替代对应 surface 的视觉检查。
 
 ## 什么时候读取
 
@@ -310,16 +319,16 @@ Story Flow
 → Final Composition
 ```
 
-- **Story Flow**：用占位图、临时声音和粗略变化检查观看动力；
-- **Image Animatic**：检查图片任务、观看顺序、构图和图片交接；
+- **Story Flow**：在官方 Storyboard surface 用按序、可渲染的低成本 Frame Cards 检查 Scene / Beat、图片任务、连续性和前后关系；不制作完整时间播放；
+- **Image Animatic**：把已确认 Cards 转为第一次从头到尾可播放的 Composition，检查停留、观看动力、粗略运动、Reveal、构图和图片交接；
 - **Timed Animatic**：加入正式 TTS 与 `captions.json` 的真实字幕时间，重排停留和节奏；
 - **Final**：替换最终素材并精修，不重做已经通过预览的内容结构。
 
 Series Style Calibration 同样使用 HyperFrames，但它只验证可复用的视觉、声音和运动身份；不测试主题、Hook、故事或单集镜头。
 
-### 4. 以播放预览沟通
+### 4. 以匹配阶段的官方 surface 沟通
 
-给用户观看实际 HyperFrames Studio URL 与 route，而不是让用户审 HTML、CLI 输出或导出文件。
+Story Flow 给用户浏览实际 HyperFrames Storyboard URL 与 route；Image Animatic、Timed Animatic 和 Final 给用户观看实际 Composition URL 与 route。不要让用户审 HTML、CLI 输出、导出文件或自定义说明页面。
 
 每轮指出具体观看问题，例如：
 
@@ -329,15 +338,15 @@ Series Style Calibration 同样使用 HyperFrames，但它只验证可复用的�
 
 ### Studio 是创意预览的事实来源
 
-创意预览以用户实际打开的 HyperFrames Studio URL 与 route 为准，按以下顺序工作：
+创意预览以用户实际打开的 HyperFrames Studio URL 与 route 为准。Story Flow 使用 Storyboard route，逐卡检查顺序、`src`、实际 Frame、连续性和占位；Image Animatic 及之后使用 Composition route，检查完整时间播放：
 
 ```text
 启动 Studio
-→ 获取用户将打开的 URL 与 route
-→ 在该 route 检查真实资源
-→ 确认首拍、中段关键拍与结尾拍可见
-→ 确认图片和字幕没有空白
-→ 再运行 lint / inspect / validate
+→ 获取用户将打开的 Storyboard / Composition URL 与 route
+→ 在匹配当前阶段的官方 surface 检查真实资源
+→ Story Flow：逐卡确认首拍、中段关键拍、结尾拍与全部主要 Beat
+→ Image Animatic 及之后：确认首拍、中段关键拍、结尾拍、图片和字幕没有空白
+→ 按当前阶段运行必要的官方检查
 → 用户确认 Final Preview 后才 render
 ```
 
@@ -347,13 +356,16 @@ CLI snapshot、lint、inspect、validate 与 render 只能证明各自的技术�
 
 ### Storyboard Preview Contract
 
-`STORYBOARD.md` 是导演计划，不是可视化 Storyboard，也不构成用户预览。使用 HyperFrames Storyboard 时：
+`STORYBOARD.md` 是导演计划，不是可视化 Storyboard，也不构成用户预览。Story Flow 必须使用 HyperFrames 官方 Storyboard surface：
 
+- 将全部需要审查的 Scene / Beat 注册为按序 Storyboard items；
 - 每个 Frame 必须有可渲染的 `src` composition；
-- 每个主要 Beat 必须在 Studio 中出现实际画面；
+- 每个主要 Beat 必须在 Studio 卡片中出现低成本实际画面；
+- 卡片主体是视觉 Frame，核心导演任务直接可见或可查，详细字段可留在 Markdown / 展开内容；
 - 第一拍、中段关键拍与结尾拍必须逐一检查；
-- Markdown、Prompt、资产路径、outline、空白卡片或只有标题的卡片不能替代 Frame preview；
-- 任一关键 Frame 空白、资源加载失败或没有可渲染 `src` 时，停止当前阶段并修复；不得继续 TTS、字幕或 Final。
+- 自定义说明网页、普通 Composition、Player 粗视频、Markdown、Prompt、资产路径、outline、空白卡片或只有标题的卡片不能替代官方 Storyboard Preview；
+- Story Flow 卡片不提前实现完整动画、正式声音或最终图片；
+- 任一关键 Frame 空白、资源加载失败或没有可渲染 `src` 时，停止当前阶段并修复；不得进入 Image Animatic、TTS、字幕或 Final。
 
 ## 六、HyperFrames Skill 引用策略
 
