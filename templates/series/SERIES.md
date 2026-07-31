@@ -95,6 +95,8 @@
 
 ## 5. Visual Identity Summary
 
+> 这里只保存系列层面的高层摘要；完整 Visual Expression Contract 只写在 `DESIGN.md`，不要在此重复。若当前系列没有额外摘要，可保留最少必要信息。
+
 - 色彩角色：
 - 字体与排版：
 - 竖屏布局：
