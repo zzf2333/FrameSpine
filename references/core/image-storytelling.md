@@ -511,30 +511,31 @@
 - 字幕默认区域；
 - 中文与英文合计高度；
 - 关键主体保护区；
-- 推近后主体是否进入字幕区域；
-- 平移终点是否被遮挡；
+- 当前媒介允许的运动 / 揭示后，主体是否进入字幕区域；
+- 运动、分格或层间变化的终点是否被遮挡；
 - 证据文字是否与字幕竞争。
 
 ### 主体位置
 
-根据后续运动设计：
+根据 `DESIGN.md` 的 `Motion Affordances` 与 `Motion Language` 设计：
 
-- 需要向右平移：左侧有起点，右侧有可探索信息；
-- 需要拉远：图片原始分辨率和四周内容足够；
-- 需要推近：关键细节清晰，裁切后仍成立；
+- 需要摄影式平移：保留起点、终点与可探索信息；
+- 需要裁切、拉远或局部放大：原始细节和四周内容足够；
+- 需要漫画分格、连续构图或黑白面积变化：阅读方向与关键关系不被破坏；
+- 需要剪纸层间运动：纸层、连接关系与投影有可分离结构；
 - 需要编辑文字：预留不影响主体与字幕的空间；
-- 需要分层：前景、主体、背景边界清楚。
+- 需要分层：媒介允许分离的层、主体与背景边界清楚。
 
-### 运动余量
+### Production Affordances｜制作余量
 
-Prompt 可明确：
+Prompt 写当前媒介真正需要的制作余量，而不是默认要求推拉或视差。例如：
 
-- wider composition for slow horizontal pan；
-- extra negative space in upper-left；
-- subject protected above lower subtitle zone；
-- high-resolution details for 130% push-in；
-- readable evidence area positioned mid-frame；
-- no critical object near crop edges。
+- 需要摄影式平移时：`wider composition for slow horizontal pan`；
+- 需要局部放大时：`high-resolution details for 130% push-in`；
+- 需要字幕时：`extra negative space in upper-left`、`subject protected above lower subtitle zone`；
+- 需要证据时：`readable evidence area positioned mid-frame`；
+- 需要裁切时：`no critical object near crop edges`；
+- 需要漫画或剪纸运动时：保留可独立揭示的分格、黑白面积、纸层、轮廓或投影关系。
 
 ### 平台 UI
 
@@ -609,7 +610,7 @@ Prompt
 3. 当前视觉世界正在发生什么，以及继承的 Entity / Environment / Medium / Relationship Anchors
 4. 从什么观察方式看、第一眼看什么、随后发现什么
 5. 这张素材如何通过当前系列媒介实现；哪些表面、线条、材质、空间或世界规则使它内部可信
-6. 字幕安全区、cover/crop、推拉、分层与 Handoff 余量
+6. 字幕安全区、cover/crop、当前媒介允许的 Motion Affordances、分层与 Handoff 余量
 7. 与该素材相关的系列 Visual Expression Contract 基线
 8. 最容易破坏叙事任务或媒介一致性的错误
 ```
@@ -680,7 +681,7 @@ img-shop-price-change
 3. 它继承哪些 Entity、Environment、Medium、Relationship 或 Reference Asset Anchors？
 4. 它相对前后素材新增什么构图与观察任务？
 5. 它怎样具体服从当前媒介的造型、边缘、表面、空间和世界规则，而非只贴媒介标签？
-6. 为字幕、裁切、推拉、分层和 Handoff 留了什么？
+6. 为字幕、裁切、当前媒介允许的运动 / 揭示、分层和 Handoff 留了什么？
 7. 最可能出现的叙事、媒介或生成错误是什么，Prompt 如何防止？
 ```
 
@@ -883,9 +884,9 @@ Locked Script Mode 还要问：这一拍是否承接了原文的互动、停顿�
 
 导致机械切换，图片之间没有关系。
 
-### 4. 所有图片慢推近
+### 4. 所有图片重复同一种运动
 
-运动没有语义，节奏单调。
+无论是慢推近、平移、分格打开还是纸层滑入，只要不再释放新信息，就没有语义并会让节奏单调。
 
 ### 5. 画面复杂等于信息密集
 
