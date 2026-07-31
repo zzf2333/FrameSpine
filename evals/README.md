@@ -288,4 +288,4 @@ P0 与软维度定义见 `DESIGN.md` §6 与 `rubrics/`。
 2. **四阶段边界** — Story/Image/Timed/Final 硬门禁均可跑；feedback 返回路径与 live Final 仍待。  
 3. **E3 harness** — 约定 + CLI 已有；用外部 runner 填满 trial-2/3 再看 cross_trial_stability。  
 4. **E4** — 25–40 稳定 case 的高风险交叉，而非全排列。  
-5. **瘦身** — 共享 synthetic/gate 脚手架，避免每阶段再复制一套。
+5. **瘦身** — suite-runner + grade-synthetic-suite 已共享；build-synthetic-* 阶段特有逻辑仍分文件。
