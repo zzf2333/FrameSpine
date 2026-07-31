@@ -507,6 +507,12 @@ Story Flow 必须是 Studio 中可以从头播放到尾的粗略视频：第一�
 
 展示实际 Studio URL 与 route，完成上述协作式交接后，**结束当前回复**，等待用户在后续消息中明确同意进入 Timed Animatic。用户未确认前，禁止正式 TTS、正式 `captions.json`、批量最终图片、Final 精修与最终 render。
 
+### Timed Animatic Before Starting｜正式投入前说明
+
+> 此说明必须在正式 TTS、转写和 `captions.json` 工作**之前**向用户给出；不能在它们完成后补报。它不新增成熟阶段，只把既有 Timed Animatic 的成本边界放在实际投入之前。
+
+向用户说明：Timed Animatic 要把确认的图片结构置入正式声音、真实时长和 `captions.json`，验证声画同步、字幕语义、停留、回报与停顿的重量；会生成正式 TTS、获取词级时间、制作 `captions.json` 并重导演图片时长；不会批量生成所有最终图片、进行最终精细动效或导出。完成后请用户判断声音方向、字幕断句、声画同步、快慢与阅读时间。
+
 ## 阶段六：正式 TTS 与双语字幕
 
 ### 什么时候生成正式声音
@@ -568,10 +574,6 @@ npx hyperframes transcribe <episode-dir>/assets/audio/narration.wav
 
 ## 阶段七：Timed Animatic
 
-### Before Starting｜进入阶段前说明
-
-向用户说明：Timed Animatic 要把确认的图片结构置入正式声音、真实时长和 `captions.json`，验证声画同步、字幕语义、停留、回报与停顿的重量；会生成正式 TTS、获取词级时间、制作 `captions.json` 并重导演图片时长；不会批量生成所有最终图片、进行最终精细动效或导出。完成后请用户判断声音方向、字幕断句、声画同步、快慢与阅读时间。
-
 ### 目的
 
 把预计节奏变成真实音频节奏。
@@ -620,6 +622,12 @@ Timed Animatic 必须在 Studio 中将正式声音、`captions.json`、真实时
 
 ## 阶段八：最终图片生产
 
+### Final Composition Before Starting｜正式投入前说明
+
+> 此说明必须在批量最终图片生产**之前**向用户给出；不能在图片已经生成、替换或精修后补报。它不新增成熟阶段，只把既有 Final Composition 的成本边界放在实际投入之前。
+
+向用户说明：Final Composition 要生成并替换已确认方向的最终资产，统一图片与声音风格、精修已通过的镜头语言，并验证可发布的完整体验；会进行最终图片生产、素材替换、克制动效、字幕/主体安全区和声音精修；不会在未经当前任务用户明确指定或后续消息确认的情况下把新视觉处理直接并入，也不会在 Final Preview 前导出。完成后请用户判断整体统一性、镜头感、字幕舒适度、音乐/声音与发布准备度。
+
 ### 先整理图片请求
 
 `image-prompts.json` 中每项应来自已验证的图片节拍和 Episode Visual Anchors，但按实际**素材**而非 Beat 一一组织：一个 Beat 可用多个素材，一个素材也可跨 Beat 复用。`purpose`、`role`、`used_in_beats` 与 `references` 只保留导演上下文，Provider 不会自动看到；真正影响生成的内容必须进入 `prompt`。
@@ -631,7 +639,7 @@ Prompt 按以下顺序写：
 - 继承的 Entity、Environment、Medium、Relationship 与 Reference Asset Anchors，以及允许变化什么；
 - 构图与观察方式、第一眼/随后发现；
 - 媒介实现，以及造型、边缘、材质、表面、空间或世界规则怎样保持当前系列的媒介一致性；
-- 双语字幕安全区、cover/crop、推拉/平移、分层和 Handoff 余量；
+- 双语字幕安全区、cover/crop、当前媒介允许的 Motion Affordances、分层和 Handoff 余量；
 - 相关系列基线；
 - 必须避免的错误。
 
@@ -680,10 +688,6 @@ node <skill>/scripts/generate-images.mjs \
 
 ## 阶段九：Final Composition
 
-### Before Starting｜进入阶段前说明
-
-向用户说明：Final Composition 要替换已确认的最终资产、统一图片与声音风格、精修已通过的镜头语言，并验证可发布的完整体验；会做最终素材替换、克制动效、字幕/主体安全区和声音精修；不会在未经当前任务用户明确指定或后续消息确认的情况下把新视觉处理直接并入，也不会在 Final Preview 前导出。完成后请用户判断整体统一性、镜头感、字幕舒适度、音乐/声音与发布准备度。
-
 ### 精修内容
 
 - 确认 Hook、回报和证据仍然成立；
@@ -698,7 +702,7 @@ node <skill>/scripts/generate-images.mjs \
 - 用 GSAP 建立观看顺序；
 - 动画速度和 easing 与语义匹配；
 - 同一视频有主转场和少量强调转场；
-- 避免所有场景使用同一种慢推近；
+- 避免所有场景重复同一种运动；
 - 处理字幕、图片主体和平台 UI 安全区；
 - 音乐和音效服务内容，不盖过 TTS。
 
@@ -793,7 +797,7 @@ npx hyperframes render --quality high --output final.mp4
 
 ```text
 我认为 0–8 秒已经成立：第一帧和第一层答案形成了清楚的异常。
-18–25 秒仍然偏平，因为旁白增加了第二个原因，但图片只是人物慢推近，没有新的证据。
+18–25 秒仍然偏平，因为旁白增加了第二个原因，但图片只重复既有运动，没有新的证据。
 我建议优先采用 A：让选择路径逐步增加；若为 Locked Script Mode，用停留和结果图承接第二句解释。
 只有用户允许 Revision Mode 时，备选 B 才是删除第二句并提前结果图。
 ```
