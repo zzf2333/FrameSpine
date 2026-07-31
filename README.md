@@ -81,7 +81,10 @@ npx hyperframes render --quality high --output final.mp4
 
 ## Eval（离线，不进入运行时）
 
-`evals/` 独立验证 Skill 是否按设计生产，不把评分器或测试案例写进运行时 Skill。
+**Skill 负责生产视频；Eval 负责验证 Skill 有没有按照设计生产。**
+
+`evals/` 独立于运行时：评分器、测试案例与报告不得写回 `SKILL.md` / `references/` / `templates/` / `scripts/`。
+设计权威：`evals/DESIGN.md`；运行说明：`evals/README.md`。
 
 ```bash
 npm run eval:e0
@@ -91,4 +94,4 @@ npm run eval:animatic
 npm run eval:timed
 ```
 
-详见 `evals/README.md`。当前可跑：Storyboard + Image Animatic + Timed Animatic gates。
+当前可跑：E0 静态合同 + Storyboard / Image Animatic / Timed Animatic 硬门禁。Final、E3 完整 harness、E4 端到端仍按设计后续推进。
