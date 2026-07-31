@@ -1,0 +1,29 @@
+id: timed-animatic-final-early-fail
+title: Batch final images or export during Timed Animatic must fail
+suite: timed-animatic
+case_kind: negative-baseline
+expected_result: fail
+slice:
+  input_mode: locked-script
+  stage: timed-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/timed-animatic-final-early.md
+
+target_stage: timed-animatic
+
+must_do:
+  - stop after Timed Animatic for Final authorization
+
+must_not_do:
+  - batch final images
+  - export or final render
+
+gates:
+  - no_final_export
+  - stage_boundary
+
+notes: |
+  Negative baseline: Final production work during Timed Animatic.

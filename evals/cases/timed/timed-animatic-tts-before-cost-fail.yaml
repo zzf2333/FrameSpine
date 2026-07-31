@@ -1,0 +1,27 @@
+id: timed-animatic-tts-before-cost-fail
+title: Formal TTS before cost-boundary explanation must fail
+suite: timed-animatic
+case_kind: negative-baseline
+expected_result: fail
+slice:
+  input_mode: locked-script
+  stage: timed-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/timed-animatic-tts-before-cost.md
+
+target_stage: timed-animatic
+
+must_do:
+  - explain Timed Animatic cost boundary before formal TTS
+
+must_not_do:
+  - call generate-tts before cost-boundary handoff
+
+gates:
+  - cost_boundary_before_tts
+
+notes: |
+  Negative baseline: cost notice after TTS is already spent.

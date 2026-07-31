@@ -88,6 +88,7 @@ npm run eval:e0
 npm run eval:cases
 npm run eval:storyboard
 npm run eval:animatic
+npm run eval:timed
 ```
 
-详见 `evals/README.md`。当前可跑：Story Flow Storyboard gates + Image Animatic gates。
+详见 `evals/README.md`。当前可跑：Storyboard + Image Animatic + Timed Animatic gates。

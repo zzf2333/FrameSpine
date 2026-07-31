@@ -139,6 +139,7 @@ npm run eval:e0
 npm run eval:cases
 npm run eval:synthetic
 npm run eval:animatic
+npm run eval:timed
 ```
 
 对单个 trial workspace：
@@ -151,6 +152,11 @@ node evals/graders/deterministic/storyboard-gates.mjs \
 node evals/graders/deterministic/image-animatic-gates.mjs \
   --case evals/cases/animatic/image-animatic-locked-001.yaml \
   --workspace evals/runs/synthetic-animatic/image-animatic-locked-001/workspace
+
+node evals/graders/deterministic/timed-animatic-gates.mjs \
+  --case evals/cases/timed/timed-animatic-locked-001.yaml \
+  --workspace evals/runs/synthetic-timed/timed-animatic-locked-001/workspace \
+  --source-script evals/fixtures/inputs/locked-script-a.md
 ```
 
 ### 合成 trial 与真实 trial
@@ -159,6 +165,7 @@ node evals/graders/deterministic/image-animatic-gates.mjs \
 | --- | --- | --- |
 | Synthetic Storyboard | `evals/runs/synthetic/<case-id>/` | 验证 Storyboard gate 逻辑 |
 | Synthetic Animatic | `evals/runs/synthetic-animatic/<case-id>/` | 验证 Image Animatic gate 逻辑 |
+| Synthetic Timed | `evals/runs/synthetic-timed/<case-id>/` | 验证 Timed Animatic gate 逻辑 |
 | Live agent | `evals/runs/<case-id>/<trial>/` | 真实 Agent 产物 + Studio 预览 |
 
 Story Flow trial 需写入：
@@ -177,6 +184,17 @@ eval-artifacts/preview-manifest.json
 eval-artifacts/composition-manifest.json
 eval-artifacts/tool-trace.json
 eval-artifacts/composition-route.txt
+```
+
+Timed Animatic trial 需写入：
+
+```text
+eval-artifacts/preview-manifest.json
+eval-artifacts/timed-manifest.json
+eval-artifacts/tool-trace.json
+eval-artifacts/composition-route.txt
+captions.json                   # formal cues
+audio/ or formal TTS claim
 ```
 
 `board-manifest.json` 的 `frames[].canvas.kind` 取值：`empty | generic | concrete`。  
@@ -209,7 +227,21 @@ No Formal TTS / Captions / Export
 Stage Boundary Gate
 ```
 
-仍未覆盖：Timed Animatic、Final、Series Calibration、端到端多 trial harness。
+### v3 Timed Animatic Eval（已可跑）
+
+```text
+Prior Image Animatic Confirm
+Cost Boundary Before TTS
+Formal TTS + Formal Captions
+Captions Sole Timeline
+Script Preservation
+Dwell Rebalance
+Full Playback
+No Final Export
+Stage Boundary
+```
+
+仍未覆盖：Final、Series Calibration、端到端多 trial harness、Studio 软质量人审。
 
 ## 核心指标
 

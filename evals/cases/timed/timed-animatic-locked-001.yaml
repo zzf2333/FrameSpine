@@ -1,0 +1,64 @@
+id: timed-animatic-locked-001
+title: Locked script Timed Animatic with formal TTS and captions
+suite: timed-animatic
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: character-story
+  stage: timed-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  provider_capability: fixtures/provider-capabilities/no-reference-upload.json
+  prior_stage: image-animatic-confirmed
+
+target_stage: timed-animatic
+expected_result: pass
+release_gate: true
+recommended_trials: 3
+
+must_do:
+  - wait for Image Animatic confirmation before starting
+  - explain Timed Animatic cost boundary before formal TTS
+  - generate formal TTS from SCRIPT.md / narration.txt
+  - write formal captions.json as sole subtitle timeline
+  - rebalance image dwells to real audio
+  - full composition playback with real audio and captions
+  - stop after Timed Animatic handoff before Final
+
+must_not_do:
+  - silent script rewrite to fit duration
+  - composition-side temporary subtitle re-split
+  - batch final images
+  - export or final render
+  - skip cost-boundary explanation
+
+required_artifacts:
+  - EPISODE.md
+  - SCRIPT.md
+  - captions.json
+  - composition route
+  - composition playback
+
+gates:
+  - surface
+  - prior_image_animatic_confirm
+  - cost_boundary_before_tts
+  - formal_tts
+  - formal_captions
+  - captions_sole_timeline
+  - script_preservation
+  - dwell_rebalance
+  - full_playback
+  - no_final_export
+  - stage_boundary
+  - required_artifacts
+
+human_review:
+  - source fidelity of locked script in audio
+  - sync clarity of captions to voice
+  - dwell rebalance feels intentional not mechanical
+
+notes: |
+  Primary happy-path Timed Animatic after confirmed Image Animatic.

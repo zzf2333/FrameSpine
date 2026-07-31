@@ -35,7 +35,7 @@ Image Animatic verifies the **first full Composition playback** after confirmed 
 
 ## Not in this slice
 
-- Timed Animatic formal TTS + `captions.json`
+- Timed Animatic formal TTS + `captions.json` → see `evals/cases/timed/` and `npm run eval:timed`
 - Final Composition polish and export authorization
 - Soft Studio quality scores without human review
 

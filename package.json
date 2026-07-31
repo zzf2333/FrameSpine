@@ -20,7 +20,11 @@
         "eval:animatic:build": "node evals/graders/deterministic/build-synthetic-animatic.mjs",
         "eval:animatic:grade": "node evals/graders/deterministic/grade-synthetic-animatic.mjs",
         "eval:animatic": "node evals/run-image-animatic-suite.mjs",
+        "eval:timed:build": "node evals/graders/deterministic/build-synthetic-timed.mjs",
+        "eval:timed:grade": "node evals/graders/deterministic/grade-synthetic-timed.mjs",
+        "eval:timed": "node evals/run-timed-animatic-suite.mjs",
         "eval:gates": "node evals/graders/deterministic/storyboard-gates.mjs",
-        "eval:gates:animatic": "node evals/graders/deterministic/image-animatic-gates.mjs"
+        "eval:gates:animatic": "node evals/graders/deterministic/image-animatic-gates.mjs",
+        "eval:gates:timed": "node evals/graders/deterministic/timed-animatic-gates.mjs"
     }
 }

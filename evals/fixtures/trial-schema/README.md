@@ -71,3 +71,22 @@ editorial
 
 Deterministic graders trust structured manifests for offline regression.  
 Human Visual-Only review must confirm the real Studio Board matches the claims.
+
+## Timed Animatic
+
+```text
+evals/runs/<case-id>/<trial>/workspace/
+  EPISODE.md
+  SCRIPT.md                       # preserved locked source
+  narration.txt                   # synced from SCRIPT.md
+  STORYBOARD.md
+  captions.json                   # formal cues (not empty)
+  audio/narration.wav             # or formal TTS claim + path
+  video/composition.html
+  eval-artifacts/
+    preview-manifest.json         # surface=composition, formal_tts/captions true
+    timed-manifest.json
+    tool-trace.json               # cost_boundary before generate-tts
+    composition-route.txt
+```
+

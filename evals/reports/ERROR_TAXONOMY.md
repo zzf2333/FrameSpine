@@ -65,6 +65,20 @@ Use these labels when filing failures. One root cause → one authority update.
 | `animatic.default_camera` | same default camera motion on every image |
 | `animatic.no_stop` | no stage_stop before Timed Animatic |
 
+## Timed Animatic
+
+| code | meaning |
+| --- | --- |
+| `timed.before_confirm` | formal TTS/captions before Image Animatic confirmation |
+| `timed.tts_before_cost` | formal TTS before cost-boundary explanation |
+| `timed.no_tts` | missing formal TTS on Timed Animatic |
+| `timed.empty_captions` | empty captions.json after formal path |
+| `timed.temp_subtitle_split` | composition re-splits subtitles instead of captions.json |
+| `timed.script_rewrite` | silent locked-script rewrite for duration |
+| `timed.no_rebalance` | image dwells not rebalanced to real audio |
+| `timed.final_early` | batch finals / export during Timed Animatic |
+| `timed.no_stop` | no stage_stop before Final |
+
 ## Repair authority
 
 | failure pattern | update |
