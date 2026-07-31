@@ -108,18 +108,61 @@ Hero Frame
 
 两种官方审查表面承担不同任务，不得互相代替：
 
-- **Storyboard Surface**：只用于 Story Flow，按顺序审查 Scene / Beat / Frame、对应原文、图片任务、图片角色、连续性、风险、占位状态和前后关系。每个 item 必须有可渲染 `src`，但不要求组成时间播放。
+- **Storyboard Surface**：只用于 Story Flow，以 Board Overview 为主要审查表面，按顺序审查 Scene / Beat / Frame 的视觉设计、对应原文、连续性、风险、占位状态和前后关系。Frame Inspector 只补充导演意图，不能替画面讲故事。
 - **Composition Surface**：从 Image Animatic 开始，用于审查时长、停留、运动、Reveal、转场、字幕、声音与从头到尾的完整播放。
 
 不得用自定义说明网页、名为“Storyboard”的普通 Composition、Player 粗视频、`STORYBOARD.md` 文本、outline 或空白卡片替代官方 Storyboard surface；也不得用 Storyboard contact sheet 替代 Image Animatic 及之后的 Composition 播放。
 
+### Storyboard Frame Contract
+
+Storyboard Frame 是一个**关键视觉状态**，不是说明页、版式占位或未来素材容器。它必须让用户直接看见：
+
+1. 具体主体是谁或是什么；
+2. 正在发生什么动作、状态或关系；
+3. 这一帧提供什么视觉事实或证据；
+4. 相比前一帧发生了什么变化；
+5. 哪个视觉元素会交给下一帧。
+
+**低保真表示美术完成度低，不表示视觉设计没有完成。** 允许使用粗略人物与空间剪影、有效的参考图裁切、具体场景拼贴、灰阶分镜草图、用户素材、真实截图、以简单形状准确构成的人物 / 物件 / 因果关系，以及少量低成本生成图。合格标准不是“像不像成片”，而是用户只看这一帧能否准确说出发生了什么，不必先读 Inspector 的 Narrative。
+
+Frame Canvas 可以出现人物、物件、环境、具体动作与状态、关系、因果、累积、对比、真实证据或明确的证据占位、参考图裁切、有叙事意义的草图 / 拼贴 / 剪影，以及为后续 HyperFrames 图形层预留的清楚位置。文字只有两种例外：它本来就是故事中的真实对象或证据；或它已被明确设计为最终成片中的少量 Editorial Text。
+
+Frame Canvas 禁止出现旁白全文、双语字幕、导演说明、Beat 标题、Attention 标签、“关键转折”“用户痛点”等解释文字、Prompt、素材路径、用来解释空画面的段落、无语义矩形 / 线框 / 重复容器，以及作为装饰底图的系列预览图。不得用三个等宽框代表三个结果、一个圆代表人物、一排方块代表数据或空白卡片等待以后填图，除非这些形状本身已经准确表达具体内容关系。不能以“后面会换正式图片”为理由降低此门槛。
+
+### Beat / Frame Mapping Contract
+
+```text
+Beat = 一次主要观众发现
+Storyboard Frame = 这个发现过程中的一个关键视觉状态
+```
+
+两者不要求一对一：
+
+- 简单静态发现 → 1 个 Frame；
+- 包含 Reveal、累积、对比或状态改变 → 通常 2–3 个 Frame；
+- 包含关键重构或回收 → 至少展示重构前与重构后两个状态。
+
+使用 `B08-F1`、`B08-F2`、`B08-F3`，或 `B08-entry`、`B08-development`、`B08-handoff` 等 ID 表达同一 Beat 内的视觉发展；这些不是三个新 Beat，也不强制最终剪辑必须切成三个独立镜头。
+
+### Storyboard Sequence Contract
+
+Story Flow 的主要审查表面是官方 **Board Overview**。Frame Inspector 是补充，不得成为唯一审查方式。Board 必须：
+
+- 按 Scene 与叙事顺序展示全部关键 Frame；
+- 清楚显示 Beat 与 Frame 的从属关系；
+- 让相邻 Frame 的变化和 Handoff 可以直接比较；
+- 用自然语言 Placeholder / Risk 说明尚未确定的素材、证据方案或高风险；不新增第二套状态枚举，也不把这些说明塞进 `scene` caption；
+- 不要求用户逐个打开 Inspector 才能理解整条设计。
+
+整组验收标准：隐藏或忽略右侧 Voiceover 与 Narrative，只浏览 Board 上的 Frame 顺序，用户仍应大致看懂人物、问题、过程、转折和回报。右侧信息只帮助判断导演意图，不负责替画面讲故事。
+
 ### Timeline Contract
 
-Story Flow 先在官方 Storyboard surface 确认 Scene / Beat / Frame 结构，不建立完整播放时间线。用户确认后，Image Animatic 才把 Storyboard Cards 转为以 Scene、Beat 和 cue 组织的第一条完整时间线；Timed Animatic 和 Final 在这条时间线上逐步成熟，避免大量 magic offsets 与相互覆盖的绝对时间偏移。Final 只精修已通过的结构，不重建第二套剪辑。Timed Animatic 及其后的实际字幕只读取 `captions.json`；Image Animatic 可以使用清楚标示的临时字幕或时间占位，但不得把它们当作正式字幕时间轴。
+Story Flow 先在官方 Storyboard surface 确认 Scene / Beat / Frame 结构，不建立完整播放时间线。用户确认后，Image Animatic 才把 Storyboard Frames 转为以 Scene、Beat 和 cue 组织的第一条完整时间线；Timed Animatic 和 Final 在这条时间线上逐步成熟，避免大量 magic offsets 与相互覆盖的绝对时间偏移。Final 只精修已通过的结构，不重建第二套剪辑。Timed Animatic 及其后的实际字幕只读取 `captions.json`；Image Animatic 可以使用清楚标示的临时字幕或时间占位，但不得把它们当作正式字幕时间轴。
 
 ### HyperFrames Self-Review
 
-Story Flow 交付前，在官方 Storyboard surface 从上到下检查全部 item 的顺序、可渲染 `src`、实际 Frame、缺失、重复、连续性、占位与高风险状态，不要求完整播放。Image Animatic 及之后才在 Studio 完整播放，并在每个 Scene 的进入前、进入完成、主要揭示时刻、转场重叠区、结束前和下一 Scene 稳定后检查旧层残留、露底、黑帧/空帧、主体越界、多个主运动、转场关系，以及 Timed Animatic 及之后由 `captions.json` 驱动的字幕。再按当前阶段与实际风险运行官方工具；工具报告不能替代对应 surface 的视觉检查。
+Story Flow 交付前执行三遍人工检查：Visual-Only Pass 隐藏说明，只检查每帧的具体主体、动作、关系、事实与证据；Sequence Pass 在 Board Overview 检查相邻变化、构图变化、Beat / Frame 从属、发展、重构、回报与 Handoff；Source-Separation Pass 检查原文只在 Voiceover、字幕和导演说明未烧进画面、精确数据使用真实证据或明确的后续图形层。任何一遍失败都不得交付。Image Animatic 及之后才在 Studio 完整播放，并检查 Scene / Layer 生命周期、画布覆盖、主运动、转场关系和正式字幕。官方工具不能替代对应 surface 的视觉检查。
 
 ## 什么时候读取
 
@@ -319,8 +362,8 @@ Story Flow
 → Final Composition
 ```
 
-- **Story Flow**：在官方 Storyboard surface 用按序、可渲染的低成本 Frame Cards 检查 Scene / Beat、图片任务、连续性和前后关系；不制作完整时间播放；
-- **Image Animatic**：把已确认 Cards 转为第一次从头到尾可播放的 Composition，检查停留、观看动力、粗略运动、Reveal、构图和图片交接；
+- **Story Flow**：在官方 Board Overview 用按序、视觉具体且无需 Inspector 也基本可读的 Frame 序列检查 Scene / Beat、图片任务、发展、连续性和 Handoff；不制作完整时间播放；
+- **Image Animatic**：把已确认 Storyboard Frames 转为第一次从头到尾可播放的 Composition，检查停留、观看动力、粗略运动、Reveal、构图和图片交接；
 - **Timed Animatic**：加入正式 TTS 与 `captions.json` 的真实字幕时间，重排停留和节奏；
 - **Final**：替换最终素材并精修，不重做已经通过预览的内容结构。
 
@@ -338,13 +381,13 @@ Story Flow 给用户浏览实际 HyperFrames Storyboard URL 与 route；Image An
 
 ### Studio 是创意预览的事实来源
 
-创意预览以用户实际打开的 HyperFrames Studio URL 与 route 为准。Story Flow 使用 Storyboard route，逐卡检查顺序、`src`、实际 Frame、连续性和占位；Image Animatic 及之后使用 Composition route，检查完整时间播放：
+创意预览以用户实际打开的 HyperFrames Studio URL 与 route 为准。Story Flow 使用 Storyboard route，以 Board Overview 的画面序列为主，Inspector 为辅；Image Animatic 及之后使用 Composition route，检查完整时间播放：
 
 ```text
 启动 Studio
 → 获取用户将打开的 Storyboard / Composition URL 与 route
 → 在匹配当前阶段的官方 surface 检查真实资源
-→ Story Flow：逐卡确认首拍、中段关键拍、结尾拍与全部主要 Beat
+→ Story Flow：隐藏说明执行 Visual-Only，再连续浏览 Board 执行 Sequence 与 Source-Separation 检查
 → Image Animatic 及之后：确认首拍、中段关键拍、结尾拍、图片和字幕没有空白
 → 按当前阶段运行必要的官方检查
 → 用户确认 Final Preview 后才 render
@@ -358,14 +401,16 @@ CLI snapshot、lint、inspect、validate 与 render 只能证明各自的技术�
 
 `STORYBOARD.md` 是导演计划，不是可视化 Storyboard，也不构成用户预览。Story Flow 必须使用 HyperFrames 官方 Storyboard surface：
 
-- 将全部需要审查的 Scene / Beat 注册为按序 Storyboard items；
-- 每个 Frame 必须有可渲染的 `src` composition；
-- 每个主要 Beat 必须在 Studio 卡片中出现低成本实际画面；
-- 卡片主体是视觉 Frame，核心导演任务直接可见或可查，详细字段可留在 Markdown / 展开内容；
+- 将全部关键视觉状态按 Scene / Beat 从属与叙事顺序注册为 Storyboard Frames；
+- 每个 Frame 必须有可渲染的 `src` composition，但“可渲染”本身不代表完成；
+- 每个 Frame 必须具体呈现主体、动作、关系、视觉事实 / 证据、相邻变化和 Handoff；
+- 包含 Reveal、累积、对比、状态改变、重构或回收的 Beat 使用多个关键 Frame 展示发展，不强制一 Beat 一 Frame；
+- Board Overview 隐藏 Voiceover / Narrative 后仍能基本读懂整条图片叙事；Inspector 只补充对应原文、Audience Discovery、Visual Event、Handoff 与 Placeholder / Risk；
+- 完整 Narrative Contract 分析、全部 Anchors、Asset Brief、Provider 参数、Prompt、图层生命周期细节、完整失败条件和技术实现说明保留在 `STORYBOARD.md`，不塞进 Inspector；
 - 第一拍、中段关键拍与结尾拍必须逐一检查；
-- 自定义说明网页、普通 Composition、Player 粗视频、Markdown、Prompt、资产路径、outline、空白卡片或只有标题的卡片不能替代官方 Storyboard Preview；
-- Story Flow 卡片不提前实现完整动画、正式声音或最终图片；
-- 任一关键 Frame 空白、资源加载失败或没有可渲染 `src` 时，停止当前阶段并修复；不得进入 Image Animatic、TTS、字幕或 Final。
+- 空白或近似空白、通用矩形 / 圆点 / 条形占位、只有版式而没有具体主体和视觉关系、需要阅读 Narrative 才知道发生什么、把旁白 / 导演说明 / 字幕烧进画面补信息，或明显有发展过程却只展示结果占位帧，均视为未完成；
+- Story Flow Frame 不提前实现完整动画、正式声音或最终图片；
+- 任一关键 Frame 违反 Frame / Sequence Contract 时，停止当前阶段并修复；不得进入 Image Animatic、TTS、字幕或 Final。
 
 ## 六、HyperFrames Skill 引用策略
 

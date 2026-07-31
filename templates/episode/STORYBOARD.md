@@ -2,7 +2,7 @@
 
 > 一拍不等于一句旁白，也不一定只使用一张图片。按注意力推进和图片信息变化拆分。
 >
-> **这是导演计划，不是用户可看的 Storyboard Preview。** 只有每个需要审看的 Beat 在 HyperFrames Studio / Storyboard 中绑定可渲染的 Frame composition，用户能看到实际卡片画面时，才能称为 Storyboard Preview。Outline、空白预览、仅有标题或没有可渲染 `src` 的卡片都视为未完成。
+> **这是导演计划，不是用户可看的 Storyboard Preview。** Story Flow 必须把每个关键视觉状态实现为具体可审查的 Frame composition。可渲染 `src` 只是技术前提；如果 Board 上的画面序列脱离 Inspector 文字后无法基本表达人物、问题、过程、转折与回报，仍视为未完成。
 >
 > `captions.json` 是 HyperFrames 实际显示字幕的唯一时间轴；本文件只说明它们怎样与图片配合。一个 Beat 可关联多个字幕组，一个字幕组也可跨 Beat 或 Scene。
 
@@ -39,18 +39,47 @@
 
 # Story Flow / HyperFrames Storyboard 映射
 
-Story Flow 阶段将下面全部主要 Beat 按顺序注册为官方 HyperFrames Storyboard items。每个 item 必须填写 `src` 并绑定低成本、可渲染的 Frame composition；卡片主体是视觉 Frame，核心导演任务通过 `scene`、`voiceover`、narrative 或其他保留字段供用户直接查看或展开查看。不要另做自定义说明网页或普通 Composition 冒充 Storyboard。
+```text
+Beat = 一次主要观众发现
+Storyboard Frame = 这个发现过程中的一个关键视觉状态
+```
 
-建议映射：
+简单静态发现通常使用 1 个 Frame；包含 Reveal、累积、对比或状态改变时使用 2–3 个 Frame；关键重构或回收至少展示前后两个状态。使用 `B08-F1`、`B08-F2`、`B08-F3`，或 `B08-entry`、`B08-development`、`B08-handoff` 表示同一 Beat 内的发展，不要把它们误写成新 Beat，也不代表最终剪辑必须产生同样数量的镜头。
+
+Story Flow 将下面全部关键视觉状态按 Scene / Beat 从属和叙事顺序注册为官方 Storyboard items。每个 item 必须绑定具体可审查的视觉 Frame；Board Overview 是主要审查表面，Inspector 只是补充。不要另做自定义说明网页或普通 Composition 冒充 Storyboard。
+
+映射合同：
 
 ```text
-Frame title → Beat ID + 简短动作 / 转折
-scene → 主要画面 + 这拍让观众理解什么
-voiceover → 对应 SCRIPT.md 原文范围或旁白 guide
-src → compositions/frames/NN-*.html
-narrative / extra → Attention 作用、第一眼 / 后续发现、Handoff、连续性、占位 / 高风险
-status → built（低成本可渲染 Frame 已存在；Story Flow 不要求 animated）
+Frame title → Frame ID + 一个具体视觉动作
+scene → Scene 名称或极短上下文；不写导演说明段落
+voiceover → 只放对应 SCRIPT.md 原文范围；不改写、不总结
+narrative → 最多三项：Audience Discovery / Visual Event / Handoff
+src → 具体可渲染的视觉 Frame composition
+status → built（官方技术状态：具体低保真 Frame composition 已存在）
 ```
+
+> HyperFrames 官方 manifest 的技术 `status` 只使用既有 `outline / built / animated` 语义；Story Flow 的 Frame 有具体低保真画面后写 `built`。素材尚未确定、证据方案待验证或其他高风险写在 Frame 下方的普通 Narrative 文本中；不要创建新的 metadata key、状态枚举或 Schema，也不要占用 `scene` 存放内部状态。
+
+Inspector 推荐只显示：
+
+```text
+VOICEOVER
+AUDIENCE DISCOVERY
+VISUAL EVENT
+HANDOFF
+PLACEHOLDER / RISK
+```
+
+完整 Narrative Contract 分析、全部 Anchors、Asset Brief、Provider 参数、Prompt、图层生命周期细节、完整失败条件和技术实现说明只留在本文件，不塞进 Inspector。Inspector 是审片辅助，不是 Agent 的数据库面板。
+
+# Storyboard Frame Canvas Contract
+
+**低保真表示美术完成度低，不表示视觉设计没有完成。** Frame 必须直接呈现具体主体、动作 / 状态 / 关系、视觉事实或证据、相邻变化和交给下一帧的视觉元素。用户只看 Frame 时应能准确说出发生了什么。
+
+允许：粗略人物与空间剪影、有效参考图裁切、具体场景拼贴、灰阶分镜草图、用户素材、真实截图、以简单形状准确构成的人物 / 物件 / 因果关系、少量低成本生成图，以及明确的后续 HyperFrames 图形层位置。
+
+禁止：旁白全文、双语字幕、导演说明、Beat 标题、Attention 标签、解释性文字、Prompt、素材路径、解释空画面的段落、无语义矩形 / 线框 / 重复容器、装饰性系列预览图。文字只有两个例外：故事中的真实对象 / 证据，或已确定进入成片的少量 Editorial Text。
 
 # 1. Scene 索引
 
@@ -64,11 +93,38 @@ status → built（低成本可渲染 Frame 已存在；Story Flow 不要求 ani
 
 ## Beat B01 —
 
+### Frame B01-F1 — 具体视觉动作
+
 - status: built
-- src: compositions/frames/01-beat-b01.html
-- scene: 主要画面 + 这拍让观众理解什么
-- voiceover: 对应 `SCRIPT.md` 原文范围或旁白 guide
-- 当前状态: 占位图 / 参考图 / 简单构图；是否高风险
+- src: compositions/frames/01-b01-f1.html
+- scene: Scene 名称或极短上下文
+- voiceover: `SCRIPT.md` 对应原文范围；逐字，不总结
+
+**Audience Discovery**：这一帧让观众新理解什么。
+
+**Visual Event**：画面具体发生什么。
+
+**Handoff**：哪个物件、动作、方向、关系或构图交给下一帧。
+
+**Placeholder / Risk**（仅在有实际未确定项时填写）：素材、证据方案或高风险的自然语言说明。
+
+### Frame B01-F2 — 若本 Beat 有 Reveal / 累积 / 对比 / 状态改变
+
+- status: built
+- src: compositions/frames/02-b01-f2.html
+- scene:
+- voiceover:
+
+**Audience Discovery**：
+
+**Visual Event**：
+
+**Handoff**：
+
+**Placeholder / Risk**（可选）：
+
+#### Beat 导演计划（不塞进 Inspector）
+
 - 注意力作用：Hook / Reveal / Evidence / Contrast / Reframe / Payoff / Callback / 其他
 - 对应 `SCRIPT.md` 原文范围：
 - 图片要让观众理解：
@@ -100,11 +156,7 @@ status → built（低成本可渲染 Frame 已存在；Story Flow 不要求 ani
 
 ## Beat B02 —
 
-- status: built
-- src: compositions/frames/02-beat-b02.html
-- scene:
-- voiceover:
-- 当前状态:
+按 B01 结构继续：先列本 Beat 的一个或多个 Frame，再写 Beat 导演计划。
 
 # 3. 图片素材 Brief
 

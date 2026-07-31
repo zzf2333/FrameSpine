@@ -336,20 +336,34 @@ Development Mode 写下：
 
 ### Before Starting｜进入阶段前说明
 
-向用户说明：Story Flow 会把整条视频的 Scene、Beat、对应原文、Attention 作用、图片任务、图片角色、前后 Handoff、连续性、占位状态与高风险素材整理到 HyperFrames 官方 Storyboard 页面；每个 Beat 会有一张可渲染的低成本 Frame 卡片。本阶段不会制作完整时间播放、临时 TTS、字幕时间轴、完整动画、最终图片或导出。完成后请用户判断 Agent 是否理解内容、Beat 顺序和图片叙事方案是否成立。
+向用户说明：Story Flow 会把整条视频的 Scene、Beat 和每个发现过程中的关键视觉状态整理到 HyperFrames 官方 Board。每个 Frame 都会完成具体的低保真视觉导演设计；用户只浏览画面序列，也能基本审查人物、问题、过程、转折、回报与 Handoff。本阶段不会制作完整时间播放、临时 TTS、字幕时间轴、完整动画、最终图片或导出。
 
 ### 建立官方 HyperFrames Storyboard
 
 在单集 `video/` 中：
 
 - 读取系列 `DESIGN.md` 与 Episode 的 Attention Spine、段落和 Visual Anchors；
-- 完成整条视频的 Scene、Beat 与 Asset 关系；
-- 将全部需要审查的 Beat 按顺序注册为 HyperFrames Storyboard items；
-- 每个 item 必须绑定项目内真正可渲染的 Frame composition `src`；
-- Frame 主体首先是占位图、参考图、简单构图或其他低成本视觉帧；
-- 卡片只配少量核心导演信息，详细字段保留在 `STORYBOARD.md` 或可展开内容中，不把说明文字做成画面主体。
+- 完成整条视频的 Scene、Beat、Frame 与 Asset 关系；
+- 区分：`Beat = 一次主要观众发现`；`Storyboard Frame = 发现过程中的一个关键视觉状态`；
+- 简单静态发现使用 1 个 Frame；Reveal、累积、对比或状态改变通常使用 2–3 个 Frame；关键重构或回收至少展示前后两个状态；
+- 使用 `B08-F1`、`B08-F2`、`B08-F3` 等 ID 表示同一 Beat 内的发展，不把它们误写成新 Beat，也不强制最终剪辑逐帧切换；
+- 例如同一结果 Beat 可以依次展示：`B08-F1` 继承已建立的小店与核心商品；`B08-F2` 让订单、用户作品或地区关系持续扩散；`B08-F3` 回到核心商品，以真实证据或明确证据方案形成“一万条好评 / 全国领先”的回报与结尾 Handoff。不能只做一个空泛结果 Frame，再靠右侧说明解释这三步；
+- 将全部关键视觉状态按 Scene / Beat 从属和叙事顺序注册为 HyperFrames Storyboard items；
+- 每个 item 必须绑定项目内真正可渲染的 Frame composition `src`，但可渲染只是技术前提；
+- Frame Canvas 必须具体呈现主体、动作 / 状态 / 关系、视觉事实或证据、相邻变化与 Handoff；
+- Board Overview 是主要审查表面，Inspector 只补充对应原文、Audience Discovery、Visual Event、Handoff 和 Placeholder / Risk。
 
-每张卡片至少应让用户看见或查到：Beat / Scene、对应原文范围、Attention 作用、这拍要理解和感受什么、主要画面、第一眼与后续发现、前后 Handoff、继承的连续性、当前占位状态，以及是否属于高风险素材。无需把 `STORYBOARD.md` 的所有字段全部铺在卡片表面。
+#### Storyboard Frame Contract
+
+Storyboard Frame 是关键视觉状态，不是说明页、版式占位或未来素材容器。**低保真表示美术完成度低，不表示视觉设计没有完成。** 用户看到 Frame 时，应能准确说出发生了什么，而不必先读右侧 Narrative。
+
+允许使用粗略人物与空间剪影、参考图片的有效裁切、具体场景拼贴、灰阶草图、用户素材、真实截图、用简单形状准确表达的人物 / 物件 / 因果关系，以及少量低成本生成图。Frame Canvas 可以呈现人物、物件、环境、动作、状态、关系、因果、累积、对比、真实证据或明确的证据占位、有叙事意义的草图 / 拼贴 / 剪影，以及后续 HyperFrames 图形层的清楚位置。
+
+禁止把旁白全文、双语字幕、导演说明、Beat 标题、Attention 标签、解释性标签、Prompt、素材路径、解释空画面的段落、无语义矩形 / 线框 / 重复容器或装饰性系列预览图烧进 Frame。文字只有两种例外：它是故事中的真实对象或证据；或已明确属于最终成片的少量 Editorial Text。三个等宽框、一个圆、一排方块或空卡片不能形式化代替具体结果、人物、数据与关系，除非这些形状本身已准确表达内容。
+
+#### Storyboard Sequence Contract
+
+官方 Board Overview 必须按 Scene 与叙事顺序展示全部关键 Frame，清楚显示 Beat / Frame 从属，让相邻变化与 Handoff 可比较，并以自然语言 Placeholder / Risk 说明尚未确定的素材、证据方案或高风险；不新增第二套状态枚举，也不占用 `scene` caption 存放内部状态。用户不应逐个打开 Inspector 才能理解设计。隐藏或忽略右侧 Voiceover 和 Narrative，只浏览 Frame 顺序时，仍应大致看懂人物、问题、过程、转折和回报。
 
 ### 两种 surface 不可互相代替
 
@@ -362,7 +376,7 @@ Story Flow 的正式产物是 **HyperFrames 官方 Storyboard URL / route**。�
 - 只展示 Beat 标题、outline、空白卡片或没有可渲染 `src` 的 item；
 - 在卡片里提前实现完整动画、正式声音或最终图片。
 
-正确要求是：使用 HyperFrames 官方 Storyboard surface，将全部 Beat 注册为按序排列、具有可渲染 `src` 的 Storyboard items。
+正确要求是：使用 HyperFrames 官方 Storyboard surface，把全部关键视觉状态注册为按序、视觉具体的 Storyboard Frames；Board 上的画面序列承担叙事，Inspector 只补充导演意图。
 
 ### 这一轮审什么
 
@@ -383,25 +397,31 @@ Story Flow 的正式产物是 **HyperFrames 官方 Storyboard URL / route**。�
 
 ### Preview Readiness Review｜交付前自审
 
-```text
-启动 Studio 官方 Storyboard surface
-→ 检查全部 Scene / Beat 是否按序出现
-→ 检查每个 item 都有可渲染 src 和实际 Frame 画面
-→ 检查缺失、重复、错误原文范围与图片角色分布
-→ 检查前后 Handoff、连续性、高风险与占位标记
-→ 修复
-→ 回到同一 Storyboard route 从上到下复查
-```
+Story Flow 不要求完整播放次数或时间点检查，但必须完成三遍人工自审；任何一遍失败都不能交付：
 
-Story Flow 不要求完整播放次数或时间点检查。必须确认全部主要 Beat 都存在、卡片顺序与 Attention Spine 一致、关键 Frame 不为空、每张卡片的核心图片任务可见，并明确仍为占位与高风险的内容。
+#### 1. Visual-Only Pass
+
+隐藏或忽略全部右侧文字，只看 Frame：每帧是否有具体主体、动作、状态和关系；是否存在空框、泛化图标或无语义形状；每帧是否自己提供视觉信息；关键数字或证据是否有明确实现方案。
+
+#### 2. Sequence Pass
+
+在 Board Overview 连续浏览：相邻 Frame 是否真的发生变化；是否连续多帧使用同一种构图；Scene / Beat / Frame 从属是否清楚；Entry、发展、重构、回报是否可见；Handoff 是否通过物件、动作、方向、关系或构图成立。
+
+#### 3. Source-Separation Pass
+
+检查 `SCRIPT.md` 原文只在 Voiceover；字幕不进入 Frame；导演说明不烧进画面；精确数据使用真实证据或明确的后续 HyperFrames 层；最终成片文字和内部工作说明已分开。
+
+修复后回到同一 Storyboard route 重做三遍检查。
 
 ### Required Preview｜必须可见
 
-必须交付 HyperFrames 官方 Storyboard URL / route。页面应按顺序展示整条视频的全部 Scene / Beat，每个需要审查的 Beat 都绑定可渲染 `src` 并出现低成本实际画面。Markdown、Prompt、资产路径、outline、空白卡片、只有标题的卡片、自定义说明网页或普通 Composition 均不构成 Story Flow Preview。
+必须交付 HyperFrames 官方 Storyboard URL / route。每个关键视觉状态都必须绑定一个具体可审查的 Frame `src`。“可渲染”本身不代表完成；空白或近似空白、通用矩形 / 圆点 / 条形占位、只有版式没有具体主体与关系、需要阅读右侧 Narrative 才知道发生什么、把旁白 / 导演说明 / 字幕烧进画面补足信息，或一个包含明显发展过程的 Beat 只展示结果占位帧，均视为未完成。
+
+交付前必须确认：**只看 Frame 序列，内容进展可以被基本理解；右侧信息只帮助判断导演意图，不负责替画面讲故事。** Markdown、Prompt、资产路径、outline、自定义说明网页或普通 Composition 均不能替代。
 
 ### Stage Handoff｜阶段交接
 
-交接时说明 Storyboard URL / route、Scene 数量、Beat 数量、这一版完成的节拍设计、主要导演选择、仍为占位或高风险的 Frame，以及用户应重点审查的 Beat 顺序、图片任务、角色分布、连续性和 Handoff。若有实质方向分歧，给出少量选项、取舍与推荐。用户确认后才会把已确认 Storyboard Cards 转为 Image Animatic 时间线，加入占位图 / 样图 / 用户素材、临时声音或估计时长，以及粗略 Entry / Development / Emphasis / Handoff；仍不会进入正式 TTS、`captions.json`、批量最终图、Final 精修或导出。
+交接时说明 Storyboard URL / route、Scene / Beat / Frame 数量、同一 Beat 使用多个 Frame 的关键发展、主要导演选择、仍有未确定素材 / 证据方案或高风险的 Frame，以及三遍自审修复。请用户先浏览 Board Overview 判断画面序列是否已直接表达人物、问题、过程、转折、回报和 Handoff；Inspector 只用于补充原文、Audience Discovery 与风险。若有实质方向分歧，给出少量选项、取舍与推荐。用户确认后才会把已确认 Storyboard Frames 转为 Image Animatic 时间线；仍不会进入正式 TTS、`captions.json`、批量最终图、Final 精修或导出。
 
 ### Stop Here｜在此停止
 
@@ -413,7 +433,7 @@ Story Flow 不要求完整播放次数或时间点检查。必须确认全部主
 
 ### Before Starting｜进入阶段前说明
 
-向用户说明：Image Animatic 是本期**第一次从头播放到尾的动态 Composition**。它会把已确认的 Storyboard Cards 转成 Scene / Beat 时间关系，用样图、参考图、低成本图或用户素材，加上临时声音或估计时长以及粗略 Entry / Development / Emphasis / Handoff，验证时间中的观看动力；不会生成正式 TTS、最终字幕时间轴、批量最终图片、精细动画或导出。完成后请用户判断节拍停留、图片切换、故事流动、中段是否变平、Reveal / Handoff 是否有效，以及整体是否像视频而不是幻灯片。
+向用户说明：Image Animatic 是本期**第一次从头播放到尾的动态 Composition**。它会把已确认的 Storyboard Frames 转成 Scene / Beat 时间关系，用样图、参考图、低成本图或用户素材，加上临时声音或估计时长以及粗略 Entry / Development / Emphasis / Handoff，验证时间中的观看动力；不会生成正式 TTS、最终字幕时间轴、批量最终图片、精细动画或导出。完成后请用户判断节拍停留、图片切换、故事流动、中段是否变平、Reveal / Handoff 是否有效，以及整体是否像视频而不是幻灯片。
 
 ### 图片节拍不是一句一图
 
@@ -456,7 +476,7 @@ Story Flow 不要求完整播放次数或时间点检查。必须确认全部主
 
 ### Image Animatic：第一次完整时间播放
 
-从已确认的 Storyboard Cards 建立时间线，使用：
+从已确认的 Storyboard Frames 建立时间线，使用：
 
 - 用户参考图；
 - 草图；

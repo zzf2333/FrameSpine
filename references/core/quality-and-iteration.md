@@ -45,10 +45,10 @@
 ```text
 Story Flow
 官方 Storyboard route
-→ 从上到下检查全部 Scene / Beat / Frame Cards
-→ 检查顺序、src、缺失、重复、连续性、占位与风险
-→ 修复
-→ 同一路径复查
+→ Visual-Only Pass：隐藏 Inspector，只看每帧具体视觉信息
+→ Sequence Pass：连续浏览 Board，检查变化、发展与 Handoff
+→ Source-Separation Pass：检查原文、字幕、导演说明与成片画面分离
+→ 任一失败则修复并重做三遍
 → 才能展示
 
 Image Animatic / Timed Animatic / Final
@@ -61,9 +61,9 @@ Image Animatic / Timed Animatic / Final
 → 才能展示
 ```
 
-存在任一与当前成熟阶段相关的 P0 blocker 时，不得请求用户审片。Story Flow 的 blocker 包括：官方 Storyboard URL / route 不可用；Scene / Beat 顺序与 Attention Spine 明显不一致；应审查的 item 缺失、重复、没有可渲染 `src`、Frame 空白或只有标题 / outline；核心图片任务、连续性、占位或高风险状态无法判断。Image Animatic 及之后的 blocker 包括：Composition 无法完整播放；该阶段应有的关键 Frame / Beat / Scene 或图片、音频、字幕、字体资源空白或加载失败；非设计性黑边、露底、错误拉伸或严重裁切；运动时露出空白；字幕 / 平台 UI 遮挡关键内容；旧图层残留、多张全屏层无边界叠加、重叠转场、黑帧、空帧、跳帧、多个竞争主运动或大量 magic offsets；或声画、字幕与揭示明显错位。
+存在任一与当前成熟阶段相关的 P0 blocker 时，不得请求用户审片。Story Flow 的 blocker 包括：官方 Storyboard URL / route 不可用；Scene / Beat / Frame 顺序或从属与 Attention Spine 明显不一致；关键视觉状态缺失、重复或没有可渲染 `src`；Frame 空白、近似空白、只有标题 / 版式、使用无语义矩形 / 圆点 / 条形占位；需要读 Inspector 才知道发生什么；旁白、字幕或导演说明被烧进画面补足信息；包含 Reveal、累积、对比、状态改变、重构或回收的 Beat 只展示一个泛化结果帧；或 Board 序列无法基本表达人物、问题、过程、转折和回报。Image Animatic 及之后的 blocker 包括：Composition 无法完整播放；该阶段应有的关键 Frame / Beat / Scene 或图片、音频、字幕、字体资源空白或加载失败；非设计性黑边、露底、错误拉伸或严重裁切；运动时露出空白；字幕 / 平台 UI 遮挡关键内容；旧图层残留、多张全屏层无边界叠加、重叠转场、黑帧、空帧、跳帧、多个竞争主运动或大量 magic offsets；或声画、字幕与揭示明显错位。
 
-阶段专属要求：Story Flow 必须在官方 Storyboard surface 为全部主要 Beat 提供按序、可渲染的低成本 Frame Cards，但不要求时间播放、临时声音、字幕时间轴或完整动画；Image Animatic 是第一次完整播放，必须具备主要 Beat 的实际画面和最低必要运动；Timed Animatic 必须使用正式声音与 `captions.json` 的真实字幕时间轴；Final 不得保留占位 / 审核标记或明显生成错误。Timed Animatic 及之后，Composition 内临时切字幕而非读取 `captions.json` 属于 P0 blocker。
+阶段专属要求：Story Flow 必须在官方 Board Overview 为全部关键视觉状态提供按序、视觉具体的低保真 Frames；低保真只降低美术完成度，不降低视觉导演完成度。用户隐藏 Voiceover / Narrative 后仍应基本读懂整组图片叙事；Inspector 只补充原文、Audience Discovery、Visual Event、Handoff 与 Placeholder / Risk。Story Flow 不要求时间播放、临时声音、字幕时间轴或完整动画；Image Animatic 是第一次完整播放，必须具备主要 Beat 的实际画面和最低必要运动；Timed Animatic 必须使用正式声音与 `captions.json` 的真实字幕时间轴；Final 不得保留占位 / 审核标记或明显生成错误。Timed Animatic 及之后，Composition 内临时切字幕而非读取 `captions.json` 属于 P0 blocker。
 
 技术工具通过只是技术信息，不能抵消上述视觉问题。Story Flow 只有在 Agent 实际获得官方 Storyboard surface 的像素级预览并逐卡复查后，才能说“已在 Studio 中确认”；Image Animatic 及之后还必须完整观看对应 Composition。若无法视觉访问，必须报告自审受阻并先解决预览访问，不能猜测画面正确、让用户充当第一轮 QA，或把未经自审的地址作为阶段预览交付。
 
@@ -73,7 +73,7 @@ Image Animatic / Timed Animatic / Final
 
 > 好像哪里不对。
 
-因此每次预览明确一个主要审片问题。Story Flow 从上到下浏览 Storyboard Cards；Image Animatic 及之后可以完整播放多次，但每次关注不同层。
+因此每次预览明确一个主要审片问题。Story Flow 先隐藏 Inspector 浏览 Board 上的 Frame 序列，再按需打开 Inspector；Image Animatic 及之后可以完整播放多次，但每次关注不同层。
 
 ### 不要同时问十个问题
 
@@ -271,21 +271,23 @@ Beat / Frame 数量：
 
 Storyboard Readiness Review：
 - 检查的 Scene / Beat / Frame 数量：
-- 缺失、重复或错误顺序：
-- 可渲染 src 与空白卡片检查：
-- 连续性、图片角色和 Handoff 检查：
+- Visual-Only Pass：具体主体 / 动作 / 关系 / 证据；空框与泛化图形：
+- Sequence Pass：相邻变化、构图变化、Beat / Frame 从属、发展、重构、回报与 Handoff：
+- Source-Separation Pass：Voiceover、字幕、导演说明、证据 / 图形层与成片文字分离：
 - 已修复的问题：
 
 仍是占位或高风险的 Frame：
 -
 
-请重点审查：
-1. Agent 是否正确理解原文与 Attention Spine？
-2. Beat 顺序、图片任务、角色分布和前后关系是否成立？
-3. 哪些 Frame 需要改方向？
+请先只浏览 Board Overview，不打开 Inspector：
+1. 是否能基本看懂人物、问题、过程、转折和回报？
+2. 同一 Beat 内的发展，以及相邻 Frame 的变化和 Handoff 是否成立？
+3. 哪些 Frame 仍需要改视觉方向？
+
+再打开 Inspector 补充核对对应原文、Audience Discovery 和风险。
 
 确认后 Image Animatic 会做：
-- 把已确认 Cards 转为第一次完整时间播放；加入低成本素材、估计时长 / 临时声音和粗略 Motion / Reveal / Handoff。
+- 把已确认 Storyboard Frames 转为第一次完整时间播放；加入低成本素材、估计时长 / 临时声音和粗略 Motion / Reveal / Handoff。
 
 确认后仍不会做：
 - 正式 TTS、captions.json、批量最终图、Final 精修或导出。
@@ -349,7 +351,7 @@ B. （方向、优点、风险）
 我先停在当前阶段，等你观看后在下一条消息决定是否继续。
 ```
 
-阶段审片重点默认是：Story Flow 在官方 Storyboard 页面看 Scene / Beat 顺序、对应原文、Attention 作用、图片任务、角色分布、连续性和 Handoff；Image Animatic 作为第一次完整播放，看停留、观看动力、图片切换、Reveal / Handoff 和是否像视频而不是幻灯片；Timed Animatic 看正式声音、字幕、声画同步与真实节奏；Final Preview 看整体统一性、镜头感、可读性、声音和发布准备度。用户仍可反馈其他问题，但不要要求其在早期阶段替 Final 做评判。
+阶段审片重点默认是：Story Flow 先在官方 Board Overview 隐藏 Inspector 看画面序列能否直接表达人物、问题、过程、转折、回报和 Handoff，再用 Inspector 补充核对原文、Audience Discovery 与风险；Image Animatic 作为第一次完整播放，看停留、观看动力、图片切换、Reveal / Handoff 和是否像视频而不是幻灯片；Timed Animatic 看正式声音、字幕、声画同步与真实节奏；Final Preview 看整体统一性、镜头感、可读性、声音和发布准备度。用户仍可反馈其他问题，但不要要求其在早期阶段替 Final 做评判。
 
 ### 展示多个方案
 
@@ -591,14 +593,15 @@ Agent 应具备导演立场，但不把偏好伪装成客观真理。
 
 质量来自官方 Storyboard surface 上的设计完整性：
 
-- Scene 与 Beat 顺序匹配 Attention Spine；
-- 每拍对应正确原文和 Attention 作用；
-- 图片任务、图片角色、第一眼 / 后续发现具体；
-- 前后 Handoff 与连续性清楚；
-- 局部回报、核心重构与结尾回收在卡片顺序中闭合；
-- 每个主要 Beat 有可渲染的低成本 Frame，并标清占位与高风险。
+- Scene / Beat / Frame 顺序与从属匹配 Attention Spine；
+- 每个 Frame 有具体主体、动作 / 状态 / 关系、事实 / 证据、相邻变化和 Handoff；
+- Reveal、累积、对比、状态改变、重构与回收通过足够的关键 Frame 展示，不被压成泛化结果卡；
+- Board Overview 隐藏 Inspector 后仍能基本读懂人物、问题、过程、转折与回报；
+- 相邻 Frame 不是重复构图，变化和 Handoff 可比较；
+- Voiceover、字幕、导演说明、内部工作信息与 Frame Canvas 清楚分离；
+- Inspector 保持简洁，只补充原文、Audience Discovery、Visual Event、Handoff 与 Placeholder / Risk。
 
-不要追求完整时间播放、最终图片、正式声音或动画流畅度。
+不要追求完整时间播放、最终图片、正式声音或动画流畅度；但不得把“低保真”误解为视觉设计未完成。
 
 ### Image Animatic
 
