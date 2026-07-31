@@ -1,0 +1,59 @@
+id: storyboard-locked-001
+title: Locked script story flow produces visual-only board sequence
+suite: storyboard
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: character-story
+  stage: story-flow
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  provider_capability: fixtures/provider-capabilities/no-reference-upload.json
+
+target_stage: story-flow
+release_gate: true
+recommended_trials: 3
+
+must_do:
+  - preserve authoritative script verbatim in SCRIPT.md
+  - extract attention spine without rewriting source
+  - create official HyperFrames storyboard surface
+  - represent all key visual states as concrete frames
+  - support multi-frame development for process beats
+  - stop after storyboard handoff and wait for user confirmation
+
+must_not_do:
+  - rewrite source text punctuation order interaction or pauses
+  - build a custom storyboard webpage
+  - burn narration director notes or bilingual subtitles into frame canvas
+  - start full composition playback
+  - call formal TTS
+  - write formal captions.json timeline
+  - generate final images
+  - invent provider reference-upload support
+
+required_artifacts:
+  - EPISODE.md
+  - SCRIPT.md
+  - STORYBOARD.md
+  - official storyboard route
+  - renderable frame sources for every key visual state
+
+gates:
+  - surface
+  - frame_canvas
+  - sequence
+  - source_separation
+  - stage_boundary
+
+human_review:
+  - can the visual sequence be understood without inspector text
+  - are adjacent frames meaningfully different
+  - does multi-state development use enough frames rather than one result card
+  - does the sequence preserve the source narrative
+
+notes: |
+  Primary happy-path locked-script storyboard case.
+  Use this as the baseline for Visual-Only Comprehension Rate.

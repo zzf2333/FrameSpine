@@ -1,0 +1,37 @@
+id: storyboard-empty-frame-fail
+title: Empty or generic frames must fail story flow even if src exists
+suite: storyboard
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: adversarial
+  stage: story-flow
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/empty-frames-with-src.md
+
+target_stage: story-flow
+release_gate: true
+case_kind: negative-baseline
+recommended_trials: 3
+
+must_do:
+  - detect empty near-empty or generic placeholder frames as incomplete
+  - refuse to present story flow as ready until visual design is concrete
+
+must_not_do:
+  - pass merely because every card has a renderable src
+  - treat three equal boxes one circle or a row of squares as finished design
+  - claim low fidelity excuses incomplete visual direction
+
+gates:
+  - frame_canvas
+  - sequence
+
+expected_result: fail
+
+human_review:
+  - confirm the board is not understandable without inspector text
+  - confirm failure is classified as incomplete visual design not missing src

@@ -1,0 +1,8 @@
+{
+  "id": "reference-supported",
+  "supports_prompt": true,
+  "supports_extra": true,
+  "supports_local_reference_upload": true,
+  "supports_base64_reference": true,
+  "notes": "Eval fixture for capability-positive provider path."
+}

@@ -1,0 +1,175 @@
+# FrameSpine Eval Suite
+
+**Skill 负责生产视频；Eval 负责验证 Skill 有没有按照设计生产。**
+
+本目录独立于 FrameSpine 运行时 Skill。评分器、测试案例、失败样例与报告只存在于 `evals/`，不得写回：
+
+```text
+SKILL.md
+references/
+templates/
+scripts/
+```
+
+运行时 Skill 继续由真实用户预览验收；离线 Eval 可以评分，两者不冲突。
+
+## 总结构
+
+```text
+E0  静态合同检查
+E1  单能力测试
+E2  阶段产物测试
+E3  Agent 轨迹测试
+E4  端到端生产测试
+E5  鲁棒性与回归测试
+```
+
+不输出一个容易掩盖问题的总分。正式报告输出：
+
+```text
+硬性违规
+各阶段通过情况
+不同能力切片表现
+人工审片结果
+失败根因与唯一修复位置
+```
+
+## 目录
+
+```text
+evals/
+├── README.md
+├── cases/
+│   ├── series/
+│   ├── locked-script/
+│   ├── development/
+│   ├── revision/
+│   ├── storyboard/          # v1 优先
+│   ├── animatic/
+│   ├── providers/
+│   └── adversarial/
+├── fixtures/
+│   ├── series-projects/
+│   ├── user-assets/
+│   ├── inputs/
+│   ├── provider-capabilities/
+│   └── expected-boundaries/
+├── rubrics/
+│   ├── core-compliance.md
+│   ├── storyboard.md
+│   ├── image-animatic.md
+│   ├── timed-animatic.md
+│   ├── final.md
+│   └── collaboration.md
+├── graders/
+│   ├── deterministic/
+│   ├── trace/
+│   ├── visual/
+│   └── human/
+├── baselines/
+├── runs/                    # 本地运行产物，不提交
+└── reports/
+```
+
+## 原则
+
+1. **Eval 不污染 Skill**  
+   具体故事、错误样例、评分标准和测试状态只放在本目录。
+
+2. **沿真实阶段测试**  
+   按 Locked / Development / Revision 输入路由，以及 Story Flow → Image Animatic → Timed Animatic → Final 四个成熟阶段检查，不只看最终导出视频。
+
+3. **轨迹与产物并重**  
+   即使最终产物看起来不错，也要检查是否跨阶段、是否错误 surface、是否虚构 Provider 能力、是否静默改稿。
+
+4. **硬门禁与软质量分离**  
+   P0 不能被高分抵消。软质量用 0 / 1 / 2 维度记录，先看切片，不要急着加总。
+
+5. **同一 case 多 trial**  
+   开发 smoke 至少 3 次；完整回归 3–5 次；高风险发布项 5 次。不挑最好一次。
+
+6. **失败回写唯一权威位置**  
+   报告必须指出应更新 `SKILL.md`、某个 core reference、模板，还是“无需改 Skill，只加 regression case”。
+
+## 运行
+
+### E0 静态合同检查
+
+```bash
+node evals/graders/deterministic/e0-static-contracts.mjs
+```
+
+### 校验 case 文件格式
+
+```bash
+node evals/graders/deterministic/validate-cases.mjs
+```
+
+### 一次性跑 v1 Storyboard 套件入口
+
+```bash
+node evals/run-storyboard-suite.mjs
+```
+
+当前 v1 可自动跑 E0、case 校验与 deterministic gates 的静态部分。  
+需要 Agent trajectory、Vision 初筛与 Human Expert 的部分，按 `rubrics/` 与 `graders/human/` 手工或外部 harness 执行，结果写入 `runs/` 与 `reports/`。
+
+## v1 优先范围
+
+第一版只做扎实的 **Story Flow Storyboard Eval**：
+
+```text
+Surface Gate
+Frame Canvas Gate
+Sequence Gate
+Source Separation Gate
+Stage Boundary Gate
+```
+
+覆盖：
+
+- 三种输入模式；
+- 单状态 Beat 与发展型 Beat；
+- 证据型 Frame；
+- 空框错误 baseline；
+- 旁白烧入 Frame；
+- 官方 Storyboard 与错误自定义页面对比。
+
+后续再扩展四阶段边界与完整端到端。
+
+## 核心指标
+
+```text
+1. P0-Free Trial Rate
+2. Input Routing Accuracy
+3. Locked Script Preservation Rate
+4. Correct Preview Surface Rate
+5. Storyboard Visual-Only Comprehension Rate
+6. Stage Stop Accuracy
+7. Medium Transfer Success Rate
+8. Root-Cause Repair Accuracy
+9. Human Pairwise Preference Win Rate
+10. Cross-Trial Stability
+```
+
+按切片查看：
+
+```text
+Locked / Development / Revision
+不同媒介
+不同内容类型
+不同阶段
+不同 Provider 条件
+```
+
+## 与 Skill 的边界
+
+| 位置 | 职责 |
+| --- | --- |
+| Skill / references / templates | 抽象生产工艺与合同 |
+| Eval cases | 具体测试内容与金标准 |
+| Rubrics | 判断标准 |
+| Graders | 离线检查器 |
+| Reports | 结果、失败分类、唯一修复位置 |
+
+**Eval 不判断 Agent 有没有“看起来很努力”，而是判断它是否在正确阶段、使用正确表面、生产正确产物、遵守正确边界，并让用户能够做出当前阶段真正应该做的判断。**

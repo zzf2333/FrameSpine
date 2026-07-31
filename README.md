@@ -78,3 +78,15 @@ npx hyperframes render --quality high --output final.mp4
 ```
 
 技术工具发现实现问题；内容、图片、节奏和风格由用户观看真实预览后判断。
+
+## Eval（离线，不进入运行时）
+
+`evals/` 独立验证 Skill 是否按设计生产，不把评分器或测试案例写进运行时 Skill。
+
+```bash
+npm run eval:e0
+npm run eval:cases
+npm run eval:storyboard
+```
+
+详见 `evals/README.md`。第一版优先 Story Flow Storyboard gates。

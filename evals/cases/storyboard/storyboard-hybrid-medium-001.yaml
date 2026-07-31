@@ -1,0 +1,34 @@
+id: storyboard-hybrid-medium-001
+title: Hybrid medium recipe must stay intentional not accidental blend
+suite: storyboard
+slice:
+  input_mode: locked-script
+  visual_medium: hybrid-primary-plus-support
+  content_type: character-story
+  stage: story-flow
+
+start_state:
+  series_fixture: fixtures/series-projects/series-hybrid
+  user_input: fixtures/inputs/locked-script-a.md
+
+target_stage: story-flow
+release_gate: false
+case_kind: diagnostic
+recommended_trials: 3
+
+must_do:
+  - follow series primary and supporting medium roles
+  - keep medium transitions intentional and readable
+  - preserve visual-only comprehension
+
+must_not_do:
+  - default to accidental AI-style medium blending
+  - use camera-default motion language that the medium forbids
+
+gates:
+  - frame_canvas
+  - sequence
+
+human_review:
+  - is primary medium clear
+  - are supporting media used only for declared roles

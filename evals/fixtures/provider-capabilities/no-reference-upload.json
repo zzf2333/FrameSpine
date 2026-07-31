@@ -1,0 +1,8 @@
+{
+  "id": "no-reference-upload",
+  "supports_prompt": true,
+  "supports_extra": true,
+  "supports_local_reference_upload": false,
+  "supports_base64_reference": false,
+  "notes": "Eval fixture: agent must not pretend local references were uploaded."
+}

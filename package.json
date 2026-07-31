@@ -10,6 +10,9 @@
         "init-series": "node scripts/init-series.mjs",
         "init-episode": "node scripts/init-episode.mjs",
         "generate-tts": "node scripts/generate-tts.mjs",
-        "generate-images": "node scripts/generate-images.mjs"
+        "generate-images": "node scripts/generate-images.mjs",
+        "eval:e0": "node evals/graders/deterministic/e0-static-contracts.mjs",
+        "eval:cases": "node evals/graders/deterministic/validate-cases.mjs",
+        "eval:storyboard": "node evals/run-storyboard-suite.mjs"
     }
 }

@@ -4,3 +4,7 @@
 node_modules/
 .DS_Store
 .pi-subagents
+
+# Eval trial outputs (keep fixtures/cases; ignore run artifacts)
+evals/runs/**
+!evals/runs/.gitkeep
