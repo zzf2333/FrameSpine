@@ -1,22 +1,11 @@
 #!/usr/bin/env node
-import { cp, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { findSeriesRoot, exists, parseArgs } from "./lib/env.mjs";
+import { replaceTokens } from "./lib/template.mjs";
 
 const skillRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-
-async function replace(root, tokens) {
-  for (const entry of await readdir(root, { withFileTypes: true })) {
-    const file = path.join(root, entry.name);
-    if (entry.isDirectory()) { await replace(file, tokens); continue; }
-    const buffer = await readFile(file);
-    if (buffer.includes(0)) continue;
-    let text = buffer.toString("utf8");
-    for (const [token, value] of Object.entries(tokens)) text = text.split(token).join(value);
-    await writeFile(file, text);
-  }
-}
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
@@ -26,7 +15,7 @@ async function main() {
   if (await exists(target) && (await readdir(target)).length) throw new Error(`单集目录已存在且非空：${target}`);
   await mkdir(target, { recursive: true });
   await cp(path.join(skillRoot, "templates/episode"), target, { recursive: true });
-  await replace(target, { "__EPISODE_TITLE__": args.title, "__EPISODE_SLUG__": args.slug });
+  await replaceTokens(target, { "__EPISODE_TITLE__": args.title, "__EPISODE_SLUG__": args.slug });
   console.log(target);
 }
 

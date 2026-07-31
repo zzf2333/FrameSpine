@@ -5,26 +5,39 @@ export async function ensureParent(file) {
   await mkdir(path.dirname(file), { recursive: true });
 }
 
-export async function fetchJson(url, init, timeoutMs) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const response = await fetch(url, { ...init, signal: controller.signal });
-    const text = await response.text();
-    let payload;
+export async function fetchJson(url, init, timeoutMs, retries = 2) {
+  const delays = [1000, 3000];
+  let lastError;
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    if (attempt > 0) await new Promise((r) => setTimeout(r, delays[attempt - 1] || 3000));
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
-      payload = JSON.parse(text);
-    } catch {
-      throw new Error(`接口返回的不是 JSON（HTTP ${response.status}）`);
+      const response = await fetch(url, { ...init, signal: controller.signal });
+      const text = await response.text();
+      let payload;
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        throw new Error(`接口返回的不是 JSON（HTTP ${response.status}）`);
+      }
+      if (!response.ok) {
+        const message = payload?.error?.message || payload?.message || payload?.msg || "";
+        const err = new Error(`接口请求失败（HTTP ${response.status}）${message ? `：${message}` : ""}`);
+        if (response.status >= 500 && attempt < retries) { lastError = err; continue; }
+        throw err;
+      }
+      return { response, payload };
+    } catch (error) {
+      clearTimeout(timer);
+      const isRetryable = error.name === "AbortError" || error.cause?.code === "ECONNRESET" || error.cause?.code === "ECONNREFUSED" || error.cause?.code === "UND_ERR_SOCKET";
+      if (isRetryable && attempt < retries) { lastError = error; continue; }
+      throw error;
+    } finally {
+      clearTimeout(timer);
     }
-    if (!response.ok) {
-      const message = payload?.error?.message || payload?.message || payload?.msg || "";
-      throw new Error(`接口请求失败（HTTP ${response.status}）${message ? `：${message}` : ""}`);
-    }
-    return { response, payload };
-  } finally {
-    clearTimeout(timer);
   }
+  throw lastError;
 }
 
 export async function imageBufferFromPayload(payload, baseUrl, apiKey, timeoutMs) {

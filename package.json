@@ -1,0 +1,15 @@
+{
+    "name": "framespine",
+    "version": "0.2.0",
+    "private": true,
+    "type": "module",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "init-series": "node scripts/init-series.mjs",
+        "init-episode": "node scripts/init-episode.mjs",
+        "generate-tts": "node scripts/generate-tts.mjs",
+        "generate-images": "node scripts/generate-images.mjs"
+    }
+}
