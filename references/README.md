@@ -34,6 +34,14 @@
 - `examples/character-story.md`
 - `examples/locked-script-directing.md`
 
+## 视觉媒介配方示例
+
+核心只定义媒介中立的生产工艺；以下示例展示不同系列怎样为同一套 `Visual Expression Contract` 填入具体配方，不创建不同工作流：
+
+- `examples/visual-mediums/cinematic-realism.md`
+- `examples/visual-mediums/manga.md`
+- `examples/visual-mediums/paper-cut.md`
+
 ## 技术附录
 
 - `technical/subtitles.md`

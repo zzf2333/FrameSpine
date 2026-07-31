@@ -375,9 +375,9 @@ Development / Revision Mode 找不到图片表达时，可改写文案、引入�
 
 用户认可 Timed Animatic 后，把图片需求整理到 `image-prompts.json`，再调用 `scripts/generate-images.mjs`。
 
-按实际素材而非 Beat 一一整理 `image-prompts.json`：一个 Beat 可使用多张素材，一张素材也可跨多个 Beat。`purpose`、`role`、`references` 和 `used_in_beats` 只是导演上下文，Provider 不会自动收到；所有影响生成的要求必须实际编入 `prompt`。将素材专属的锚点、镜头、真实细节、制作余量与 AI 风险写入逐素材 Brief，不要混在 Beat 的图片组合任务中。Prompt 依次写叙事任务、可见证据、继承的人物/空间/物件、镜头任务、写实素材的物理真实细节或概念/幻想素材的材质与世界规则一致性、字幕安全区与运动余量、相关系列基线和失败约束；不只写表面题材和风格，也不以风格形容词开头。
+按实际素材而非 Beat 一一整理 `image-prompts.json`：一个 Beat 可使用多张素材，一张素材也可跨多个 Beat。`purpose`、`role`、`references` 和 `used_in_beats` 只是导演上下文，Provider 不会自动收到；所有影响生成的要求必须实际编入 `prompt`。将素材专属的 Entity / Environment / Medium / Relationship Anchors、构图与观察方式、媒介实现、媒介一致性、制作余量与风险写入逐素材 Brief，不要混在 Beat 的图片组合任务中。Prompt 依次写叙事任务、可见证据、继承锚点、构图与观察方式、媒介实现、材质/世界一致性、字幕安全区与运动余量、相关系列配方和失败约束；不只写表面题材和风格，也不以风格形容词开头。
 
-逐素材完成 Prompt Audit 后，再完成 Image Set Audit，检查整组角色分布、景别/机位、姿态、完成状态、光线、功能性细节与观看任务不会同质化；这两项是 Agent 的人工导演检查，不是脚本评分或批准状态。`prompt` 留空会令脚本安全报错，绝不在实际字段放教学说明。先生成世界锚点、第一帧、长期人物、核心重构、机制和结尾回收等高风险素材；在同一真实竖屏 HyperFrames Composition 中应用 cover/crop、字幕安全区、推拉与 Handoff 后再判断。用户不满意时，根据问题修改：视觉任务、锚点/参考、构图、连续性、Prompt 或图片方案，而不是反复使用同一个 Prompt 抽卡。不要在这一原则上建设自动 Prompt 编译器。
+逐素材完成 Prompt Audit 后，再完成 Image Set Audit，检查整组角色分布、观察方式、主体状态、媒介表现、功能性细节与观看任务不会同质化；这两项是 Agent 的人工导演检查，不是脚本评分或批准状态。`prompt` 留空会令脚本安全报错，绝不在实际字段放教学说明。先生成视觉世界锚点、第一帧、长期主体、核心重构、机制和结尾回收等高风险素材；在同一真实竖屏 HyperFrames Composition 中应用 cover/crop、字幕安全区、推拉与 Handoff 后再判断。用户不满意时，根据问题修改：视觉任务、锚点/参考、构图、连续性、Prompt 或图片方案，而不是反复使用同一个 Prompt 抽卡。不要在这一原则上建设自动 Prompt 编译器。
 
 ## 8. 完成、审片与渲染
 

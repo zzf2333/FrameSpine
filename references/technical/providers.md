@@ -108,7 +108,7 @@ assets/audio/units/*.wav
     "used_in_beats": ["B01", "B02"],
     "role": "world-anchor",
     "purpose": "这张图片在故事中承担什么",
-    "references": ["Character Anchor 01", "Space Anchor 01"],
+    "references": ["Entity Anchor 01", "Environment Anchor 01", "Medium Anchor 01"],
     "prompt": "完整镜头生产指令：叙事任务、可见事实、连续性、镜头、真实细节、制作余量、系列基线与失败约束",
     "output": "assets/images/world-anchor.png",
     "size": "1024x1536",
@@ -126,7 +126,7 @@ prompt
 output
 ```
 
-`purpose`、`role`、`used_in_beats` 与 `references` 是 Agent 的导演上下文，脚本会忽略；Provider 也不会自动看到 `STORYBOARD.md`、`DESIGN.md` 或这些字段。因此，真正影响生成的叙事任务、可见事实、连续性锚点、镜头、物理真实细节、制作余量、系列基线和失败约束必须写进 `prompt`。
+`purpose`、`role`、`used_in_beats` 与 `references` 是 Agent 的导演上下文，脚本会忽略；Provider 也不会自动看到 `STORYBOARD.md`、`DESIGN.md` 或这些字段。因此，真正影响生成的叙事任务、可见事实、连续性锚点、构图与观察方式、媒介实现、媒介/世界一致性、制作余量、系列基线和失败约束必须写进 `prompt`。
 
 `extra` 原样并入第三方请求体，用于第三方 API 的特有参数。仅在第三方接口已确认支持时，用它映射参考图、编辑或变体参数；不要假定所有 Provider 都支持。
 

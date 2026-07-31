@@ -4,7 +4,7 @@
     "used_in_beats": ["B01", "B02"],
     "role": "world-anchor",
     "purpose": "这张素材在故事中承担什么，以及必须让观众看见什么",
-    "references": ["Character Anchor 01", "Space Anchor 01"],
+    "references": ["Entity Anchor 01", "Environment Anchor 01", "Medium Anchor 01"],
     "prompt": "",
     "output": "assets/images/world-anchor.png",
     "size": "1024x1536",
