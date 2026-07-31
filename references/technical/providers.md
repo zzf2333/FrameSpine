@@ -104,10 +104,13 @@ assets/audio/units/*.wav
 ```json
 [
   {
-    "id": "beat-01",
+    "id": "img-world-anchor",
+    "used_in_beats": ["B01", "B02"],
+    "role": "world-anchor",
     "purpose": "这张图片在故事中承担什么",
-    "prompt": "完整图片提示词",
-    "output": "assets/images/beat-01.png",
+    "references": ["Character Anchor 01", "Space Anchor 01"],
+    "prompt": "完整镜头生产指令：叙事任务、可见事实、连续性、镜头、真实细节、制作余量、系列基线与失败约束",
+    "output": "assets/images/world-anchor.png",
     "size": "1024x1536",
     "quality": "high",
     "extra": {}
@@ -123,9 +126,9 @@ prompt
 output
 ```
 
-`purpose` 供 Agent 和用户理解，脚本会忽略。
+`purpose`、`role`、`used_in_beats` 与 `references` 是 Agent 的导演上下文，脚本会忽略；Provider 也不会自动看到 `STORYBOARD.md`、`DESIGN.md` 或这些字段。因此，真正影响生成的叙事任务、可见事实、连续性锚点、镜头、物理真实细节、制作余量、系列基线和失败约束必须写进 `prompt`。
 
-`extra` 原样并入第三方请求体，用于第三方 API 的特有参数。
+`extra` 原样并入第三方请求体，用于第三方 API 的特有参数。仅在第三方接口已确认支持时，用它映射参考图、编辑或变体参数；不要假定所有 Provider 都支持。
 
 ## 运行
 
@@ -140,7 +143,7 @@ node <skill>/scripts/generate-images.mjs --project <episode-dir>
 ```bash
 node <skill>/scripts/generate-images.mjs \
   --project <episode-dir> \
-  --only beat-01,beat-02
+  --only img-world-anchor,img-job-search-wide
 ```
 
 已有文件默认跳过。重新生成：
@@ -148,15 +151,17 @@ node <skill>/scripts/generate-images.mjs \
 ```bash
 node <skill>/scripts/generate-images.mjs \
   --project <episode-dir> \
-  --only beat-01 \
+  --only img-world-anchor \
   --overwrite
 ```
 
 ## 图片制作建议
 
-- Prompt 来自 `STORYBOARD.md` 的图片任务，不从旁白直接临时生成；
-- 对高风险镜头先生成少量候选；
-- 候选放入 HyperFrames 真实裁切和运动后再选择；
+- Prompt 来自 `STORYBOARD.md` 的图片任务和 Episode Visual Anchors，不从旁白直接临时生成；
+- 按实际素材而非 Beat 一一命名；一个素材可跨多个 Beat，一个 Beat 可使用多个素材；
+- 先生成世界锚点、第一帧、长期人物、核心重构、机制和结尾回收等高风险素材；
+- 候选放入真实竖屏 HyperFrames Composition，应用实际裁切、字幕安全区、运动与 Handoff 后再选择；
+- 生成前完成 Prompt Audit：任务、证据、锚点、镜头差异、真实细节、制作余量与 AI 风险均要能回答；
 - 用户不喜欢时先修改导演任务或构图，再改风格形容词；
 - 准确中文、英文和界面文字优先在 HyperFrames 中叠加；
 - 第三方 API 的参考图、编辑和变体参数只有在接口确认支持后通过 `extra` 使用。

@@ -11,13 +11,14 @@
 7. [图片序列与镜头衔接](#图片序列与镜头衔接)
 8. [构图、字幕与制作余量](#构图字幕与制作余量)
 9. [编辑文字与图形](#编辑文字与图形)
-10. [GPT Image 2 生产方法](#gpt-image-2-生产方法)
-11. [用户素材、截图和证据](#用户素材截图和证据)
-12. [From Image Story to Motion](#from-image-story-to-motion)
-13. [交给 HyperFrames 的制作判断](#交给-hyperframes-的制作判断)
-14. [图片审片方法](#图片审片方法)
-15. [Narrative-Aware Image Design](#narrative-aware-image-design)
-16. [常见失败模式](#常见失败模式)
+10. [Prompt Assembly Contract](#prompt-assembly-contract)
+11. [GPT Image 2 生产方法](#gpt-image-2-生产方法)
+12. [用户素材、截图和证据](#用户素材截图和证据)
+13. [From Image Story to Motion](#from-image-story-to-motion)
+14. [交给 HyperFrames 的制作判断](#交给-hyperframes-的制作判断)
+15. [图片审片方法](#图片审片方法)
+16. [Narrative-Aware Image Design](#narrative-aware-image-design)
+17. [常见失败模式](#常见失败模式)
 
 ## 图片主导的真正含义
 
@@ -567,33 +568,110 @@ Prompt 可明确：
 - 不要把每张图片都变成信息图；
 - 精确文字和数字优先用 HyperFrames 叠加。
 
-## GPT Image 2 生产方法
+## Prompt Assembly Contract
 
-### Prompt 从图片任务编译
+Prompt 是**镜头生产指令**，不是风格描述，也不是自动 Prompt 编译器。`image-prompts.json` 最终只有 `prompt` 会被 Provider 当作生成文本；`purpose`、`role`、`used_in_beats`、`references`、`STORYBOARD.md` 与 `DESIGN.md` 都不会自动带入。Agent 必须将真正影响生成的导演信息编入每条 `prompt`，而不是假设脚本会补全上下文。
 
-一个成熟 Prompt 至少包含：
+### 固定编排顺序
+
+先说发生什么，最后才说长什么风格：
 
 ```text
-1. 这张图片在故事中的任务
-2. 必须可见的主体、动作和证据
-3. 环境和时间
-4. 构图与主体位置
-5. 字幕安全区
-6. 图片运动和裁切余量
-7. 与前后镜头的视觉连续性
-8. 系列图片质感、色彩和镜头语言
-9. 必须避免的错误
+Prompt
+= 叙事任务
++ 可见事实
++ 世界连续性
++ 镜头设计
++ 物理真实感
++ 制作余量
++ 系列基线
++ 失败约束
 ```
+
+具体顺序：
+
+```text
+1. 这张素材在故事中完成什么
+2. 观众必须具体看见的主体、动作、关系与证据
+3. 这个真实世界正在发生什么，以及继承的人物、空间、物件
+4. 镜头从哪里看、第一眼看什么、随后发现什么
+5. 少量必须出现的材质、使用痕迹、普通光线或行为细节
+6. 字幕安全区、cover/crop、推拉、分层与 Handoff 余量
+7. 与该素材相关的系列 Camera / Material / Anti-Pattern 基线
+8. 最容易破坏任务的错误
+```
+
+不要以 `cinematic editorial photography`、`warm atmospheric light`、`highly detailed realistic scene` 等风格句开头；这会让模型先产出“AI 好图”，再勉强塞入故事事实。
+
+### 按素材而非 Beat 生成
+
+Beat 按观众发现划分；Image Asset 按实际需要生成、复用或编辑的素材划分；Prompt 按具体素材划分。一个 Beat 可以使用多个素材，一张素材也可以跨多个 Beat，通过裁切、Reveal、同构替换或 Handoff 继续承担任务。
+
+使用资产级 ID，例如：
+
+```text
+img-desk-world-anchor
+img-job-search-wide
+img-job-search-detail
+img-bead-box-handoff
+img-shop-zero-orders
+img-shop-price-change
+```
+
+不要默认 `beat-01` 等于一张图。每项可保留 `used_in_beats`、`role`、`purpose` 与 `references` 作为人类导演上下文；脚本仍只需要 `id`、`prompt`、`output`，不需要增加 Schema、编译器或自动决策层。
+
+### Episode Visual Anchors
+
+先在 `STORYBOARD.md` 定义 Character、Space 与 Object Anchors，并优先生成高风险世界锚点。用户确认人物、空间和关键物件方向后，再从同一世界生成不同机位、过程、证据细节与回收图。
+
+每条 Prompt 只写实际需要继承的锚点，明确不可变化与允许变化：例如同一人物、衣着、桌面、窗光方向和拼豆盒保持不变，机位、动作、时间状态与桌面累积程度可以变化。Provider 确认支持参考图、编辑或变体时，才通过 `extra` 传递对应参数；否则将必要锚点写进 Prompt。
+
+### Physical Realism｜物理真实感
+
+“避免 AI 味”不是一句反向提示。让模型少自由发挥：根据镜头任务写少量、具体且可见的真实线索。
+
+- **空间**：真实功能关系、普通光线、轻微磨损、电线、杯子、纸张压痕与非样板房的物件摆放；
+- **行为**：手真正压着、拿着、点击或调整某个物件，不让人物面对镜头摆出情绪；
+- **过程**：半完成、等待反馈、暂时失败、正在操作或状态变化，不总是完成状态；
+- **受控不完美**：轻微不对称、局部遮挡、折痕、磨损、自然裁切、不是所有信息都面向相机。
+
+物理真实感不允许牺牲关键事实：畸形手、空间矛盾、人物身份漂移、物件数量/形态失控或证据不可读仍是失败。精确文字、数字和界面信息继续在 HyperFrames 中叠加，不强求模型生成。
+
+### 图片角色决定镜头倾向
+
+| 图片角色 | Prompt 优先写什么 | 避免什么 |
+| --- | --- | --- |
+| 场景建立 | 空间关系、人物正在做什么、可继续发现的世界锚点 | 封面式摆拍。 |
+| 证据 | 证据来源、一个关键事实、可读区域、功能化普通光线 | 强景深、戏剧布光和让模型生成精确文字。 |
+| 行为过程 | 动作中间状态、手与物件关系、前后步骤连续 | 只展示最终成品。 |
+| 情绪承载 | 人与空间的关系、身体状态、停顿、自然观察距离 | 夸张表情和头抱手的陈词滥调。 |
+| 回报 / 回收 | 已建立世界中的完整关系、构图回收与结果 | 突然变成另一支广告片。 |
+
+### Prompt Audit｜生成前导演自查
+
+生成前逐条回答；回答不出来，先改图片任务或素材关系，不要调用 Provider：
+
+```text
+1. 删除风格形容词后，这张图仍然具体吗？
+2. 它明确证明什么，而不只是表达相关情绪？
+3. 它继承哪些人物、空间与物件锚点？
+4. 它相对前后素材新增什么镜头任务？
+5. 哪些使用痕迹让它不像图库或广告摆拍？
+6. 为字幕、裁切、推拉、分层和 Handoff 留了什么？
+7. 最可能出现的 AI 错误是什么，Prompt 如何防止？
+```
+
+## GPT Image 2 生产方法
 
 ### Prompt 示例
 
 弱：
 
-> 一个年轻人在办公室做计划，高级电影感，竖屏。
+> A sad unemployed man sitting at a desk, cinematic lighting, highly detailed.
 
 强：
 
-> Vertical editorial-photography scene for an image-led short video. A young office worker sits at a desk with one unfinished task on the laptop. The person remains calm and capable, not lazy or distressed. Around the desk, a highly polished planning system expands into many colored labels, time blocks and priority cards, visually creating too many possible paths before action. Composition begins with the person and single task in the upper-center, with extra environmental detail on both sides for a later pull-back reveal. Keep the lower 30% visually quiet for Chinese-English subtitles. Preserve clear edges between foreground desk objects, subject and background so HyperFrames can add depth motion. Avoid generic head-in-hands procrastination, floating text, illegible UI and decorative neon cyberpunk styling.
+> Make six months of repeated job applications with almost no response physically visible, without presenting the man as lazy or theatrically depressed. In the established small lived-in apartment workspace, the same man in the same dark sweater sits slightly side-on at the same desk. One hand rests on the trackpad; the other holds down a resume with handwritten revision marks. A generic recruitment list, repeated printed resumes, dated sticky notes, and unanswered-email states suggest repetition; precise numbers and interface text will be added in HyperFrames. First read: repeated application work. Second discovery: nothing in the room shows progress. Documentary over-the-shoulder medium-wide view, slightly off-center. Ordinary window light, screen glare, worn paper edges, practical desk clutter and believable object spacing; no posed sadness. Vertical cover composition: protect the lower subtitle zone, retain side environment for a slow pull-back, and keep foreground, subject and background separable. Preserve the same room, desk, laptop, bead box, clothing and window direction. Avoid advertising composition, showroom desk, dramatic warm grade, excessive shallow depth of field, glossy skin, head-in-hands cliché, floating labels and generated UI text.
 
 ### 先生成高风险图片
 
@@ -619,6 +697,12 @@ Prompt 可明确：
 - 哪张能与下一镜衔接；
 - 哪张字幕安全；
 - 哪张 AI 痕迹最少。
+
+### 在真实 HyperFrames 场景中审素材
+
+不要孤立地凭原始图片文件选择。对高风险候选，先放进同一个真实竖屏 Composition，应用实际 `cover` / crop、预计字幕安全区、所需的推拉或平移，以及前后素材的 Handoff；然后静音完整观看，再决定是修改 Prompt、锚点/参考图、构图还是素材方案。
+
+原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交给下一镜时，不是可用素材。这个循环用于当前阶段的 Studio Preview，不替代既有 Preview Readiness、用户 Stage Handoff 或“先展示，再推进”边界。
 
 ### 连续性
 

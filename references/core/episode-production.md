@@ -622,23 +622,24 @@ Timed Animatic 必须在 Studio 中将正式声音、`captions.json`、真实时
 
 ### 先整理图片请求
 
-`image-prompts.json` 中每项应来自已验证的图片节拍。
+`image-prompts.json` 中每项应来自已验证的图片节拍和 Episode Visual Anchors，但按实际**素材**而非 Beat 一一组织：一个 Beat 可用多个素材，一个素材也可跨 Beat 复用。`purpose`、`role`、`used_in_beats` 与 `references` 只保留导演上下文，Provider 不会自动看到；真正影响生成的内容必须进入 `prompt`。
 
-Prompt 包含：
+Prompt 按以下顺序写：
 
 - 叙事任务；
-- 画面中必须可见的证据；
-- 主体、动作与环境；
-- 构图与主体位置；
-- 双语字幕安全区；
-- 推拉和平移余量；
-- 与前后镜头衔接；
-- 系列图片语言；
+- 画面中必须可见的事实、动作、关系与证据；
+- 继承的人物、空间和物件锚点，以及允许变化什么；
+- 镜头、第一眼/随后发现与构图；
+- 少量物理真实细节（使用痕迹、功能关系、普通光线或行为中间状态）；
+- 双语字幕安全区、cover/crop、推拉/平移、分层和 Handoff 余量；
+- 相关系列基线；
 - 必须避免的错误。
 
-不要只写：
+先说发生了什么，最后才说风格；不要只写：
 
 > 高级感办公室，电影感，竖屏。
+
+生成前完成 Prompt Audit；先测试世界锚点、第一帧、长期人物、核心重构、机制和回收等高风险素材。
 
 ### 生成策略
 
@@ -660,13 +661,15 @@ node <skill>/scripts/generate-images.mjs --project <episode-dir>
 ```bash
 node <skill>/scripts/generate-images.mjs \
   --project <episode-dir> \
-  --only beat-03,beat-07 \
+  --only img-job-search-wide,img-shop-price-change \
   --overwrite
 ```
 
 ### 放回 HyperFrames
 
-不要把图片生成视为结束。继续：
+不要把图片生成视为结束。将高风险素材放入同一个真实竖屏 HyperFrames Composition，应用实际 `cover` / crop、字幕安全区、推拉或平移与前后 Handoff，再静音完整观看。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点/参考、构图或素材方案后重做。
+
+继续：
 
 - 重新裁切；
 - 调整运动路径；

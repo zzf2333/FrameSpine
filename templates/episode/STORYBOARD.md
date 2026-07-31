@@ -6,6 +6,29 @@
 >
 > `captions.json` 是 HyperFrames 实际显示字幕的唯一时间轴；本文件只说明它们怎样与图片配合。一个 Beat 可关联多个字幕组，一个字幕组也可跨 Beat 或 Scene。
 
+# Episode Visual Anchors｜单集视觉锚点
+
+先定义需要跨素材保持一致的真实世界，再写资产 Prompt。锚点是导演上下文，不是 Provider 自动读取的内容；每张生成素材必须在 `prompt` 中写入实际需要继承的锚点信息，或在 Provider 确认支持时通过 `extra` 映射参考图。
+
+## Character Anchor
+
+- 外貌、年龄与状态：
+- 服装、姿态与不可变化的特征：
+- 参考图片 / 已选锚点素材：
+
+## Space Anchor
+
+- 主要空间与功能：
+- 窗户、光线方向、桌面 / 家具 / 墙面：
+- 参考图片 / 已选锚点素材：
+
+## Object Anchors
+
+- 反复出现的物件、形态、位置与使用关系：
+- 参考图片 / 已选锚点素材：
+
+> 每张素材可声明继承哪些 Anchor，并只允许改变机位、动作、时间状态或空间累积程度。先生成高风险世界锚点，获得用户方向确认后，再扩展同一世界中的机位、过程、证据和回收图。
+
 # 1. Scene 索引
 
 | Scene | 承担的图片节拍 | 空间 / 视觉问题 | 为什么保持或切换 Scene | 计划转场 |
@@ -29,7 +52,12 @@
 - 第一眼焦点：
 - 后续揭示：
 - Narrative Contract 角色：evidence / representation / metaphor / emotional environment / imagined world；本拍继承或覆盖的 Reality Level / Story License；怎样服务本期 Meaning Anchor：
+- 图片角色：场景建立 / 人物处境 / 行为过程 / 对比 / 证据 / 机制 / 后果 / 情绪承载 / 过渡 / 回收
 - 图片结构：单图揭示 / 同构替换 / 多图累积 / 证据放大 / 拼贴 / 图形层 / 其他
+- 连续性锚点：继承哪些 Character / Space / Object Anchor；本拍允许变化什么
+- 镜头功能：这一素材相对前后素材新增什么观看任务；不是“与 Beat 一一对应”
+- 必须出现的现实细节：实际使用痕迹、手与物件关系、光线、材质或空间功能关系
+- AI 味风险：最容易变成图库、广告摆拍、塑料质感、身份漂移或不可信空间的原因
 - 主视觉事件：本拍唯一主要变化；次要运动只服务它
 - 媒体适配：full-bleed cover / intentional frame；若留黑或不铺满，说明叙事原因
 - Scene / Transition 关系：同一 Scene / hard cut / 官方 transition；前后关系是什么
@@ -47,13 +75,13 @@
 
 ## Beat B02 —
 
-# 3. 图片生成 Brief
+# 3. 图片素材 Brief
 
-对需要生成的图片，先写导演任务，再整理进 `image-prompts.json`。
+按实际生成素材而非 Beat 一一整理。一个 Beat 可用多张素材；一张素材也可跨多个 Beat、通过裁切、Reveal 或 Handoff 重复使用。每项先写导演任务与锚点，再整理进 `image-prompts.json`。
 
-| 图片 ID | 对应 Beat | 用途与可见证据 | 构图和运动余量 | 连续性 / 参考 | 输出路径 |
+| 图片 ID | 使用 Beat | 角色 / 用途与可见证据 | 继承锚点 / 参考 | 构图和运动余量 | 输出路径 |
 |---|---|---|---|---|---|
-| beat-01 | B01 |  |  |  | assets/images/beat-01.png |
+| img-world-anchor | B01–B03 | world-anchor /  | Character 01, Space 01 |  | assets/images/world-anchor.png |
 
 # 4. 仍影响后续制作的用户决定
 

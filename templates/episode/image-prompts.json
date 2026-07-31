@@ -1,9 +1,12 @@
 [
   {
-    "id": "beat-01",
-    "purpose": "这张图片在故事中承担什么，以及必须让观众看见什么",
-    "prompt": "",
-    "output": "assets/images/beat-01.png",
+    "id": "img-world-anchor",
+    "used_in_beats": ["B01", "B02"],
+    "role": "world-anchor",
+    "purpose": "这张素材在故事中承担什么，以及必须让观众看见什么",
+    "references": ["Character Anchor 01", "Space Anchor 01"],
+    "prompt": "Write this as a production instruction, in this order: narrative task; concrete visible facts and action; inherited character, space, and object continuity; shot design and first/second discovery; a few physical-realism details; subtitle/crop/motion room; only then relevant series baseline; failure constraints. All requirements that affect generation must appear in this prompt because the provider receives only prompt plus supported extra fields.",
+    "output": "assets/images/world-anchor.png",
     "size": "1024x1536",
     "quality": "high",
     "extra": {}
