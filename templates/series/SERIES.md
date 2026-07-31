@@ -93,7 +93,7 @@
 - 构图与观察方式、双语字幕安全区：
 - 明确不接受的图片方式：
 
-## 5. Visual Identity
+## 5. Visual Identity Summary
 
 - 色彩角色：
 - 字体与排版：

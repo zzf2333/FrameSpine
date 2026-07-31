@@ -216,14 +216,17 @@ Meaning Anchor 是观众最终要带走、且系列必须长期保持一致的�
 
 在 `calibration/` 中用非叙事化的短动态试验验证：
 
-- 图片风格与图像处理；
-- 竖屏布局与字幕；
-- 运动和转场语言；
-- 声音身份；
-- HyperFrames 组件与可播放手感；
+- 主体、物件和视觉世界连续性；
+- 场景、证据、过程、机制、情绪和回报的图片角色差异；
+- 证据可读性；
+- 当前媒介对动作、变化、累积和因果的表达能力；
+- 竖屏、字幕和平台 UI 安全；
+- `Motion Affordances` 在 HyperFrames 中是否成立；
+- Provider 稳定性及常见失败模式；
+- 声音、转场与可复用组件；
 - Narrative Contract 在视觉世界中的一致性。
 
-可以用抽象关系、通用素材、占位文本或无具体主题的组件演示；不要把它包装成“即将发布的第一期”。校准结果只更新 `SERIES.md`、`DESIGN.md` 和生产约定。
+可以用抽象关系、通用素材、占位文本或无具体主题的组件演示；不要把它包装成“即将发布的第一期”。校准结果只更新 `SERIES.md`、`DESIGN.md` 和生产约定。FrameSpine 的核心分类不在单个系列校准中重审；只有真实生产反复暴露同一种缺口时，才由开发层判断是否需要调整。
 
 ## Series Ready
 
@@ -234,7 +237,7 @@ Meaning Anchor 是观众最终要带走、且系列必须长期保持一致的�
 3. Narrative Contract 与 Meaning Anchor 清楚；
 4. Visual Medium、Visual Expression Contract 与 Voice Identity 可以复用；
 5. Production Configuration 和长期照护约束明确；
-6. 风格校准已解决需要通过观看判断的视觉与声音问题。
+6. 校准已形成可开始生产的视觉、声音、运动与 Provider 工作答案；未决问题已记录为长期生产假设。
 
 不必等到所有颜色数值、全部组件或未来例外题材确定。把未知记录到 `SERIES.md` 的 Future Decisions；不要用某一期的需要倒逼系列初始化进入内容策划。
 
