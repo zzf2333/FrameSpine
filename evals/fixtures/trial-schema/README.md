@@ -1,6 +1,8 @@
 # Live Trial Artifact Schema
 
-Agent harnesses should write these under each trial workspace:
+Agent harnesses should write these under each trial workspace.
+
+## Story Flow
 
 ```text
 evals/runs/<case-id>/<trial>/workspace/
@@ -14,6 +16,23 @@ evals/runs/<case-id>/<trial>/workspace/
     board-manifest.json
     tool-trace.json
     storyboard-route.txt
+```
+
+## Image Animatic
+
+```text
+evals/runs/<case-id>/<trial>/workspace/
+  EPISODE.md
+  SCRIPT.md
+  STORYBOARD.md                 # confirmed prior stage
+  captions.json                 # still empty []
+  video/composition.html        # or composition route target
+  video/compositions/frames/
+  eval-artifacts/
+    preview-manifest.json       # surface=hyperframes-composition, full_composition_playback=true
+    composition-manifest.json
+    tool-trace.json             # must include story-flow user_confirmation first
+    composition-route.txt
 ```
 
 See the `*.example.json` files in this directory.

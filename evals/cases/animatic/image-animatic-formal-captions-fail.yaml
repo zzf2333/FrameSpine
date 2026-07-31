@@ -1,0 +1,28 @@
+id: image-animatic-formal-captions-fail
+title: Formal captions.json during Image Animatic must fail
+suite: image-animatic
+case_kind: negative-baseline
+expected_result: fail
+slice:
+  input_mode: locked-script
+  stage: image-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/image-animatic-formal-captions.md
+
+target_stage: image-animatic
+
+must_do:
+  - leave formal captions timeline empty until Timed Animatic
+
+must_not_do:
+  - write formal captions.json as final subtitle timeline
+
+gates:
+  - no_formal_captions
+  - stage_boundary
+
+notes: |
+  Negative baseline: formal captions timeline too early.

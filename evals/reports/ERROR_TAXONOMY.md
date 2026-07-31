@@ -49,6 +49,22 @@ Use these labels when filing failures. One root cause → one authority update.
 | `stage.images_early` | final/batch images before confirmation |
 | `stage.animatic_early` | Image Animatic before confirmation |
 
+## Image Animatic
+
+| code | meaning |
+| --- | --- |
+| `animatic.surface_storyboard` | still using Storyboard contact sheet as review surface |
+| `animatic.no_playback` | missing full start-to-end Composition playback |
+| `animatic.before_confirm` | composition work before Story Flow confirmation |
+| `animatic.no_inherit` | timeline does not inherit confirmed Storyboard Frames |
+| `animatic.final_media` | batch final images / final polish during Image Animatic |
+| `animatic.formal_tts` | formal TTS too early |
+| `animatic.formal_captions` | formal captions.json too early |
+| `animatic.export` | export / final render during Image Animatic |
+| `animatic.slideshow` | pure slideshow / no Entry-Development-Emphasis-Handoff |
+| `animatic.default_camera` | same default camera motion on every image |
+| `animatic.no_stop` | no stage_stop before Timed Animatic |
+
 ## Repair authority
 
 | failure pattern | update |

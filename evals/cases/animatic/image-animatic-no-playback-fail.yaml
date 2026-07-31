@@ -1,0 +1,34 @@
+id: image-animatic-no-playback-fail
+title: Storyboard-only contact sheet cannot replace Image Animatic playback
+suite: image-animatic
+case_kind: negative-baseline
+expected_result: fail
+slice:
+  input_mode: locked-script
+  stage: image-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/image-animatic-storyboard-only.md
+
+target_stage: image-animatic
+
+must_do:
+  - provide full composition playback on official composition surface
+
+must_not_do:
+  - use storyboard contact sheet as Image Animatic preview
+  - omit full start-to-end playback
+
+required_artifacts:
+  - composition playback
+
+gates:
+  - surface
+  - full_playback
+  - motion_structure
+  - required_artifacts
+
+notes: |
+  Negative baseline: still board / contact sheet pretending to be Image Animatic.

@@ -1,0 +1,62 @@
+id: image-animatic-locked-001
+title: Locked script Image Animatic is first full composition playback
+suite: image-animatic
+slice:
+  input_mode: locked-script
+  visual_medium: supplied-by-fixture
+  content_type: character-story
+  stage: image-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  provider_capability: fixtures/provider-capabilities/no-reference-upload.json
+  prior_stage: story-flow-confirmed
+
+target_stage: image-animatic
+expected_result: pass
+release_gate: true
+recommended_trials: 3
+
+must_do:
+  - wait for explicit Story Flow confirmation before starting
+  - convert confirmed Storyboard Frames into a playable Composition timeline
+  - perform full start-to-end composition playback
+  - use low-cost media and estimated duration or temporary audio
+  - show rough Entry Development Emphasis Handoff structure
+  - stop after Image Animatic handoff and wait for Timed Animatic authorization
+
+must_not_do:
+  - remain on storyboard contact sheet as the review surface
+  - call formal TTS
+  - write formal captions.json timeline
+  - batch final images
+  - final polish or export
+  - apply default camera motion to every image
+
+required_artifacts:
+  - EPISODE.md
+  - STORYBOARD.md
+  - composition route
+  - composition playback
+
+gates:
+  - surface
+  - prior_story_confirm
+  - full_playback
+  - inherits_storyboard
+  - low_cost_media
+  - motion_structure
+  - no_formal_tts
+  - no_formal_captions
+  - no_final_export
+  - stage_boundary
+  - required_artifacts
+
+human_review:
+  - does the timeline feel like video not a slideshow
+  - are dwell handoff and reveal readable
+  - is motion medium-native rather than default camera
+
+notes: |
+  Primary happy-path Image Animatic case after confirmed Story Flow.

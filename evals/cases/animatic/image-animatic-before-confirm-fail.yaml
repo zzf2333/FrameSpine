@@ -1,0 +1,32 @@
+id: image-animatic-before-confirm-fail
+title: Image Animatic before Story Flow confirmation must fail
+suite: image-animatic
+case_kind: negative-baseline
+expected_result: fail
+slice:
+  input_mode: locked-script
+  stage: image-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/image-animatic-before-confirm.md
+
+target_stage: image-animatic
+
+must_do:
+  - require explicit Story Flow confirmation before composition work
+
+must_not_do:
+  - start Image Animatic without user confirmation after Story Flow
+
+required_artifacts:
+  - composition route
+
+gates:
+  - prior_story_confirm
+  - stage_boundary
+  - required_artifacts
+
+notes: |
+  Negative baseline: composition work without Story Flow confirmation.

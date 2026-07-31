@@ -87,6 +87,7 @@ npx hyperframes render --quality high --output final.mp4
 npm run eval:e0
 npm run eval:cases
 npm run eval:storyboard
+npm run eval:animatic
 ```
 
-详见 `evals/README.md`。第一版优先 Story Flow Storyboard gates。
+详见 `evals/README.md`。当前可跑：Story Flow Storyboard gates + Image Animatic gates。

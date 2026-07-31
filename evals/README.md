@@ -120,10 +120,25 @@ E0 静态合同
 → deterministic Storyboard gate matrix
 ```
 
+### Image Animatic 套件（v2 slice）
+
+```bash
+npm run eval:animatic
+```
+
+自动跑：
+
+```text
+case 校验
+→ Image Animatic 合成 trial 构建
+→ deterministic Image Animatic gate matrix
+```
+
 ```bash
 npm run eval:e0
 npm run eval:cases
 npm run eval:synthetic
+npm run eval:animatic
 ```
 
 对单个 trial workspace：
@@ -132,16 +147,21 @@ npm run eval:synthetic
 node evals/graders/deterministic/storyboard-gates.mjs \
   --case evals/cases/storyboard/storyboard-locked-001.yaml \
   --workspace evals/runs/synthetic/storyboard-locked-001/workspace
+
+node evals/graders/deterministic/image-animatic-gates.mjs \
+  --case evals/cases/animatic/image-animatic-locked-001.yaml \
+  --workspace evals/runs/synthetic-animatic/image-animatic-locked-001/workspace
 ```
 
 ### 合成 trial 与真实 trial
 
 | 类型 | 路径 | 用途 |
 | --- | --- | --- |
-| Synthetic | `evals/runs/synthetic/<case-id>/` | 验证 gate 逻辑；负例必须 fail_as_expected |
+| Synthetic Storyboard | `evals/runs/synthetic/<case-id>/` | 验证 Storyboard gate 逻辑 |
+| Synthetic Animatic | `evals/runs/synthetic-animatic/<case-id>/` | 验证 Image Animatic gate 逻辑 |
 | Live agent | `evals/runs/<case-id>/<trial>/` | 真实 Agent 产物 + Studio 预览 |
 
-真实 trial 需写入：
+Story Flow trial 需写入：
 
 ```text
 eval-artifacts/preview-manifest.json
@@ -150,14 +170,23 @@ eval-artifacts/tool-trace.json
 eval-artifacts/storyboard-route.txt
 ```
 
+Image Animatic trial 需写入：
+
+```text
+eval-artifacts/preview-manifest.json
+eval-artifacts/composition-manifest.json
+eval-artifacts/tool-trace.json
+eval-artifacts/composition-route.txt
+```
+
 `board-manifest.json` 的 `frames[].canvas.kind` 取值：`empty | generic | concrete`。  
-Vision / Human 负责核对 manifest 与真实 Board 一致；deterministic grader 信任结构化 claim 做回归。
+Vision / Human 负责核对 manifest 与真实 Studio 一致；deterministic grader 信任结构化 claim 做回归。
 
 需要 Agent trajectory、Vision 初筛与 Human Expert 的部分，按 `rubrics/` 与 `graders/human/` 执行，结果写入 `runs/` 与 `reports/`。
 
-## v1 优先范围
+## 当前范围
 
-第一版只做扎实的 **Story Flow Storyboard Eval**：
+### v1 Story Flow Storyboard Eval（已稳）
 
 ```text
 Surface Gate
@@ -167,16 +196,20 @@ Source Separation Gate
 Stage Boundary Gate
 ```
 
-覆盖：
+### v2 Image Animatic Eval（已可跑）
 
-- 三种输入模式；
-- 单状态 Beat 与发展型 Beat；
-- 证据型 Frame；
-- 空框错误 baseline；
-- 旁白烧入 Frame；
-- 官方 Storyboard 与错误自定义页面对比。
+```text
+Composition Surface Gate
+Prior Story Confirm Gate
+Full Playback Gate
+Inherits Storyboard Gate
+Low-Cost Media Gate
+Motion Structure Gate
+No Formal TTS / Captions / Export
+Stage Boundary Gate
+```
 
-后续再扩展四阶段边界与完整端到端。
+仍未覆盖：Timed Animatic、Final、Series Calibration、端到端多 trial harness。
 
 ## 核心指标
 

@@ -1,0 +1,29 @@
+id: image-animatic-formal-tts-fail
+title: Formal TTS during Image Animatic must fail
+suite: image-animatic
+case_kind: negative-baseline
+expected_result: fail
+slice:
+  input_mode: locked-script
+  stage: image-animatic
+
+start_state:
+  series_fixture: fixtures/series-projects/series-a
+  user_input: fixtures/inputs/locked-script-a.md
+  injected_failure: fixtures/expected-boundaries/image-animatic-formal-tts.md
+
+target_stage: image-animatic
+
+must_do:
+  - keep audio temporary or estimated only
+
+must_not_do:
+  - call formal TTS before Timed Animatic authorization
+
+gates:
+  - no_formal_tts
+  - low_cost_media
+  - stage_boundary
+
+notes: |
+  Negative baseline: generate-tts during Image Animatic.
