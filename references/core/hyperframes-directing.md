@@ -48,6 +48,12 @@ The first question is:
 
 如果答案不清楚，回到 Attention Spine、旁白、图片选择或构图。不要用效果补偿薄弱叙事。
 
+### Motion Affordances 来自系列配方
+
+HyperFrames 不默认使用摄影式推拉、平移或视差。每次实现前读取 `DESIGN.md` 的 `Motion Affordances`：摄影媒介可以使用推拉、平移和空间视差；漫画可以使用分格揭示、黑白面积变化和连续构图；剪纸可以使用纸层滑动、翻折、抬起和层间投影；其他媒介按自身结构执行。
+
+FrameSpine 只要求 Entry / Development / Emphasis / Handoff 成立，不规定它们必须通过摄影式运动完成。`Motion Affordances` 是媒介能力边界；`Motion Language` 才是系列对这些能力的实际取舍。
+
 ### 新增视觉处理是候选，不是默认合并
 
 原图、字幕和用户在当前任务中明确指定的元素之外，任何视觉处理都先是候选：例如额外动效、编辑文字、装饰图形、遮罩、滤镜、光效、粒子、背景纹理、数据图形、强化转场、强调标记和音效驱动视觉元素。
@@ -124,12 +130,7 @@ Hero Frame
 
 先判断图片本身是否已经成立。
 
-如果图片已经能表达，可使用克制的：
-
-- camera movement；
-- scale；
-- pan；
-- parallax。
+如果图片已经能表达，按 `DESIGN.md` 的 `Motion Affordances` 和 `Motion Language` 选择最小、媒介相符的实现。例如可以是摄影式推拉、平移与空间视差，也可以是漫画分格揭示、黑白面积变化、连续构图，或剪纸纸层滑动、翻折与投影变化。
 
 如果图片不能表达，不要增加运动。回到：
 

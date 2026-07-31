@@ -4,7 +4,9 @@
 
 ## Visual Medium
 
-以黑白漫画的阅读与叙事规则呈现人物、过程、证据和因果。适合 Educational Narrative、Cinematic Storytelling 或 Symbolic 的系列契约；不能只给摄影图套“manga style”标签。
+以黑白漫画的阅读与叙事规则呈现人物、过程、证据和因果；不能只给摄影图套“manga style”标签。
+
+Visual Medium 不决定 Narrative Mode。本示例只演示这种媒介在造型、材质、空间、连续性和运动上的具体配方；它可以服务任何 Narrative Contract，但必须让该契约的 Meaning Anchor 可见。
 
 ## Form & Edge Language
 
@@ -22,6 +24,10 @@
 
 空间可采用透视、平面压缩、分格或象征留白，但同一段内使用一致的深度与阅读规则。人物与物件的比例、位置和连续动作必须可追踪。
 
+## Continuity System
+
+角色通过发型轮廓、服装标记、脸部比例和关键物件保持一致；环境可以简化，但阅读方向、人物位置和动作接力不能漂移。分格、黑白面积与网点规则在同一段中稳定，除非有明确的叙事转换。
+
 ## Controlled Irregularity
 
 允许手绘线条轻微波动、网点密度变化和纸面不均；不允许角色变脸、线条体系突然改变、2D / 3D 混杂或让装饰纹理遮住证据。
@@ -29,6 +35,10 @@
 ## Motion Affordances
 
 适合分格打开、局部重墨、速度线延伸、黑白面积 reveal、连续构图 Handoff 与面板式切换。运动应延续阅读顺序，不把静态漫画强行做成摄影机漂移。
+
+## Visual Variety
+
+场景建立使用完整空间格；证据使用局部特写；过程使用连续构图；情绪使用留白和黑白面积；回报使用已建立构图的重新解释。景别、分格密度、黑白比例与阅读速度随图片角色变化，不把每张都做成角色海报。
 
 ## Medium Failure Modes
 

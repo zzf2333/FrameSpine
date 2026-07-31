@@ -109,7 +109,7 @@ assets/audio/units/*.wav
     "role": "world-anchor",
     "purpose": "这张图片在故事中承担什么",
     "references": ["Entity Anchor 01", "Environment Anchor 01", "Medium Anchor 01"],
-    "prompt": "完整镜头生产指令：叙事任务、可见事实、连续性、镜头、真实细节、制作余量、系列基线与失败约束",
+    "prompt": "完整素材生产指令：叙事任务、可见事实、连续性锚点、构图与观察方式、媒介实现、媒介/世界一致性、制作余量、系列基线与失败约束",
     "output": "assets/images/world-anchor.png",
     "size": "1024x1536",
     "quality": "high",
@@ -161,9 +161,9 @@ node <skill>/scripts/generate-images.mjs \
 
 - Prompt 来自 `STORYBOARD.md` 的图片任务和 Episode Visual Anchors，不从旁白直接临时生成；
 - 按实际素材而非 Beat 一一命名；一个素材可跨多个 Beat，一个 Beat 可使用多个素材；
-- 先生成世界锚点、第一帧、长期人物、核心重构、机制和结尾回收等高风险素材；
-- 候选放入真实竖屏 HyperFrames Composition，应用实际裁切、字幕安全区、运动与 Handoff 后再选择；
-- 生成前完成 Prompt Audit；随后完成 Image Set Audit，检查整组素材的角色分布、景别/机位、姿态、完成状态、光线、功能性细节和镜头任务是否过度重复；
+- 先生成视觉世界锚点、第一帧、长期主体、核心重构、机制和结尾回收等高风险素材；
+- 候选放入真实竖屏 HyperFrames Composition，应用实际裁切、字幕安全区、与媒介相符的运动及 Handoff 后再选择；
+- 生成前完成 Prompt Audit；随后完成 Image Set Audit，检查整组素材的角色分布、观察方式、主体状态、媒介表现、功能性细节和观看任务是否过度重复；
 - `prompt` 为空时脚本会拒绝请求；不要在该字段放教学说明或元指令；
 - 用户不喜欢时先修改导演任务或构图，再改风格形容词；
 - 准确中文、英文和界面文字优先在 HyperFrames 中叠加；

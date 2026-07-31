@@ -686,15 +686,26 @@ img-shop-price-change
 
 ## GPT Image 2 生产方法
 
-### Prompt 示例
+### Prompt 骨架
 
-弱：
+Core 只保留媒介中立骨架；不要把任一媒介的完成 Prompt 当作“强 Prompt”唯一代表。完整的电影写实、黑白漫画与剪纸示例分别在 `references/examples/visual-mediums/` 中按需读取。
 
-> A sad unemployed man sitting at a desk, cinematic lighting, highly detailed.
+```text
+Narrative function:
+Visible content:
+Inherited anchors:
+Composition and viewpoint:
+Medium execution:
+Material / world coherence:
+Production affordances:
+Failure constraints:
+```
 
-强：
+弱 Prompt 只给题材与泛化形容词，例如：
 
-> Make six months of repeated job applications with almost no response physically visible, without presenting the man as lazy or theatrically depressed. In the established small lived-in apartment workspace, the same man in the same dark sweater sits slightly side-on at the same desk. One hand rests on the trackpad; the other holds down a resume with handwritten revision marks. A generic recruitment list, repeated printed resumes, dated sticky notes, and unanswered-email states suggest repetition; precise numbers and interface text will be added in HyperFrames. First read: repeated application work. Second discovery: nothing in the room shows progress. Documentary over-the-shoulder medium-wide view, slightly off-center. Ordinary window light, screen glare, worn paper edges, practical desk clutter and believable object spacing; no posed sadness. Vertical cover composition: protect the lower subtitle zone, retain side environment for a slow pull-back, and keep foreground, subject and background separable. Preserve the same room, desk, laptop, bead box, clothing and window direction. Avoid advertising composition, showroom desk, dramatic warm grade, excessive shallow depth of field, glossy skin, head-in-hands cliché, floating labels and generated UI text.
+> A sad unemployed person at a desk, highly detailed.
+
+它没有说明可见因果、继承锚点、媒介规则、观看顺序或制作余量。强 Prompt 的标准是完整回答上面的骨架，而不是更像某一种摄影、漫画或纸艺口味。
 
 ### 先生成高风险图片
 
@@ -714,7 +725,7 @@ img-shop-price-change
 
 ```text
 - 场景建立、证据、过程、情绪、回报 / 回收的分布是否足以支撑故事？
-- 景别、机位、人物姿态、构图和完成状态是否过度重复？
+- 观察方式、主体状态、构图和完成状态是否过度重复？
 - 是否所有素材都落入同一种默认 AI 表现、完整英雄构图或媒介手感？
 - 是否有足够与当前媒介相符的局部证据、过程、关系和状态变化，而不全是封面图？
 - 前后素材是否属于同一世界，同时各自完成不同观看任务？
@@ -738,7 +749,7 @@ img-shop-price-change
 
 ### 在真实 HyperFrames 场景中审素材
 
-不要孤立地凭原始图片文件选择。对高风险候选，先放进同一个真实竖屏 Composition，应用实际 `cover` / crop、预计字幕安全区、所需的推拉或平移，以及前后素材的 Handoff；然后静音完整观看，再决定是修改 Prompt、锚点/参考图、构图还是素材方案。
+不要孤立地凭原始图片文件选择。对高风险候选，先放进同一个真实竖屏 Composition，应用实际 `cover` / crop、预计字幕安全区、当前媒介允许的 Motion Affordances，以及前后素材的 Handoff；然后静音完整观看，再决定是修改 Prompt、锚点/参考图、构图还是素材方案。
 
 原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交给下一镜时，不是可用素材。这个循环用于当前阶段的 Studio Preview，不替代既有 Preview Readiness、用户 Stage Handoff 或“先展示，再推进”边界。
 
@@ -747,11 +758,11 @@ img-shop-price-change
 需要保持人物、物体或空间时：
 
 - 保存锚点图片；
-- 明确不可变化的特征；
+- 明确不可变化的实体、环境、媒介与关系特征；
 - 使用第三方 API 支持的参考图片或编辑接口；
-- 复用同一构图和光线；
+- 复用已确认的构图、媒介与世界规则；
 - 必要时从已选图片派生，而不是重新描述；
-- 只在内容需要时改变服装、环境或时间。
+- 只在内容需要时改变允许变化的状态。
 
 ### 生成图片中的文字
 

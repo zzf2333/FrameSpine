@@ -667,7 +667,7 @@ node <skill>/scripts/generate-images.mjs \
 
 ### 放回 HyperFrames
 
-不要把图片生成视为结束。将高风险素材放入同一个真实竖屏 HyperFrames Composition，应用实际 `cover` / crop、字幕安全区、推拉或平移与前后 Handoff，再静音完整观看。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点/参考、构图或素材方案后重做。这个检查服从当前阶段已有的 Studio Preview、Preview Readiness 与协作式交接边界，不替代它们。
+不要把图片生成视为结束。将高风险素材放入同一个真实竖屏 HyperFrames Composition，应用实际 `cover` / crop、字幕安全区、当前媒介允许的 Motion Affordances 与前后 Handoff，再静音完整观看。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点/参考、构图或素材方案后重做。这个检查服从当前阶段已有的 Studio Preview、Preview Readiness 与协作式交接边界，不替代它们。
 
 继续：
 
