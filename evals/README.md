@@ -65,7 +65,7 @@ npm run eval:gates:final -- \
 node evals/graders/visual/board-claim-check.mjs --workspace /path/to/episode
 ```
 
-Workspace 需含阶段 `eval-artifacts/`（preview / board|composition|timed|final manifest、tool-trace 等）。没有 artifacts 时 gate 可能 `inconclusive`——那说明 Agent 没按可验方式落盘，不是“质量高”。
+Workspace 需含阶段 `eval-artifacts/`（preview / board|composition|timed|final manifest、tool-trace 等）。Composition 阶段还必须区分实现文件与用户审片表面：`video/composition.html` 可以存在，但不能满足 `composition_user_surface`；后者要求 Studio HTTP / HTTPS URL、准确的非源文件 route，以及 trace 中按顺序记录 Studio start → route open → 完整播放 → 用户交接。没有 artifacts 时 gate 可能 `inconclusive`——那说明 Agent 没按可验方式落盘，不是“质量高”。
 
 ## 原则
 

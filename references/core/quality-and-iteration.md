@@ -61,7 +61,7 @@ Image Animatic / Timed Animatic / Final
 → 才能展示
 ```
 
-存在任一与当前成熟阶段相关的 P0 blocker 时，不得请求用户审片。Story Flow 的 blocker 包括：官方 Storyboard URL / route 不可用；Scene / Beat / Frame 顺序或从属与 Attention Spine 明显不一致；关键视觉状态缺失、重复或没有可渲染 `src`；Frame 空白、近似空白、只有标题 / 版式、使用无语义矩形 / 圆点 / 条形占位；需要读 Inspector 才知道发生什么；旁白、字幕或导演说明被烧进画面补足信息；包含 Reveal、累积、对比、状态改变、重构或回收的 Beat 只展示一个泛化结果帧；或 Board 序列无法基本表达人物、问题、过程、转折和回报。Image Animatic 及之后的 blocker 包括：Composition 无法完整播放；该阶段应有的关键 Frame / Beat / Scene 或图片、音频、字幕、字体资源空白或加载失败；非设计性黑边、露底、错误拉伸或严重裁切；运动时露出空白；字幕 / 平台 UI 遮挡关键内容；旧图层残留、多张全屏层无边界叠加、重叠转场、黑帧、空帧、跳帧、多个竞争主运动或大量 magic offsets；或声画、字幕与揭示明显错位。
+存在任一与当前成熟阶段相关的 P0 blocker 时，不得请求用户审片。Story Flow 的 blocker 包括：官方 Storyboard URL / route 不可用；Scene / Beat / Frame 顺序或从属与 Attention Spine 明显不一致；关键视觉状态缺失、重复或没有可渲染 `src`；Frame 空白、近似空白、只有标题 / 版式、使用无语义矩形 / 圆点 / 条形占位；需要读 Inspector 才知道发生什么；旁白、字幕或导演说明被烧进画面补足信息；包含 Reveal、累积、对比、状态改变、重构或回收的 Beat 只展示一个泛化结果帧；或 Board 序列无法基本表达人物、问题、过程、转折和回报。Image Animatic 及之后的 blocker 包括：没有实际 HTTP / HTTPS Studio URL 与准确的当前 Composition route；URL 是 `file://` 或直接指向 `.html` 源文件；页面不是官方 Studio surface；Studio route 未实际加载、播放器不能完整播放或加载错误 Composition；该阶段应有的关键 Frame / Beat / Scene 或图片、音频、字幕、字体资源空白或加载失败；非设计性黑边、露底、错误拉伸或严重裁切；运动时露出空白；字幕 / 平台 UI 遮挡关键内容；旧图层残留、多张全屏层无边界叠加、重叠转场、黑帧、空帧、跳帧、多个竞争主运动或大量 magic offsets；或声画、字幕与揭示明显错位。截图、snapshot、实现源文件、资产目录、技术日志或“检查已通过”均不得冒充用户审片表面。
 
 阶段专属要求：Story Flow 必须在官方 Board Overview 为全部关键视觉状态提供按序、视觉具体的低保真 Frames；低保真只降低美术完成度，不降低视觉导演完成度。用户隐藏 Voiceover / Narrative 后仍应基本读懂整组图片叙事；Inspector 只补充原文、Audience Discovery、Visual Event、Handoff 与 Placeholder / Risk。Story Flow 不要求时间播放、临时声音、字幕时间轴或完整动画；Image Animatic 是第一次完整播放，必须具备主要 Beat 的实际画面和最低必要运动；Timed Animatic 必须使用正式声音与 `captions.json` 的真实字幕时间轴；Final 不得保留占位 / 审核标记或明显生成错误。Timed Animatic 及之后，Composition 内临时切字幕而非读取 `captions.json` 属于 P0 blocker。
 
@@ -295,17 +295,32 @@ Storyboard Readiness Review：
 我先停在 Story Flow，等你浏览 Storyboard 后在下一条消息决定是否继续。
 ```
 
+### Preview Handoff Test｜交付前最后判定
+
+发送 Image Animatic、Timed Animatic 或 Final 的阶段交接前，Agent 必须能回答：
+
+- 我交付的是哪个 HyperFrames User Review Surface？
+- URL 是否是 Studio HTTP / HTTPS URL，而不是文件路径、源文件或独立 HTML？
+- route 是否指向当前阶段的正确 Composition？
+- 我是否实际打开并完整观看过这个 Studio route？
+- 用户点击后能否直接进入同一个审片表面？
+- 当前回复是否把 snapshot、截图、源文件或技术检查误称为 Preview？
+
+任一答案不成立，就不能发送 Stage Handoff。停止交付，定位 Studio / route / asset loading / playback 问题，修复后重新完整播放。此检查是交付前判断，不是状态机、批准记录或新的成熟阶段。
+
 ### Image Animatic 及之后的统一交接模板
 
 ```text
-当前阶段：Image Animatic / Timed Animatic / Final Preview
+当前阶段：Image Animatic / Timed Animatic / Final Composition
+
+Surface：Studio Composition
+Studio URL：
+Route：
+Composition：
+完整播放自审：已完成
 
 这一阶段的目标：
 - （只说明当前阶段要降低的创作不确定性）
-
-实际预览：
-- Studio URL：
-- Composition route：
 
 这一阶段实际完成了：
 1. （实际完成的段落、Beat、图片关系、声音/字幕或精修）

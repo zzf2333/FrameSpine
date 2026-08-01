@@ -42,6 +42,7 @@ required_artifacts:
 
 gates:
   - surface
+  - composition_user_surface
   - prior_story_confirm
   - full_playback
   - inherits_storyboard

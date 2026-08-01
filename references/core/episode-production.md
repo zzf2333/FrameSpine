@@ -12,12 +12,11 @@
 8. [阶段五：图片节拍与 Image Animatic](#阶段五图片节拍与-image-animatic)
 9. [阶段六：正式 TTS 与双语字幕](#阶段六正式-tts-与双语字幕)
 10. [阶段七：Timed Animatic](#阶段七timed-animatic)
-11. [阶段八：最终图片生产](#阶段八最终图片生产)
-12. [阶段九：Final Composition](#阶段九final-composition)
-13. [用户反馈后的返回路径](#用户反馈后的返回路径)
-14. [Agent 的主动导演职责](#agent-的主动导演职责)
-15. [常见失败模式](#常见失败模式)
-16. [单集完成后的沉淀](#单集完成后的沉淀)
+11. [Final Composition：最终图片生产与成片精修](#final-composition最终图片生产与成片精修)
+12. [用户反馈后的返回路径](#用户反馈后的返回路径)
+13. [Agent 的主动导演职责](#agent-的主动导演职责)
+14. [常见失败模式](#常见失败模式)
+15. [单集完成后的沉淀](#单集完成后的沉淀)
 
 ## 核心思路
 
@@ -645,7 +644,21 @@ Timed Animatic 必须在 Studio 中将正式声音、`captions.json`、真实时
 
 展示实际 Studio URL 与 route，完成上述协作式交接后，**结束当前回复**，等待用户在后续消息中明确同意进入最终图片生产。用户未确认前，禁止批量最终图片、最终精细动画、Final Composition 精修与最终 render。
 
-## 阶段八：最终图片生产
+## Final Composition：最终图片生产与成片精修
+
+最终图片生产和 Final Composition 是同一个用户成熟阶段中的连续内部工作，不是两个独立的用户审片节点。图片生成后的单张图片、资产目录、内部快照、Composition 源文件或技术检查页面都不得作为本阶段交付。
+
+本阶段唯一正常的用户交付是：最终素材已经放回当前 Composition、完成精修并通过真实 Studio 自审后的 **HyperFrames Studio Final Preview**。内部循环固定为：
+
+```text
+Generate
+→ Integrate into the current Composition
+→ Studio Self-Review
+→ Revise Prompt / Asset / Composition
+→ Continue
+```
+
+禁止使用 `Generate → Send HTML → 等用户发现不对 → 再打开 Studio`。高风险素材测试默认属于此内部循环；只有测试暴露会实质改变已确认视觉方向的候选时，才在官方 Studio 中展示候选并等待用户决定。普通素材替换不新增中间用户确认。
 
 ### Final Composition Before Starting｜正式投入前说明
 
@@ -698,9 +711,11 @@ node <skill>/scripts/generate-images.mjs \
   --overwrite
 ```
 
-### 放回 HyperFrames
+### 放回当前 Composition 并在 Studio 内部自审
 
-不要把图片生成视为结束。将高风险素材放入同一个真实竖屏 HyperFrames Composition，应用实际 `cover` / crop、字幕安全区、当前媒介允许的 Motion Affordances 与前后 Handoff，再静音完整观看。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点/参考、构图或素材方案后重做。这个检查服从当前阶段已有的 Studio Preview、Preview Readiness 与协作式交接边界，不替代它们。
+不要把图片生成视为结束，也不要把生成结果交给用户。将高风险素材立即放入**同一个当前 Final Composition**，应用实际 `cover` / crop、字幕安全区、当前媒介允许的 Motion Affordances 与前后 Handoff；在官方 Studio 的当前 route 内检查裁切、字幕、连续性和运动。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点 / 参考、构图、素材或 Composition 后重做。
+
+单张图片、资产列表、HTML 源文件、截图、snapshot 与检查页面只供 Agent 内部自审，不是新的用户阶段交付。这个内部检查服从当前阶段已有的 Studio Preview、Preview Readiness 与协作式交接边界，不替代它们。
 
 继续：
 
@@ -711,7 +726,9 @@ node <skill>/scripts/generate-images.mjs \
 - 检查字幕覆盖；
 - 修改不成立的镜头。
 
-## 阶段九：Final Composition
+### Final Composition 精修
+
+在当前 Composition 内完成最终素材替换与精修；不要建立第二条“最终图片预览”路径或额外审片节点。
 
 ### 精修内容
 
@@ -741,7 +758,9 @@ node <skill>/scripts/generate-images.mjs \
 
 ### Studio-first 预览验证
 
-先启动 Studio，取得用户实际打开的 URL 与 route，并在该 route 检查首拍、中段关键拍、结尾拍、最终素材、字幕和声音均能加载，没有空白资源或字幕遮挡。只有这份完整 Studio 播放才是 Final Preview；lint 全绿或 MP4 文件存在不能替代它。
+按 `hyperframes-directing.md` 的 Studio Preview Verification：使用官方方式启动 Studio，获得实际 HTTP / HTTPS Studio URL，打开当前 Episode 的准确 Final Composition route，并在该 route 从头到尾完整播放。检查首拍、中段关键拍、结尾拍、最终素材、字幕、声音与 Scene 交接均能加载，没有空白资源、断裂路径、不可播放区间或字幕遮挡。
+
+只有这份已加载、已完整播放并由 Agent 自审的 Studio Composition Surface 才是 Final Preview。Studio server 启动、URL 生成、浏览器打开、lint 全绿、snapshot、MP4 存在或 `video/composition.html` 存在均不能替代它，也不得被交给用户作为 Preview。
 
 ### 技术检查
 
@@ -758,11 +777,27 @@ npx hyperframes preview
 
 ### Required Preview｜必须可见
 
-Final Composition 必须在 Studio 中完整播放最终素材、字幕、声音与动效。
+Final Composition 必须在官方 Studio 中的准确 Composition route 完整播放最终素材、字幕、声音与动效。交付必须给出可直接打开的 HTTP / HTTPS Studio URL 与准确 route；不得交付 HTML 文件地址、本地文件路径、源代码链接、CLI snapshot 路径、截图或“渲染检查通过”的文字代替实际 Studio URL。
 
 ### Stage Handoff｜阶段交接
 
-交接时说明已替换和统一的最终资产、为保持镜头感而做的关键精修、候选视觉处理是否仍未合并，以及自审修复的连续性/字幕/安全区/播放问题。请用户重点判断最终风格是否统一、动效是否克制且有镜头感、字幕和主体是否舒服、声音是否合适、整体是否可以发布。若仍有发布前的方向选择，给出少量选项、取舍与推荐。用户在后续消息确认时，下一步只会导出已观看的 Final Preview，并检查导出文件与该预览一致；不会借导出再改变创意方向。
+交接前先完成 Studio Preview Verification；任一 URL 不是 Studio HTTP / HTTPS URL、route 指向源文件 / 错误 Composition、播放器不能完整播放、资源断裂、画面空白 / 报错，或用户仍需自行运行命令才能观看时，都是 P0 blocker：停止交付，修复 Studio / route / asset loading，重新完整播放后再交付。
+
+交接时必须包含：
+
+```text
+Surface：Studio Composition
+Studio URL：
+Route：
+Composition：
+Stage：Final Composition
+完整播放自审：已完成
+本轮实际替换 / 精修：
+请重点观看：
+下一步：等待是否导出的明确授权
+```
+
+随后说明已替换和统一的最终资产、为保持镜头感而做的关键精修、候选视觉处理是否仍未合并，以及自审修复的连续性 / 字幕 / 安全区 / 播放问题。请用户重点判断最终风格是否统一、动效是否克制且有镜头感、字幕和主体是否舒服、声音是否合适、整体是否可以发布。若仍有发布前的方向选择，给出少量选项、取舍与推荐。用户在后续消息确认时，下一步只会导出已观看的 Final Preview，并检查导出文件与该预览一致；不会借导出再改变创意方向。
 
 ### Stop Here｜在此停止
 

@@ -22,7 +22,11 @@ export const STORYBOARD_SURFACES = new Set([
 
 export function normalizePreviewManifest(raw = {}) {
   return {
+    // `surface` is legacy technical classification. `review_surface` and
+    // `studio_url` prove the user-facing Studio surface separately.
     surface: raw.surface || raw.preview_surface || null,
+    review_surface: raw.review_surface || raw.user_review_surface || null,
+    studio_url: raw.studio_url || raw.url || null,
     stage: raw.stage || null,
     storyboard_route: raw.storyboard_route || null,
     composition_route: raw.composition_route || raw.route || null,

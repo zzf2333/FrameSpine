@@ -16,7 +16,11 @@ export const COMPOSITION_SURFACES = new Set([
 
 export function normalizeFinalPreview(raw = {}) {
 	return {
+		// `surface` is technical classification; only review_surface + studio_url
+		// can prove a user-facing Studio handoff.
 		surface: raw.surface || raw.preview_surface || null,
+		review_surface: raw.review_surface || raw.user_review_surface || null,
+		studio_url: raw.studio_url || raw.url || null,
 		stage: raw.stage || null,
 		composition_route: raw.composition_route || raw.route || null,
 		full_composition_playback: Boolean(raw.full_composition_playback),

@@ -104,14 +104,20 @@ Hero Frame
 
 每个转场先声明关系，再选择正式 Transition 或同一 Scene 内连续构图：Object Continuity、Movement Continuity、Spatial Continuity、Cause → Effect、Question → Answer、Surface → Reveal、Before → After 或 Emotional Change。若说不清关系，默认使用干净 hard cut 或保持同一 Scene；不得堆 wipe、zoom、glitch、mask 和 shader。
 
-### Storyboard Surface 与 Composition Surface
+### User Review Surface Contract｜用户审片表面合同
 
-两种官方审查表面承担不同任务，不得互相代替：
+以下三类产物必须分开命名，也不能互相代替：
+
+- **Implementation Artifact｜实现产物**：Composition HTML / TS / JS、图片、音频、`captions.json`、配置和资产路径。它们用于制作，绝不是用户预览。
+- **Technical Inspection Artifact｜技术检查产物**：CLI snapshot、截图、单帧渲染、lint / inspect / validate 输出、控制台日志与文件检查。它们只证明对应检查执行过，不能证明用户已经观看真实视频。
+- **User Review Surface｜用户审片表面**：唯一可以用于阶段交接和用户验收的官方 HyperFrames surface。
+
+两种官方 User Review Surface 承担不同任务，不得互相代替：
 
 - **Storyboard Surface**：只用于 Story Flow，以 Board Overview 为主要审查表面，按顺序审查 Scene / Beat / Frame 的视觉设计、对应原文、连续性、风险、占位状态和前后关系。Frame Inspector 只补充导演意图，不能替画面讲故事。
-- **Composition Surface**：从 Image Animatic 开始，用于审查时长、停留、运动、Reveal、转场、字幕、声音与从头到尾的完整播放。
+- **Studio Composition Surface**：从 Image Animatic 开始，必须是 HyperFrames 官方 Studio 中可播放的当前 Composition route，用于审查时长、停留、运动、Reveal、转场、字幕、声音与从头到尾的完整播放。
 
-不得用自定义说明网页、名为“Storyboard”的普通 Composition、Player 粗视频、`STORYBOARD.md` 文本、outline 或空白卡片替代官方 Storyboard surface；也不得用 Storyboard contact sheet 替代 Image Animatic 及之后的 Composition 播放。
+不得用自定义说明网页、名为“Storyboard”的普通 Composition、Player 粗视频、`STORYBOARD.md` 文本、outline 或空白卡片替代官方 Storyboard surface；也不得用 Storyboard contact sheet 替代 Image Animatic 及之后的 Composition 播放。Composition 源文件、独立 HTML 或 `file://` 页面、CLI snapshot、截图 / 单帧、lint / inspect / validate / render 输出、资产目录 / 图片文件，或能打开但不能在 Studio 完整播放的 route，也永远不能代替 Studio Composition Surface。
 
 ### Storyboard Frame Contract
 
@@ -160,9 +166,22 @@ Story Flow 的主要审查表面是官方 **Board Overview**。Frame Inspector �
 
 Story Flow 先在官方 Storyboard surface 确认 Scene / Beat / Frame 结构，不建立完整播放时间线。用户确认后，Image Animatic 才把 Storyboard Frames 转为以 Scene、Beat 和 cue 组织的第一条完整时间线；Timed Animatic 和 Final 在这条时间线上逐步成熟，避免大量 magic offsets 与相互覆盖的绝对时间偏移。Final 只精修已通过的结构，不重建第二套剪辑。Timed Animatic 及其后的实际字幕只读取 `captions.json`；Image Animatic 可以使用清楚标示的临时字幕或时间占位，但不得把它们当作正式字幕时间轴。
 
-### HyperFrames Self-Review
+### Studio Preview Verification
 
-Story Flow 交付前执行三遍人工检查：Visual-Only Pass 隐藏说明，只检查每帧的具体主体、动作、关系、事实与证据；Sequence Pass 在 Board Overview 检查相邻变化、构图变化、Beat / Frame 从属、发展、重构、回报与 Handoff；Source-Separation Pass 检查原文只在 Voiceover、字幕和导演说明未烧进画面、精确数据使用真实证据或明确的后续图形层。任何一遍失败都不得交付。Image Animatic 及之后才在 Studio 完整播放，并检查 Scene / Layer 生命周期、画布覆盖、主运动、转场关系和正式字幕。官方工具不能替代对应 surface 的视觉检查。
+在声称 Image Animatic、Timed Animatic 或 Final Preview 已完成前，Agent 必须：
+
+1. 使用官方 HyperFrames 方式启动 Studio；
+2. 获得实际 HTTP / HTTPS Studio URL；
+3. 打开当前 Episode、当前阶段的准确 Composition route；
+4. 确认该 route 加载当前素材；
+5. 从开始到结束完整播放；
+6. 检查开始、中段、结束与 Scene 交接，确认无加载错误、空白画面、断裂资产或不可播放区间；
+7. 完成当前阶段的 Preview Readiness Review；
+8. 只向用户交付 Studio URL 与准确 route。
+
+`Studio server started` ≠ `Studio route loaded`；`Studio route loaded` ≠ `Composition successfully played`；`Composition successfully played` ≠ 已向用户展示；`CLI check passed` ≠ `Studio Preview passed`。只启动服务、只生成 URL、只打开浏览器或只产生 snapshot，均不代表完成 Studio Preview。
+
+Story Flow 交付前执行三遍人工检查：Visual-Only Pass 隐藏说明，只检查每帧的具体主体、动作、关系、事实与证据；Sequence Pass 在 Board Overview 检查相邻变化、构图变化、Beat / Frame 从属、发展、重构、回报与 Handoff；Source-Separation Pass 检查原文只在 Voiceover、字幕和导演说明未烧进画面、精确数据使用真实证据或明确的后续图形层。任何一遍失败都不得交付。Image Animatic 及之后才按上面的 Studio Preview Verification 完整播放，并检查 Scene / Layer 生命周期、画布覆盖、主运动、转场关系和正式字幕。官方工具不能替代对应 surface 的视觉检查。
 
 ## 什么时候读取
 

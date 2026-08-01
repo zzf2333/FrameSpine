@@ -18,6 +18,7 @@ import {
 	normalizeFinalManifest,
 	normalizeFinalPreview,
 } from "../lib/final-manifest.mjs";
+import { verifyCompositionUserSurface } from "../lib/composition-user-surface.mjs";
 
 function parseArgs(argv) {
 	const out = {};
@@ -152,6 +153,7 @@ export function gradeFinalWorkspace(workspace, caze, options = {}) {
 	const gateFailures = new Set();
 	const gates = {
 		surface: null,
+		composition_user_surface: null,
 		prior_timed_animatic_confirm: null,
 		cost_boundary_before_batch: null,
 		prompt_audit: null,
@@ -250,6 +252,16 @@ export function gradeFinalWorkspace(workspace, caze, options = {}) {
 			}
 		}
 		gates.surface = ok;
+	}
+
+	if (wants("composition_user_surface")) {
+		const verification = verifyCompositionUserSurface(preview, events);
+		if (!verification.ok) {
+			for (const message of verification.failures) {
+				push("P0", "composition_user_surface", message);
+			}
+		}
+		gates.composition_user_surface = verification.ok;
 	}
 
 	if (wants("prior_timed_animatic_confirm")) {

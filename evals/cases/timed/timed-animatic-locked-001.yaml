@@ -43,6 +43,7 @@ required_artifacts:
 
 gates:
   - surface
+  - composition_user_surface
   - prior_image_animatic_confirm
   - cost_boundary_before_tts
   - formal_tts

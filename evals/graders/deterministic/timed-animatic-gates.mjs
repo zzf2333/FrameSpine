@@ -21,6 +21,7 @@ import {
   normalizeTimedManifest,
   normalizeTimedPreview,
 } from '../lib/timed-manifest.mjs';
+import { verifyCompositionUserSurface } from '../lib/composition-user-surface.mjs';
 
 function parseArgs(argv) {
   const out = {};
@@ -119,6 +120,7 @@ export function gradeTimedAnimaticWorkspace(workspace, caze, options = {}) {
   const gateFailures = new Set();
   const gates = {
     surface: null,
+    composition_user_surface: null,
     prior_image_animatic_confirm: null,
     cost_boundary_before_tts: null,
     formal_tts: null,
@@ -232,6 +234,17 @@ export function gradeTimedAnimaticWorkspace(workspace, caze, options = {}) {
       }
     }
     gates.surface = ok;
+  }
+
+  // composition_user_surface
+  if (wants('composition_user_surface')) {
+    const verification = verifyCompositionUserSurface(preview, events);
+    if (!verification.ok) {
+      for (const message of verification.failures) {
+        push('P0', 'composition_user_surface', message);
+      }
+    }
+    gates.composition_user_surface = verification.ok;
   }
 
   // prior_image_animatic_confirm

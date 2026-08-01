@@ -62,6 +62,14 @@ Story Flow → Image Animatic → Timed Animatic → Final Composition
 
 每个阶段必须先产生与其成熟度匹配的真实 HyperFrames 预览：**Story Flow 使用 HyperFrames 官方 Storyboard Preview；Image Animatic、Timed Animatic 与 Final 使用可播放的 Composition Preview。** 展示后立即结束当前回复，等待用户在后续消息中明确同意才能进入下一阶段。详细的阶段边界协议见 `references/core/episode-production.md`。
 
+### 用户审片表面不可替代
+
+三类产物必须使用不同名称，不能混称为“Preview”：**Implementation Artifact｜实现产物**（Composition HTML / TS / JS、图片、音频、`captions.json`、配置与资产路径）用于制作；**Technical Inspection Artifact｜技术检查产物**（CLI snapshot、截图、单帧渲染、lint / inspect / validate 输出、日志）只用于自审；只有 **User Review Surface｜用户审片表面** 才能交给用户验收。
+
+Story Flow 的用户审片表面只能是 HyperFrames 官方 Storyboard。Image Animatic、Timed Animatic 与 Final Composition 的用户审片表面只能是 HyperFrames 官方 Studio 中**可播放的 Composition route**。Composition 源文件、独立 HTML 或 `file://` 页面、CLI snapshot、截图 / 单帧、lint / inspect / validate / render 输出、资产目录 / 图片文件、自定义预览网页，以及只能打开而不能在 Studio 完整播放的 route，永远不得称为用户预览或代替阶段交付。
+
+技术检查通过不等于完成 Studio Preview。只有真实 Studio route 已加载、完整播放并由 Agent 自审后，才允许向用户交付 Studio URL 与准确 route。
+
 ### 协作式阶段交接
 
 FrameSpine 是 Agent 与用户通过真实预览共同导演的视频制作。实现细节由 Agent 承担；会改变视频方向、返工成本或用户判断的创作决定必须对用户透明。交接模板与反馈翻译见 `references/core/quality-and-iteration.md`。
@@ -168,10 +176,10 @@ Series initialization 定义可复用的长期决定（系列身份、观众、�
 1. **按输入进入正确导演路径** — Locked Script Mode（完整文案）、Development Mode（选题 / 资料）、Revision Mode（明确要求改稿）。
 2. **设计或提取注意力主干** — Development Mode 先设计观看承诺和回报链；Locked Script Mode 从原文提取。详见 `references/core/attention-spine.md`。
 3. **发展旁白或导演定稿文案** — Development / Revision Mode 写短、具体、可视化的旁白；Locked Script Mode 保留原文，寻找其中的人物、动作、物件、环境和证据。详见 `references/core/narrative-directing.md`。
-4. **Story Flow** — 完成整条视频的 Scene、Beat、图片任务、连续性与视觉关系；把每次观众发现拆成足以展示其发展过程的关键视觉状态，并注册为按序、具有具体可审查画面的 HyperFrames Storyboard Frames。可渲染 `src` 只是技术前提，不是完成标准；用户不读 Inspector 也应能从 Board 序列基本看懂图片叙事。本阶段不制作完整时间播放。
-5. **Image Animatic** — 把用户确认的 Storyboard Frames 转为 Scene / Beat 时间线，使用占位图、样图、用户素材、临时声音或估计时长以及粗略 Entry / Development / Emphasis / Handoff，形成第一次从头到尾可播放的 Composition。详见 `references/core/image-storytelling.md`。
-6. **Timed Animatic** — 生成正式 TTS、写入 `captions.json`、依据真实时间重新导演图片停留和节奏。详见 `references/technical/providers.md` 和 `references/technical/subtitles.md`。
-7. **最终图片与精修** — 整理 `image-prompts.json` 并生成最终图片，完成 Prompt Audit 和 Image Set Audit。详见 `references/core/image-storytelling.md`。
+4. **Story Flow** — 完成整条视频的 Scene、Beat、图片任务、连续性与视觉关系；把每次观众发现拆成足以展示其发展过程的关键视觉状态，并注册为按序、具有具体可审查画面的 HyperFrames Storyboard Frames。可渲染 `src` 只是实现前提，不是用户审片表面或完成标准；用户不读 Inspector 也应能从 Board 序列基本看懂图片叙事。本阶段不制作完整时间播放。
+5. **Image Animatic** — 把用户确认的 Storyboard Frames 转为 Scene / Beat 时间线，使用占位图、样图、用户素材、临时声音或估计时长以及粗略 Entry / Development / Emphasis / Handoff，形成第一次从头到尾可播放的 Composition；只交付已验证的 Studio URL 与 Composition route。详见 `references/core/image-storytelling.md`。
+6. **Timed Animatic** — 生成正式 TTS、写入 `captions.json`、依据真实时间重新导演图片停留和节奏；只交付已验证的 Studio URL 与 Composition route。详见 `references/technical/providers.md` 和 `references/technical/subtitles.md`。
+7. **Final Composition** — 最终图片生产、素材替换与成片精修属于同一个成熟阶段的连续内部工作；完成 Prompt Audit、Image Set Audit 与高风险素材测试后，只有把最终素材放回当前 Composition、完成 Studio 自审并交付可播放的 Studio URL / route，才构成 Final Preview。详见 `references/core/image-storytelling.md`。
 8. **审片与渲染** — HyperFrames Studio Final Preview 后等待用户明确允许导出。
 
 每个阶段边界的交接协议、反馈处理和质量检查见 `references/core/quality-and-iteration.md`。

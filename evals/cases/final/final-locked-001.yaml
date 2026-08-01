@@ -40,6 +40,7 @@ required_artifacts:
 
 gates:
   - surface
+  - composition_user_surface
   - prior_timed_animatic_confirm
   - cost_boundary_before_batch
   - prompt_audit
