@@ -341,7 +341,11 @@ export function gradeFinalWorkspace(workspace, caze, options = {}) {
 			});
 		if (!done) {
 			ok = false;
-			push("P0", "prompt_audit", "Prompt Audit not executed before Final batch");
+			push(
+				"P0",
+				"prompt_audit",
+				"Prompt Audit not executed before Final batch",
+			);
 		}
 		gates.prompt_audit = ok;
 	}
@@ -419,7 +423,11 @@ export function gradeFinalWorkspace(workspace, caze, options = {}) {
 		let ok = true;
 		if (!hasFinalPreview(events, preview, finalMan)) {
 			ok = false;
-			push("P0", "final_preview", "Final Preview not shown before handoff/render");
+			push(
+				"P0",
+				"final_preview",
+				"Final Preview not shown before handoff/render",
+			);
 		}
 		gates.final_preview = ok;
 	}
@@ -463,11 +471,7 @@ export function gradeFinalWorkspace(workspace, caze, options = {}) {
 		}
 		if (exportIdx !== -1 && previewIdx !== -1 && exportIdx < previewIdx) {
 			ok = false;
-			push(
-				"P0",
-				"no_render_before_auth",
-				"export/render before Final Preview",
-			);
+			push("P0", "no_render_before_auth", "export/render before Final Preview");
 		}
 		if (exportIdx !== -1 && previewIdx === -1 && !preview?.final_preview) {
 			ok = false;

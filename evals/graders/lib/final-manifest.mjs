@@ -60,9 +60,7 @@ export function normalizeFinalManifest(raw = {}) {
 		medium_motion_inherited: Boolean(
 			raw.medium_motion_inherited ?? raw.inherits_medium_motion,
 		),
-		final_preview_shown: Boolean(
-			raw.final_preview_shown ?? raw.final_preview,
-		),
+		final_preview_shown: Boolean(raw.final_preview_shown ?? raw.final_preview),
 		placeholder_marks_present: Boolean(raw.placeholder_marks_present),
 		export_or_render_before_auth: Boolean(
 			raw.export_or_render_before_auth ??
