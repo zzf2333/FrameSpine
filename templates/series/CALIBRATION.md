@@ -46,6 +46,9 @@ FrameSpine 的核心分类已经冻结，不在 Series Style Calibration 中重�
 使用非叙事化的素材、抽象关系、通用占位文案或组件演示；不要选用未来要发布的 Episode 内容。
 
 - Visual Medium / 造型、表面、空间与媒介一致性测试：
+- Caption Surface Test：使用明、暗、复杂画面检查可读性、字幕块背景、图片安全区、是否有双重底板，以及中英文高度是否压住主体：
+- Critical Information Test：用需要准确显示的信息测试生成媒体、真实证据与 HyperFrames Information Layer 的分工：
+- Motion Execution Test：播放完整 Scene 的开始、中段、结束前，检查运动、Intentional Hold 与 Handoff 是否真正执行：
 - 字幕与布局测试：
 - 运动与转场测试：
 - 声音与音乐测试：
@@ -71,8 +74,9 @@ FrameSpine 的核心分类已经冻结，不在 Series Style Calibration 中重�
 - 证据可读性：真实截图、文件、对象或 HyperFrames 精确文字怎样保持可读？
 - 过程素材：动作、变化、累积或因果能否由当前媒介清楚呈现？
 - 媒介手感：造型、边缘、材质、表面与空间规则能否稳定，不滑向默认 AI 风格？
-- 竖屏可用性：字幕、平台 UI、主体与证据是否有安全区？
-- Motion Affordances：当前媒介允许的运动能否在 HyperFrames 中成立，而非默认摄影式漂移？
+- 竖屏可用性：字幕、平台 UI、主体与证据是否有安全区？Caption Surface Test 是否确认字幕块没有变成全宽底板、也没有与图片暗带 / 留白重复？
+- Critical Information Test：必要文字、数字、来源、证据或界面是否有明确实现归属，且不依赖图片模型准确拼写？
+- Motion Affordances：当前媒介允许的运动能否在 HyperFrames 中成立，而非默认摄影式漂移？Motion Execution Test 是否确认完整 Scene 的开始、中段、结束前都有时间意图？
 - Provider 稳定性：确认的 Provider 能否稳定生成所需素材；哪些限制必须写进 Prompt 或改用其他素材方案？
 - 常见失败模式：最常出现的生成、连续性、媒介或播放问题是什么？
 ```

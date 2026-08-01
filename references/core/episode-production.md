@@ -687,6 +687,8 @@ Prompt 按以下顺序写：
 
 生成前先完成逐素材 Prompt Audit，再完成整组 Image Set Audit，检查图片角色分布、观察方式、主体状态、媒介表现、功能性细节和观看任务不被同质化；这两者都是 Agent 的导演检查，不是脚本评分或批准状态。先测试视觉世界锚点、第一帧、长期主体、核心重构、机制和回收等高风险素材。
 
+批量替换最终图之前，先选择一个同时涉及**最终媒体 + 精确信息 + 字幕 + 时间行为**的高风险 Scene，完成完整接入并在 Studio 播放。确认 Media Layer 可独立运动、Information Layer 仍存在、Caption Layer 正常、没有双重字幕底板，且开始 / 中段 / 结束前都有运动或 Intentional Hold 的明确理由后，再扩展到其他 Scene。这是 Agent 的内部生产验证，不新增用户确认点。
+
 ### 生成策略
 
 - 先生成最关键、风险最高的图片；
@@ -713,7 +715,7 @@ node <skill>/scripts/generate-images.mjs \
 
 ### 放回当前 Composition 并在 Studio 内部自审
 
-不要把图片生成视为结束，也不要把生成结果交给用户。将高风险素材立即放入**同一个当前 Final Composition**，应用实际 `cover` / crop、字幕安全区、当前媒介允许的 Motion Affordances 与前后 Handoff；在官方 Studio 的当前 route 内检查裁切、字幕、连续性和运动。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点 / 参考、构图、素材或 Composition 后重做。
+不要把图片生成视为结束，也不要把生成结果交给用户。将高风险素材立即放入**同一个当前 Final Composition**，只替换 Media Layer；保留或有意识地重建精确数字、文字、来源、证据和必要界面的 Information Layer、`captions.json` 驱动的 Caption Layer，以及 Entry / Development 或 Intentional Hold / Emphasis / Handoff 的 Time Behavior。应用实际 `cover` / crop、字幕安全区、当前媒介允许的 Motion Affordances 与前后 Handoff；在官方 Studio 的当前 route 内检查裁切、字幕、连续性和运动。原图漂亮但主体被裁掉、证据看不清、没有运动余量、字幕遮挡或无法交接时，不是可用素材；修改 Prompt、锚点 / 参考、构图、素材或 Composition 后重做。
 
 单张图片、资产列表、HTML 源文件、截图、snapshot 与检查页面只供 Agent 内部自审，不是新的用户阶段交付。这个内部检查服从当前阶段已有的 Studio Preview、Preview Readiness 与协作式交接边界，不替代它们。
 
@@ -742,6 +744,7 @@ node <skill>/scripts/generate-images.mjs \
 
 - 每个场景先确认英雄帧布局；
 - 用 GSAP 建立观看顺序；
+- 每个 Scene 检查开始、中段、结束前的 Temporal Coverage：运动是否持续服务观看任务；静止是否有阅读、证据或情绪理由；结束前怎样 Handoff；
 - 动画速度和 easing 与语义匹配；
 - 同一视频有主转场和少量强调转场；
 - 避免所有场景重复同一种运动；
@@ -754,7 +757,7 @@ node <skill>/scripts/generate-images.mjs \
 
 ### Preview Readiness Review｜交付前自审
 
-完成正常观看、静音观看、只听声音与手机尺寸观看；再执行 Scene boundary pass（每个 Scene 进入前、交接中、结束前和下一 Scene 稳定后）以及 Media coverage pass（所有全屏媒体的运动起点、终点和最大位移）。确认不存在占位/审核标记、生成错误、露底、错误裁切、图层残留、重叠转场、黑帧、空帧、字幕错位或不可播放区间。
+完成正常观看、静音观看、只听声音与手机尺寸观看；再执行 Scene boundary pass（每个 Scene 进入前、交接中、结束前和下一 Scene 稳定后）、Temporal Coverage pass（每个 Scene 的开始、中段、结束前）以及 Media coverage pass（所有全屏媒体的运动起点、终点和最大位移）。确认不存在占位 / 审核标记、生成错误、露底、错误裁切、图层残留、重叠转场、黑帧、空帧、字幕错位或不可播放区间；也确认最终 Media Layer 替换没有删除 Information Layer、Caption Layer 或应有的 Time Behavior。
 
 ### Studio-first 预览验证
 

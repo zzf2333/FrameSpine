@@ -100,6 +100,30 @@ Hero Frame
 
 每个 Scene 必须明确哪些层进入、在 Scene 内持续、在 Handoff 时交给下一 Scene，以及在 Scene 结束时必须退出。禁止旧 Scene 图层无限保留、多张全屏图片长期叠放、只用 `z-index + opacity` 模拟场景切换、上一个 Transition 未结束就开启新的主运动，或在 Scene 外维护第二套时间逻辑。
 
+### Final Replacement Contract｜最终素材替换合同
+
+每个成熟 Scene 至少区分以下职责，不必新增 Schema、组件库或第二条时间线：
+
+```text
+Media Layer
+→ 图片、视频和主要视觉素材
+
+Information Layer
+→ 精确数字、文字、来源、证据和必要界面
+
+Caption Layer
+→ 由 captions.json 驱动的字幕
+
+Time Behavior
+→ Entry → Development 或 Intentional Hold → Emphasis → Handoff
+```
+
+Final 替换默认只替换 **Media Layer**。Information Layer、Caption Layer 与 Time Behavior 必须保留，或在替换时有意识地重建；“图片换好了”不代表 Scene 已完成。禁止隐藏整个 Canvas 子树、用全局后代选择器关闭旧内容、把最终图设为静态背景后删除原有时间行为，或在没有重建 Information Layer 时删除旧精确信息。
+
+### Temporal Coverage｜时间行为覆盖
+
+每个 Scene 在 Final 自审时检查**开始、中段、结束前**三个时刻：各自释放什么信息；中段是否仍有观看任务；静止是否服务阅读、证据或情绪；结束前怎样交给下一 Scene。只有前 0.5 秒淡入、之后无理由静止，不是完成的时间行为。没有持续运动不自动失败：能说明阅读、证据或情绪理由的 Intentional Hold 是有效设计。
+
 ### Transition Contract
 
 每个转场先声明关系，再选择正式 Transition 或同一 Scene 内连续构图：Object Continuity、Movement Continuity、Spatial Continuity、Cause → Effect、Question → Answer、Surface → Reveal、Before → After 或 Emotional Change。若说不清关系，默认使用干净 hard cut 或保持同一 Scene；不得堆 wipe、zoom、glitch、mask 和 shader。
@@ -384,7 +408,7 @@ Story Flow
 - **Story Flow**：在官方 Board Overview 用按序、视觉具体且无需 Inspector 也基本可读的 Frame 序列检查 Scene / Beat、图片任务、发展、连续性和 Handoff；不制作完整时间播放；
 - **Image Animatic**：把已确认 Storyboard Frames 转为第一次从头到尾可播放的 Composition，检查停留、观看动力、粗略运动、Reveal、构图和图片交接；
 - **Timed Animatic**：加入正式 TTS 与 `captions.json` 的真实字幕时间，重排停留和节奏；
-- **Final**：替换最终素材并精修，不重做已经通过预览的内容结构。
+- **Final**：替换最终素材并精修，不重做已经通过预览的内容结构；Media Layer 替换不得破坏 Information Layer、Caption Layer 或已确认的 Time Behavior。
 
 Series Style Calibration 同样使用 HyperFrames，但它只验证可复用的视觉、声音和运动身份；不测试主题、Hook、故事或单集镜头。
 

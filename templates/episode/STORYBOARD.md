@@ -173,6 +173,8 @@ PLACEHOLDER / RISK
 - 构图与观察方式：距离、方向、构图、第一眼和第二层发现：
 - 媒介实现与材质 / 世界一致性：
 - 字幕、裁切、运动、分层与 Handoff 余量：
+- 信息归属：这张素材有哪些文字、数字或界面；哪些可由生成媒体自然呈现；哪些必须逐字 / 逐数准确；分别由生成媒体 / 真实素材 / HyperFrames Information Layer 实现：
+- Final 保留项：替换本素材时必须保留或重建的 Information Layer、Caption Layer 与 Entry / Development 或 Intentional Hold / Emphasis / Handoff：
 - 媒介一致性与生成风险：身份漂移 / 材质漂移 / 边缘规则漂移 / 空间规则矛盾 / 媒介混杂 / 关键事实不可读 / Provider 常见生成错误；本素材具体为：
 - 失败条件：
 - 输出路径：`assets/images/world-anchor.png`
